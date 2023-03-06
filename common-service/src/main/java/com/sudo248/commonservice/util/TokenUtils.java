@@ -1,6 +1,5 @@
 package com.sudo248.commonservice.util;
 
-import com.sudo248.domain.common.Constants;
 import com.sudo248.domain.common.ErrorMessage;
 import com.sudo248.domain.exception.ApiException;
 import io.jsonwebtoken.*;

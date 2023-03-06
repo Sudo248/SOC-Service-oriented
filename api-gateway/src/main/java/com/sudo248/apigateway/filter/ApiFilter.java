@@ -31,7 +31,7 @@ public class ApiFilter implements GatewayFilter {
 
     public ApiFilter(CommonService commonService) {
         this.commonService = commonService;
-        final List<String> unsecuredApiEndpoints = List.of("/sign-in", "/sign-up", "/logout");
+        final List<String> unsecuredApiEndpoints = List.of("/sign-in", "/sign-up", "/logout", "/generate-otp", "/verify-otp");
         final List<String> internalApiEndpoint = List.of("/internal");
 
         this.isApiSecured = _request ->
@@ -53,7 +53,7 @@ public class ApiFilter implements GatewayFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
 
-        log.info("[Inside Handle filter][" + request + "]" + "[" + request.getMethod() + "]" + request.getPath());
+        log.info("[Inside Handle filter]" + "[" + request.getMethod() + "] " + request.getPath());
 
         if (isApiInternal.test(request)) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, ErrorMessage.INTERNAL_API_NOT_ALLOW);

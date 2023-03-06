@@ -9,16 +9,14 @@ import javax.validation.constraints.NotEmpty;
 @Data
 public class SignInDto {
 
-    private String emailOrPhoneNumber;
+    private String phoneNumber;
 
-    @NotEmpty(message = "Password required")
-    @Min(value = 8, message = "Password length must be 8 or higher")
     private String password;
 
     public SignInDto() {
     }
 
     public AccountModel toUserModel() {
-        return new AccountModel(emailOrPhoneNumber, password);
+        return new AccountModel(phoneNumber, password);
     }
 }

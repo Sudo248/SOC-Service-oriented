@@ -20,16 +20,16 @@ public class Account {
     @Column(name = "user_id")
     private String userId;
 
-    @Column(name = "email_or_phone_number")
-    private String emailOrPhoneNumber;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     // hash by bcrypt
     private String password;
 
     private Provider provider;
 
-    @Column(name = "is_validate")
-    private boolean isValidate;
+    @Column(name = "is_validated")
+    private boolean isValidated;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -41,12 +41,12 @@ public class Account {
         this.userId = userId;
     }
 
-    public Account(String userId, String emailOrPhoneNumber, String password, Provider provider, boolean isValidate, LocalDateTime createdAt) {
+    public Account(String userId, String phoneNumber, String password, Provider provider, boolean isValidated, LocalDateTime createdAt) {
         this.userId = userId;
-        this.emailOrPhoneNumber = emailOrPhoneNumber;
+        this.phoneNumber = phoneNumber;
         this.password = password;
         this.provider = provider;
-        this.isValidate = isValidate;
+        this.isValidated = isValidated;
         this.createdAt = createdAt;
     }
 

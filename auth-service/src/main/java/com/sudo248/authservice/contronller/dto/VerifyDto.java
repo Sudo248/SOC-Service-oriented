@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 @Data
 public class VerifyDto {
     @NotEmpty(message = "Required email or phone number")
-    private String emailOrPhoneNumber;
+    private String phoneNumber;
 
     @NotEmpty(message = "Required otp to verify")
     private String otp;

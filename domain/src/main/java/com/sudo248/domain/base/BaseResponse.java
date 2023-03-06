@@ -9,7 +9,6 @@ public class BaseResponse<D> {
     private int statusCode;
     private boolean success;
     private String message;
-
     private D data;
 
     public BaseResponse(int statusCode, boolean success, String message, D data) {
@@ -57,6 +56,15 @@ public class BaseResponse<D> {
         return ResponseEntity.ok(response);
     }
 
+    public static <Data> ResponseEntity<BaseResponse<?>> ok(String message, Data body) {
+        var response = new BaseResponse<>(
+                200,
+                message,
+                body
+        );
+        return ResponseEntity.ok(response);
+    }
+
     public static <Data> ResponseEntity<BaseResponse<?>> status(HttpStatus status, Data body) {
         var response = new BaseResponse<>(
                 status.value(),
@@ -71,6 +79,15 @@ public class BaseResponse<D> {
                 status.value(),
                 message,
                 body
+        );
+        return ResponseEntity.status(status).body(response);
+    }
+
+    public static <Data> ResponseEntity<BaseResponse<?>> status(HttpStatus status, String message) {
+        var response = new BaseResponse<>(
+                status.value(),
+                message,
+                null
         );
         return ResponseEntity.status(status).body(response);
     }

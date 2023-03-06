@@ -12,7 +12,7 @@ public interface AccountService extends BaseService {
 
     ResponseEntity<BaseResponse<?>> signUp(SignUpDto signUpDto);
 
-    ResponseEntity<BaseResponse<?>> logOut(Long userId);
+    ResponseEntity<BaseResponse<?>> logOut(String userId);
 
     ResponseEntity<BaseResponse<?>> changePassword(String userId, ChangePasswordDto changePasswordDto);
 }

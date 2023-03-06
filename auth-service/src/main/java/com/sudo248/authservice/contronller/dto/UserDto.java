@@ -11,7 +11,7 @@
 //public class UserDto {
 //    private String userId;
 //
-//    private String emailOrPhoneNumber;
+//    private String phoneNumber;
 //
 //    private Provider provider;
 //
@@ -32,9 +32,9 @@
 //        this.userId = userId;
 //    }
 //
-//    public UserDto(String userId, String emailOrPhoneNumber, Provider provider, String fullName, LocalDate birthday, String bio, String imageUrl, LocalDateTime createdAt) {
+//    public UserDto(String userId, String phoneNumber, Provider provider, String fullName, LocalDate birthday, String bio, String imageUrl, LocalDateTime createdAt) {
 //        this.userId = userId;
-//        this.emailOrPhoneNumber = emailOrPhoneNumber;
+//        this.phoneNumber = phoneNumber;
 //        this.provider = provider;
 //        this.createdAt = createdAt;
 //        this.fullName = fullName;
@@ -46,7 +46,7 @@
 //    public AccountModel toUserModel() {
 //        return new AccountModel(
 //                userId,
-//                emailOrPhoneNumber,
+//                phoneNumber,
 //                provider,
 //                fullName,
 //                birthday,
