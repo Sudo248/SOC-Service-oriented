@@ -10,7 +10,7 @@ import com.sudo248.soc.data.api.auth.request.AccountRequest
 import com.sudo248.soc.data.api.auth.request.ChangePasswordRequest
 import com.sudo248.soc.data.api.auth.request.OtpRequest
 import com.sudo248.soc.data.dto.TokenDto
-import com.sudo248.soc.domain.common.SharedPrefKey
+import com.sudo248.soc.domain.common.Constants
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -24,8 +24,8 @@ import retrofit2.http.Path
  * @since 10:21 - 23/02/2023
  */
 
-@ApiService(baseUrl = BuildConfig.BASE_URL + "/auth")
-@EnableAuthentication(SharedPrefKey.KEY_TOKEN)
+@ApiService(baseUrl = BuildConfig.BASE_URL + "/auth/")
+@EnableAuthentication(Constants.Key.TOKEN)
 @LoggingLever(level = Level.BODY)
 interface AuthService {
 
