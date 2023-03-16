@@ -31,29 +31,26 @@ public class ApiFilter implements GatewayFilter {
 
     public ApiFilter(CommonService commonService) {
         this.commonService = commonService;
-        final List<String> unsecuredApiEndpoints = List.of("/sign-in", "/sign-up", "/logout", "/generate-otp", "/verify-otp");
+        final List<String> unsecuredApiEndpoints = List.of(
+                "/sign-in",
+                "/sign-up",
+                "/logout",
+                "/generate-otp",
+                "/verify-otp",
+                "/images"
+        );
         final List<String> internalApiEndpoint = List.of("/internal");
 
-        this.isApiSecured = _request ->
-                unsecuredApiEndpoints
-                        .stream()
-                        .noneMatch(endpoint ->
-                                _request.getURI().getPath().contains(endpoint)
-                        );
+        this.isApiSecured = _request -> unsecuredApiEndpoints.stream().noneMatch(endpoint -> _request.getURI().getPath().contains(endpoint));
 
-        this.isApiInternal = _request ->
-                internalApiEndpoint
-                        .stream()
-                        .anyMatch(endpoint ->
-                                _request.getURI().getPath().contains(endpoint)
-                        );
+        this.isApiInternal = _request -> internalApiEndpoint.stream().anyMatch(endpoint -> _request.getURI().getPath().contains(endpoint));
     }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
 
-        log.info("[Inside Handle filter]" + "[" + request.getMethod() + "] " + request.getPath());
+        log.info("[" + request.getMethod() + "] " + request.getPath());
 
         if (isApiInternal.test(request)) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, ErrorMessage.INTERNAL_API_NOT_ALLOW);

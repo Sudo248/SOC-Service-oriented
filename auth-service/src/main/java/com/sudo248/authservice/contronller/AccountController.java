@@ -3,7 +3,6 @@ package com.sudo248.authservice.contronller;
 import com.sudo248.authservice.contronller.dto.ChangePasswordDto;
 import com.sudo248.authservice.contronller.dto.SignInDto;
 import com.sudo248.authservice.contronller.dto.SignUpDto;
-import com.sudo248.authservice.contronller.dto.VerifyDto;
 import com.sudo248.authservice.service.AccountService;
 import com.sudo248.domain.base.BaseResponse;
 import com.sudo248.domain.common.Constants;
