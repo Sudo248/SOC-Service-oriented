@@ -10,7 +10,7 @@ public interface BaseService {
         try {
             return handle.handle();
         } catch (Exception e) {
-            LoggerFactory.getLogger(this.getClass().getName()).error(e.getMessage());
+            LoggerFactory.getLogger(this.getClass().getName()).error(e.getMessage(), e);
             if (e instanceof ApiException) {
                 return ((ApiException)e).getResponseEntity();
             }
