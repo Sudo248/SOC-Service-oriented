@@ -13,6 +13,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>image-service</name>
     <description>image-service</description>
+    <packaging>jar</packaging>
+
     <properties>
         <java.version>11</java.version>
         <spring-cloud.version>2021.0.4</spring-cloud.version>
@@ -40,6 +42,7 @@
             <artifactId>domain</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -55,10 +58,42 @@
 
     <build>
         <plugins>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-install-plugin</artifactId>-->
+<!--                <version>2.5.1</version>-->
+<!--                <configuration>-->
+<!--                    <file>../domain/target/domain-0.0.1-SNAPSHOT.jar</file>-->
+<!--                    <repositoryLayout>default</repositoryLayout>-->
+<!--                    <groupId>com.sudo248</groupId>-->
+<!--                    <artifactId>domain</artifactId>-->
+<!--                    <version>0.0.1-SNAPSHOT</version>-->
+<!--                    <packaging>jar</packaging>-->
+<!--                    <generatePom>true</generatePom>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>install-jar-lib</id>-->
+<!--                        <goals>-->
+<!--                            <goal>install-file</goal>-->
+<!--                        </goals>-->
+<!--                        <phase>validate</phase>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>repackage</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
             </plugin>
+
         </plugins>
     </build>
     <repositories>
@@ -73,3 +108,5 @@
     </repositories>
 
 </project>
+
+<!--        mvn install:install-file -Dfile=../domain/target/domain-0.0.1-SNAPSHOT.jar -DgroupId=com.sudo248 -DartifactId=domain -Dversion=0.0.1-SNAPSHOT.jar -Dpackaging=jar   -->
