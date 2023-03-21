@@ -9,5 +9,22 @@
         android:id="@+id/discoveryFragment"
         android:name="com.sudo248.soc.ui.activity.main.fragment.discovery.DiscoveryFragment"
         android:label="DiscoveryFragment"
-        tools:layout="@layout/fragment_discovery"/>
+        tools:layout="@layout/fragment_discovery" >
+        <action
+            android:id="@+id/action_discoveryFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" >
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="com.sudo248.soc.ui.activity.main.fragment.product_detail.ProductDetailFragment"
+        android:label="ProductDetailFragment"
+        tools:layout="@layout/fragment_product_detail">
+        <argument
+            android:name="productId"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

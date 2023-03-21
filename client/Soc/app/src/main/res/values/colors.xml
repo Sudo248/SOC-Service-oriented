@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primaryColor">#FA89B2</color>
+    <color name="primaryColor">#3AC5C9</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -21,5 +21,6 @@
     <color name="black_47">#474646</color>
     <color name="purple_B4">#B4B5E5</color>
     <color name="gray_88">#FF888888</color>
+    <color name="gray_91">#919191</color>
     <color name="transparent">#00FFFFFF</color>
 </resources>

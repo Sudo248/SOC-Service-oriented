@@ -12,4 +12,21 @@
     <style name="TabLayoutStyle" parent="Widget.Design.TabLayout">
         <item name="android:stateListAnimator">@null</item>
     </style>
+
+    <style name="textTitleLarge">
+        <item name="android:textSize">36sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="textTitleMedium">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="textTitleSmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>
