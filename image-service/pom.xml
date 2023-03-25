@@ -10,9 +10,11 @@
     </parent>
     <groupId>com.sudo248</groupId>
     <artifactId>image-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>image-service</name>
     <description>image-service</description>
+    <packaging>jar</packaging>
+
     <properties>
         <java.version>11</java.version>
         <spring-cloud.version>2021.0.4</spring-cloud.version>
@@ -38,8 +40,11 @@
         <dependency>
             <groupId>com.sudo248</groupId>
             <artifactId>domain</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.1</version>
+            <scope>system</scope>
+            <systemPath>/mnt/39178B285F7A3DB1/Code/SOC/domain/target/domain-0.0.1.jar</systemPath>
         </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -58,6 +63,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                </configuration>
             </plugin>
         </plugins>
     </build>

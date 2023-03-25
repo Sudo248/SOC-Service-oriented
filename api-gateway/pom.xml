@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.sudo248</groupId>
     <artifactId>api-gateway</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>api-gateway</name>
     <description>api-gateway</description>
     <properties>
@@ -42,13 +42,15 @@
         <dependency>
             <groupId>com.sudo248</groupId>
             <artifactId>domain</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-web</artifactId>
                 </exclusion>
             </exclusions>
+            <scope>system</scope>
+            <systemPath>/mnt/39178B285F7A3DB1/Code/SOC/domain/target/domain-0.0.1.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -74,6 +76,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                </configuration>
             </plugin>
         </plugins>
     </build>

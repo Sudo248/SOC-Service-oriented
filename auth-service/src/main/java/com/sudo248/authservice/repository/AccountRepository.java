@@ -8,14 +8,14 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, String> {
-    @Query(value = "SELECT * FROM account WHERE account.phoneNumber = :phoneNumber LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM account WHERE account.phone_number = :phoneNumber LIMIT 1", nativeQuery = true)
     Account getUserByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 
     @Query(value =
             "SELECT " +
             "   CASE WHEN EXISTS(" +
             "       SELECT 1 FROM account" +
-            "       WHERE account.phoneNumber = :phoneNumber " +
+            "       WHERE account.phone_number = :phoneNumber " +
             "       LIMIT 1" +
             "   )" +
             "   THEN 'true'" +

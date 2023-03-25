@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.sudo248</groupId>
 	<artifactId>common-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>common-service</name>
 	<description>common-service</description>
 	<properties>
@@ -18,6 +18,11 @@
 		<spring-cloud.version>2021.0.5</spring-cloud.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -49,7 +54,9 @@
 		<dependency>
 			<groupId>com.sudo248</groupId>
 			<artifactId>domain</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>/mnt/39178B285F7A3DB1/Code/SOC/domain/target/domain-0.0.1.jar</systemPath>
 		</dependency>
 
 		<dependency>
@@ -82,6 +89,7 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+					<includeSystemScope>true</includeSystemScope>
 				</configuration>
 			</plugin>
 		</plugins>

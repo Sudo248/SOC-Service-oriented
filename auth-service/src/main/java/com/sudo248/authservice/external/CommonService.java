@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(value = "COMMON-SERVICE", url = "http://localhost:8081/internal")
+@FeignClient(value = "COMMON-SERVICE", url = "http://common-service:8081/internal")
 @Service
 public interface CommonService {
     @GetMapping("/token/generate/{userId}")
