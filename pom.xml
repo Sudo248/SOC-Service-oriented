@@ -13,6 +13,7 @@
         <module>auth-service</module>
         <module>common-service</module>
         <module>image-service</module>
+        <module>discovery-service</module>
     </modules>
 
 </project>
