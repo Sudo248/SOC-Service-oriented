@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.sudo248</groupId>
     <artifactId>domain</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>domain</name>
     <description>domain</description>
     <packaging>jar</packaging>
@@ -48,6 +48,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <classifier>exec</classifier>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>

@@ -1,0 +1,70 @@
+version: '3'
+services:
+  db-service:
+    image: mysql:8.0.32-debian
+    container_name: db-service
+    hostname: db-service
+    expose:
+      - 3306
+    volumes:
+      #      - ./database:/var/lib/mysql
+      - ./create-db.sql:/docker-entrypoint-initdb.d/create-db.sql
+    environment:
+      - MYSQL_ROOT_PASSWORD=03092001
+      - MYSQL_DATABASE=soc
+    networks:
+      - soc-network
+
+  soc-registry:
+    image: soc-registry:0.0.1
+    container_name: soc-registry
+    hostname: soc-registry
+    networks:
+      - soc-network
+    ports:
+      - "8761:8761"
+
+  api-gateway:
+    image: api-gateway:0.0.1
+    container_name: api-gateway
+    hostname: api-gateway
+    depends_on:
+      - soc-registry
+    networks:
+      - soc-network
+    ports:
+      - "9030:9030"
+
+  common-service:
+    image: common-service:0.0.1
+    container_name: common-service
+    hostname: common-service
+    depends_on:
+      - soc-registry
+    networks:
+      - soc-network
+
+  image-service:
+    image: image-service:0.0.1
+    container_name: image-service
+    hostname: image-service
+    depends_on:
+      - soc-registry
+    networks:
+      - soc-network
+    volumes:
+      - ./image-service/uploads/images:/app/image-service/uploads/images
+
+  auth-service:
+    image: auth-service:0.0.1
+    container_name: auth-service
+    hostname: auth-service
+    depends_on:
+      - soc-registry
+      - db-service
+    networks:
+      - soc-network
+
+networks:
+  soc-network:
+    external: true

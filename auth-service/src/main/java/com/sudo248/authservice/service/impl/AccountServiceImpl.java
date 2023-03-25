@@ -47,7 +47,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public ResponseEntity<BaseResponse<?>> signIn(SignInDto signInDto) {
         return handleException(() -> {
-            if (accountRepository.existsByPhoneNumber(signInDto.getPhoneNumber())) {
+            if (!accountRepository.existsByPhoneNumber(signInDto.getPhoneNumber())) {
                 throw new PhoneNumberInvalidException();
             }
             AccountModel accountModel = mapper.map(accountRepository.getUserByPhoneNumber(signInDto.getPhoneNumber()), AccountModel.class);
@@ -64,7 +64,7 @@ public class AccountServiceImpl implements AccountService {
         return handleException(() -> {
             var accountModel = signUpDto.toUserModel();
             log.info("accountModel: " + accountModel.toString());
-            if (accountRepository.existsByPhoneNumber(accountModel.getPhoneNumber())) {
+            if (!accountRepository.existsByPhoneNumber(accountModel.getPhoneNumber())) {
                 throw new PhoneNumberExistedException();
             }
             saveAccount(accountModel);
