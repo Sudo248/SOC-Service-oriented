@@ -16,7 +16,7 @@ services:
       - soc-network
 
   soc-registry:
-    image: soc-registry:0.0.1
+    image: sudo248dev/soc-registry:0.0.1
     container_name: soc-registry
     hostname: soc-registry
     networks:
@@ -25,7 +25,7 @@ services:
       - "8761:8761"
 
   api-gateway:
-    image: api-gateway:0.0.1
+    image: sudo248dev/api-gateway:0.0.1
     container_name: api-gateway
     hostname: api-gateway
     depends_on:
@@ -36,7 +36,7 @@ services:
       - "9030:9030"
 
   common-service:
-    image: common-service:0.0.1
+    image: sudo248dev/common-service:0.0.1
     container_name: common-service
     hostname: common-service
     depends_on:
@@ -45,7 +45,7 @@ services:
       - soc-network
 
   image-service:
-    image: image-service:0.0.1
+    image: sudo248dev/image-service:0.0.1
     container_name: image-service
     hostname: image-service
     depends_on:
@@ -56,7 +56,7 @@ services:
       - ./image-service/uploads/images:/app/image-service/uploads/images
 
   auth-service:
-    image: auth-service:0.0.1
+    image: sudo248dev/auth-service:0.0.1
     container_name: auth-service
     hostname: auth-service
     depends_on:
