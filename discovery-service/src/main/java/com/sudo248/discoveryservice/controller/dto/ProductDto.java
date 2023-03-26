@@ -7,7 +7,6 @@ public class ProductDto {
     private String name,description,sku;
     private List<ImageDto> images;
     private List<SupplierProductDto> supplierProducts;
-    private List<CategoryProductDto> categoryProducts;
     public ProductDto() {
     }
 
@@ -36,13 +35,13 @@ public class ProductDto {
         this.supplierProducts = supplierProducts;
     }
 
-    public List<CategoryProductDto> getCategoryProducts() {
-        return categoryProducts;
-    }
-
-    public void setCategoryProducts(List<CategoryProductDto> categoryProducts) {
-        this.categoryProducts = categoryProducts;
-    }
+//    public List<CategoryProductDto> getCategoryProducts() {
+//        return categoryProducts;
+//    }
+//
+//    public void setCategoryProducts(List<CategoryProductDto> categoryProducts) {
+//        this.categoryProducts = categoryProducts;
+//    }
 
     public List<ImageDto> getImages() {
         return images;

@@ -53,7 +53,17 @@ public class SupplierProductServiceImpl implements SupplierProductService {
         }
         return null;
     }
-
+    @Override
+    public List<SupplierProductDto> getSupplierProductsByProductId(int idProduct) {
+        List<SupplierProduct> SupplierProducts = supplierProductRepository.findAll();
+        List<SupplierProductDto> supplierProductDtos = new ArrayList<>();
+        for(SupplierProduct s: SupplierProducts){
+            if(s.getProduct().getProductId() == idProduct ){
+                supplierProductDtos.add(toDto(s));
+            }
+        }
+        return supplierProductDtos;
+    }
     @Override
     public SupplierProductDto toDto(SupplierProduct s) {
         SupplierProductDto spd = new SupplierProductDto(s.getSupplier().getSupplierId(),s.getProduct().getProductId(),calcDistance(s.getSupplier().getLocation()),s.getAmountLeft(),s.getPrice()
@@ -67,6 +77,8 @@ public class SupplierProductServiceImpl implements SupplierProductService {
         //Waiting for other APIs
         return supplierProduct;
     }
+
+
 
     private Double calcDistance(String locationSupplier){
         String[] lonlatSup = locationSupplier.split(",");

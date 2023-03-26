@@ -10,6 +10,7 @@ import com.sudo248.discoveryservice.repository.entity.Category;
 import com.sudo248.discoveryservice.repository.entity.Image;
 import com.sudo248.discoveryservice.repository.entity.Product;
 import com.sudo248.discoveryservice.service.ProductService;
+import com.sudo248.discoveryservice.service.SupplierProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +24,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository ProductRepository;
+    @Autowired
     private ImageRepository imageRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private SupplierProductService supplierProductService;
 
     @Override
     public ProductDto addProduct(ProductDto productDto) {
@@ -55,6 +59,7 @@ public class ProductServiceImpl implements ProductService {
         productDto.setName(c.getName());
         productDto.setDescription(c.getDescription());
         productDto.setSku(c.getSku());
+        productDto.setSupplierProducts(supplierProductService.getSupplierProductsByProductId(c.getProductId()));
         return productDto;
     }
 
@@ -76,6 +81,17 @@ public class ProductServiceImpl implements ProductService {
         return products.stream().map(Product -> {
             return toDto(Product);
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductDto> getProductsByName(String name) {
+        List<Product> products = ProductRepository.findAll();
+        List<ProductDto> productDtos = new ArrayList<>();
+        for(Product p: products){
+            if(p.getName().toLowerCase().contains(name.toLowerCase()))
+                productDtos.add(toDto(p));
+        }
+        return productDtos;
     }
 
 

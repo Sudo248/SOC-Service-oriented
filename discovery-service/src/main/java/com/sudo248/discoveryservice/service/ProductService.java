@@ -11,6 +11,7 @@ import java.util.List;
 public interface ProductService {
     ProductDto addProduct(ProductDto productDto);
     List<ProductDto> getAllProducts();
+    List<ProductDto> getProductsByName(String name);
 
     ProductDto getProductById(int id);
     ProductDto toDto(Product product);

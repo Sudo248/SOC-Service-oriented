@@ -7,22 +7,16 @@ import java.util.List;
 public class CategoryDto {
     private int categoryId;
     private String  name, image, supplierId;
-    private List<CategoryProductDto> products;
+    private List<ProductDto> products;
 
-    public List<CategoryProductDto> getProducts() {
+    public List<ProductDto> getProducts() {
         return products;
     }
 
-    public void setProducts(List<CategoryProductDto> products) {
+    public void setProducts(List<ProductDto> products) {
         this.products = products;
     }
-//    public List<ProductDto> getProducts() {
-//        return products;
-//    }
-//
-//    public void setProducts(List<ProductDto> products) {
-//        this.products = products;
-//    }
+
 
     public CategoryDto() {
     }
@@ -66,7 +60,7 @@ public class CategoryDto {
         this.supplierId = supplierId;
     }
 
-    public CategoryDto(int categoryId, String name, String image, String supplierId, List<CategoryProductDto> products) {
+    public CategoryDto(int categoryId, String name, String image, String supplierId, List<ProductDto> products) {
         this.categoryId = categoryId;
         this.name = name;
         this.image = image;

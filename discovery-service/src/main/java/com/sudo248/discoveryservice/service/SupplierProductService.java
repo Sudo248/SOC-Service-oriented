@@ -14,5 +14,5 @@ public interface SupplierProductService {
     SupplierProductDto getProductInfoBySupplierNameProductId(String name, int id);
     SupplierProductDto toDto(SupplierProduct supplierProduct);
     SupplierProduct toEntity(SupplierProductDto supplierProductDto);
-
+    List<SupplierProductDto> getSupplierProductsByProductId(int idProduct);
 }

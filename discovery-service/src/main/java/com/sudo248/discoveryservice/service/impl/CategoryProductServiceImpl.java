@@ -7,6 +7,7 @@ import com.sudo248.discoveryservice.repository.entity.CategoryProduct;
 import com.sudo248.discoveryservice.repository.entity.SupplierProduct;
 import com.sudo248.discoveryservice.service.CategoryProductService;
 import com.sudo248.discoveryservice.service.CategoryService;
+import com.sudo248.discoveryservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ import java.util.List;
 public class CategoryProductServiceImpl implements CategoryProductService {
     @Autowired
     private CategoryProductRepository categoryProductRepository;
+    @Autowired
+    private ProductService productService;
     @Override
     public List<ProductDto> getProductByIdCategory(int id) {
         List<CategoryProduct> categoryProducts =  categoryProductRepository.findAll();
@@ -23,12 +26,8 @@ public class CategoryProductServiceImpl implements CategoryProductService {
         for(CategoryProduct s: categoryProducts){
 
             if(s.getCategory().getCategoryId() == id){
-                ProductDto productDto = new ProductDto();
-                productDto.setProductId(s.getProduct().getProductId());
-                productDto.setName(s.getProduct().getName());
-                productDto.setDescription(s.getProduct().getDescription());
-                productDto.setSku(s.getProduct().getSku());
-                productDtos.add(productDto);
+
+                productDtos.add(productService.toDto(s.getProduct()));
             }
 
         }
