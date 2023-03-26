@@ -11,6 +11,7 @@ import com.sudo248.soc.data.api.auth.request.ChangePasswordRequest
 import com.sudo248.soc.data.api.auth.request.OtpRequest
 import com.sudo248.soc.data.dto.TokenDto
 import com.sudo248.soc.domain.common.Constants
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -24,26 +25,26 @@ import retrofit2.http.Path
  * @since 10:21 - 23/02/2023
  */
 
-@ApiService(baseUrl = BuildConfig.BASE_URL + "/auth/")
+@ApiService(baseUrl = BuildConfig.BASE_URL + "auth/")
 @EnableAuthentication(Constants.Key.TOKEN)
 @LoggingLever(level = Level.BODY)
 interface AuthService {
 
-    @POST("/sign-in")
-    suspend fun signIn(@Body accountRequest: AccountRequest): BaseResponse<TokenDto>
+    @POST("sign-in")
+    suspend fun signIn(@Body accountRequest: AccountRequest): Response<BaseResponse<TokenDto>>
 
-    @POST("/sign-up")
-    suspend fun signUp(@Body accountRequest: AccountRequest): BaseResponse<Unit>
+    @POST("sign-up")
+    suspend fun signUp(@Body accountRequest: AccountRequest): Response<BaseResponse<Unit>>
 
-    @POST("/change-password")
-    suspend fun changePassword(@Body changePasswordRequest: ChangePasswordRequest): BaseResponse<Unit>
+    @POST("change-password")
+    suspend fun changePassword(@Body changePasswordRequest: ChangePasswordRequest): Response<BaseResponse<Unit>>
 
-    @POST("/generate-otp/{phoneNumber}")
-    suspend fun generateOtp(@Path("phoneNumber") phoneNumber: String): BaseResponse<Unit>
+    @POST("generate-otp/{phoneNumber}")
+    suspend fun generateOtp(@Path("phoneNumber") phoneNumber: String): Response<BaseResponse<Unit>>
 
-    @POST("/verify-otp")
-    suspend fun verifyOtp(@Body otp: OtpRequest): BaseResponse<TokenDto>
+    @POST("verify-otp")
+    suspend fun verifyOtp(@Body otp: OtpRequest): Response<BaseResponse<TokenDto>>
 
-    @GET("/logout")
-    suspend fun logout(): BaseResponse<Unit>
+    @GET("logout")
+    suspend fun logout(): Response<BaseResponse<Unit>>
 }

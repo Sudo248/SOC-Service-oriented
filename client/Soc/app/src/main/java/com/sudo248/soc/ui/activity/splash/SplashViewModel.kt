@@ -21,10 +21,10 @@ class SplashViewModel : BaseViewModel<IntentDirections>() {
     init {
         launch {
             delay(1000)
-//            navigator.navigateOff(AuthActivity::class.createActionIntentDirections())
-            navigator.navigateOff(OtpActivity::class.createActionIntentDirections{
-                putExtra(Constants.Key.PHONE_NUMBER, "0989465270")
-            })
+            navigator.navigateOff(AuthActivity::class.createActionIntentDirections())
+//            navigator.navigateOff(OtpActivity::class.createActionIntentDirections{
+//                putExtra(Constants.Key.PHONE_NUMBER, "0989465270")
+//            })
         }
     }
 }

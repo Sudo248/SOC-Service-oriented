@@ -47,8 +47,8 @@ constructor(
     )
 
     private val colors = intArrayOf(
-        Color.RED,
-        Color.RED,
+        context.getColor(R.color.primaryColor),
+        context.getColor(R.color.primaryColor),
         Color.GRAY
     )
 

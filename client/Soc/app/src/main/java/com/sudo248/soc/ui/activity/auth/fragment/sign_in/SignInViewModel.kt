@@ -57,6 +57,7 @@ class SignInViewModel @Inject constructor(
             },
             onError = {
                 _error.postValue(it.message)
+                Log.e("Sudoo", "signIn: ", it)
                 accountUiModel.password.set("")
                 parentViewModel?.setState(UiState.ERROR)
             }

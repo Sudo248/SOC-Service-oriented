@@ -1,14 +1,18 @@
 package com.sudo248.soc.data.repository
 
+import android.util.Log
 import com.sudo248.base_android.core.DataState
+import com.sudo248.base_android.data.api.handleResponse
 import com.sudo248.base_android.exception.ApiException
 import com.sudo248.base_android.ktx.state
 import com.sudo248.base_android.ktx.stateOn
 import com.sudo248.base_android.utils.SharedPreferenceUtils
+import com.sudo248.soc.data.api.BaseResponse
 import com.sudo248.soc.data.api.auth.AuthService
 import com.sudo248.soc.data.api.auth.request.AccountRequest
 import com.sudo248.soc.data.api.auth.request.ChangePasswordRequest
 import com.sudo248.soc.data.api.auth.request.OtpRequest
+import com.sudo248.soc.data.ktx.errorBody
 import com.sudo248.soc.data.ktx.fromResponse
 import com.sudo248.soc.data.mapper.toToken
 import com.sudo248.soc.domain.common.Constants
@@ -37,38 +41,41 @@ class AuthRepositoryImpl @Inject constructor(
             .putString(Constants.Key.TOKEN, token)
     }
 
-    override suspend fun signIn(account: Account): DataState<Token, Exception> = stateOn(ioDispatcher) {
-        val request = AccountRequest(
-            phoneNumber = account.phoneNumber,
-            password = account.password,
-            provider = account.provider
-        )
-        val response = authService.signIn(request)
-        if (response.success) {
-            response.data!!.toToken()
-        } else {
-            throw ApiException.fromResponse(response)
+    override suspend fun signIn(account: Account): DataState<Token, Exception> =
+        stateOn(ioDispatcher) {
+            val request = AccountRequest(
+                phoneNumber = account.phoneNumber,
+                password = account.password,
+                provider = account.provider
+            )
+            val response = handleResponse(authService.signIn(request))
+            if (response.isSuccess) {
+                response.get().data!!.toToken()
+            } else {
+                throw response.error().errorBody()
+            }
         }
-    }
 
-    override suspend fun signUp(account: Account): DataState<Unit, Exception> = stateOn(ioDispatcher) {
-        val request = AccountRequest(
-            phoneNumber = account.phoneNumber,
-            password = account.password,
-            provider = account.provider
-        )
-        val response = authService.signUp(request)
-        if (!response.success) {
-            throw ApiException.fromResponse(response)
+    override suspend fun signUp(account: Account): DataState<Unit, Exception> =
+        stateOn(ioDispatcher) {
+            val request = AccountRequest(
+                phoneNumber = account.phoneNumber,
+                password = account.password,
+                provider = account.provider
+            )
+            val response = handleResponse(authService.signUp(request))
+            if (response.isError) {
+                throw response.error().errorBody()
+            }
         }
-    }
 
-    override suspend fun generateOtp(phoneNumber: String): DataState<Unit, Exception> = stateOn(ioDispatcher) {
-        val response = authService.generateOtp(phoneNumber)
-        if (!response.success) {
-            throw ApiException.fromResponse(response)
+    override suspend fun generateOtp(phoneNumber: String): DataState<Unit, Exception> =
+        stateOn(ioDispatcher) {
+            val response = handleResponse(authService.generateOtp(phoneNumber))
+            if (response.isError) {
+                throw response.error().errorBody()
+            }
         }
-    }
 
     override suspend fun verifyOtp(phoneNumber: String, otp: String): DataState<Token, Exception> =
         stateOn(ioDispatcher) {
@@ -76,11 +83,11 @@ class AuthRepositoryImpl @Inject constructor(
                 phoneNumber,
                 otp
             )
-            val response = authService.verifyOtp(request)
-            if (response.success) {
-                response.data!!.toToken()
+            val response = handleResponse(authService.verifyOtp(request))
+            if (response.isSuccess) {
+                response.get().data!!.toToken()
             } else {
-                throw ApiException.fromResponse(response)
+                throw response.error().errorBody()
             }
         }
 
@@ -92,9 +99,9 @@ class AuthRepositoryImpl @Inject constructor(
             oldPassword,
             newPassWord
         )
-        val response = authService.changePassword(request)
-        if (!response.success) {
-            throw ApiException.fromResponse(response)
+        val response = handleResponse(authService.changePassword(request))
+        if (response.isError) {
+            throw response.error().errorBody()
         }
     }
 
