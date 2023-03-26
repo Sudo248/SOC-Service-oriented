@@ -5,6 +5,7 @@ import com.sudo248.authservice.contronller.dto.VerifyDto;
 import com.sudo248.authservice.exception.PhoneNumberInvalidException;
 import com.sudo248.authservice.external.CommonService;
 import com.sudo248.authservice.repository.AccountRepository;
+import com.sudo248.authservice.repository.entity.Account;
 import com.sudo248.authservice.service.OtpService;
 import com.sudo248.authservice.service.model.AccountModel;
 import com.sudo248.domain.base.BaseResponse;
@@ -74,6 +75,7 @@ public class TwilioOtpServiceImpl implements OtpService {
                 return BaseResponse.status(HttpStatus.BAD_REQUEST, "Verification failed with status: " + status);
             }
             AccountModel accountModel = mapper.map(accountRepository.getUserByPhoneNumber(verifyDto.getPhoneNumber()), AccountModel.class);
+            accountRepository.validate(accountModel.getUserId());
             TokenDto token = new TokenDto(commonService.generateToken(accountModel.getUserId()));
             return BaseResponse.ok(token);
         });

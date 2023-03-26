@@ -23,4 +23,7 @@ public interface AccountRepository extends JpaRepository<Account, String> {
             "   END"
             , nativeQuery = true)
     boolean existsByPhoneNumber(@Param("phoneNumber") String phoneNumber);
+
+    @Query(value = "UPDATE account SET account.is_validated=true WHERE account.user_id = :userId", nativeQuery = true)
+    boolean validate(@Param("userId") String userId);
 }

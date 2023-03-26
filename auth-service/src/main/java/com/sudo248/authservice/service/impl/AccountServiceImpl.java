@@ -36,7 +36,7 @@ public class AccountServiceImpl implements AccountService {
 
     private final OtpService otpService;
 
-    public AccountServiceImpl(AccountRepository accountRepository, PasswordEncoder encoder, ModelMapper mapper, CommonService commonService,@Qualifier("TwilioOtpService") OtpService otpService) {
+    public AccountServiceImpl(AccountRepository accountRepository, PasswordEncoder encoder, ModelMapper mapper, CommonService commonService, @Qualifier("TwilioOtpService") OtpService otpService) {
         this.accountRepository = accountRepository;
         this.encoder = encoder;
         this.mapper = mapper;
@@ -54,6 +54,14 @@ public class AccountServiceImpl implements AccountService {
             if (!encoder.matches(signInDto.getPassword(), accountModel.getPhoneNumber())) {
                 throw new WrongPasswordException();
             }
+//            if (!accountModel.isValidated()) {
+//                var result = otpService.generateOtp(accountModel.getPhoneNumber());
+//                if (result.getStatusCode() == HttpStatus.OK) {
+//                    return BaseResponse.ok("Need to verify phone number " + accountModel.getPhoneNumber());
+//                } else {
+//                    return result;
+//                }
+//            }
             TokenDto token = new TokenDto(commonService.generateToken(accountModel.getUserId()));
             return BaseResponse.ok(token);
         });
@@ -64,12 +72,16 @@ public class AccountServiceImpl implements AccountService {
         return handleException(() -> {
             var accountModel = signUpDto.toUserModel();
             log.info("accountModel: " + accountModel.toString());
-            if (!accountRepository.existsByPhoneNumber(accountModel.getPhoneNumber())) {
+            if (accountRepository.existsByPhoneNumber(accountModel.getPhoneNumber())) {
                 throw new PhoneNumberExistedException();
             }
             saveAccount(accountModel);
-//            TokenDto token = new TokenDto(commonService.generateToken(accountModel.getUserId()));
-//            log.info("token:" + token);
+//            var result = otpService.generateOtp(accountModel.getPhoneNumber());
+//            if  (result.getStatusCode() == HttpStatus.OK) {
+//                return BaseResponse.ok("Need to verify phone number " + accountModel.getPhoneNumber());
+//            } else {
+//                return result;
+//            }
             return BaseResponse.ok("Need to verify phone number " + accountModel.getPhoneNumber());
         });
     }
@@ -92,17 +104,23 @@ public class AccountServiceImpl implements AccountService {
         });
     }
 
-    private void saveAccount(AccountModel accountModel) throws ApiException {
+    private void saveAccount(AccountModel accountModel, boolean isHashPassword) throws ApiException {
         try {
             if (accountModel.getUserId() == null || accountModel.getUserId().isEmpty()) {
                 int timestamp = LocalDateTime.now().getSecond();
                 accountModel.setUserId(UUID.randomUUID() + "-" + timestamp);
             }
-            String hashPassword = encoder.encode(accountModel.getPassword());
-            accountModel.setPassword(hashPassword);
+            if (isHashPassword) {
+                String hashPassword = encoder.encode(accountModel.getPassword());
+                accountModel.setPassword(hashPassword);
+            }
             accountRepository.save(mapper.map(accountModel, Account.class));
         } catch (Exception e) {
             throw new ApiException(HttpStatus.INSUFFICIENT_STORAGE, e.getMessage());
         }
+    }
+
+    private void saveAccount(AccountModel accountModel) throws ApiException {
+        saveAccount(accountModel, true);
     }
 }
