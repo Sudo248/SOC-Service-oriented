@@ -36,7 +36,11 @@ public class ProductController {
         ProductDto product = productService.getProductById(id);
         return ResponseEntity.ok(new BaseResponse<>(200,true,"OK", product));
     }
-
+    @GetMapping("/product/name/{name}")
+    public ResponseEntity<BaseResponse<?>> getProductsByName(@PathVariable String name) {
+        List<ProductDto> products = productService.getProductsByName(name);
+        return ResponseEntity.ok(new BaseResponse<>(200,true,"OK", products));
+    }
 
 
 }
