@@ -5,8 +5,8 @@ import com.sudo248.discoveryservice.repository.entity.Product;
 import java.util.List;
 
 public class CategoryDto {
-    private int categoryId;
-    private String  name, image, supplierId;
+    private String categoryId;
+    private String  name, image;
     private List<ProductDto> products;
 
     public List<ProductDto> getProducts() {
@@ -21,11 +21,11 @@ public class CategoryDto {
     public CategoryDto() {
     }
 
-    public int getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -45,26 +45,18 @@ public class CategoryDto {
         this.image = image;
     }
 
-    public String getSupplierId() {
-        return supplierId;
-    }
 
-    public void setSupplierId(String supplierId) {
-        this.supplierId = supplierId;
-    }
 
-    public CategoryDto(int categoryId, String name, String image, String supplierId) {
+    public CategoryDto(String categoryId, String name, String image) {
         this.categoryId = categoryId;
         this.name = name;
         this.image = image;
-        this.supplierId = supplierId;
     }
 
-    public CategoryDto(int categoryId, String name, String image, String supplierId, List<ProductDto> products) {
+    public CategoryDto(String categoryId, String name, String image, List<ProductDto> products) {
         this.categoryId = categoryId;
         this.name = name;
         this.image = image;
-        this.supplierId = supplierId;
         this.products = products;
     }
 }

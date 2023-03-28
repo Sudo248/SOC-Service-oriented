@@ -3,23 +3,23 @@ package com.sudo248.discoveryservice.controller.dto;
 import com.sudo248.discoveryservice.repository.entity.Image;
 
 public class ImageDto {
-    private int imageId;
+    private String imageId;
     private String  url, ownerId;
 
     public ImageDto() {
     }
 
-    public ImageDto(int imageId, String url, String ownerId) {
+    public ImageDto(String imageId, String url, String ownerId) {
         this.imageId = imageId;
         this.url = url;
         this.ownerId = ownerId;
     }
 
-    public int getImageId() {
+    public String getImageId() {
         return imageId;
     }
 
-    public void setImageId(int imageId) {
+    public void setImageId(String imageId) {
         this.imageId = imageId;
     }
 

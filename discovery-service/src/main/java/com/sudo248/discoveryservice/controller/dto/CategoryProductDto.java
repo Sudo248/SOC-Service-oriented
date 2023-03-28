@@ -1,30 +1,30 @@
 package com.sudo248.discoveryservice.controller.dto;
 
 public class CategoryProductDto {
-    private int categoryId;
-    private int productId;
+    private String categoryId;
+    private String productId;
 
     public CategoryProductDto() {
     }
 
-    public CategoryProductDto(int categoryId, int productId) {
+    public CategoryProductDto(String categoryId, String productId) {
         this.categoryId = categoryId;
         this.productId = productId;
     }
 
-    public int getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 
-    public int getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 }

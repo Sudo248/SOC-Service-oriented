@@ -44,21 +44,21 @@ public class SupplierProductServiceImpl implements SupplierProductService {
     }
 
     @Override
-    public SupplierProductDto getProductInfoBySupplierNameProductId(String name, int id) {
+    public SupplierProductDto getProductInfoBySupplierNameProductId(String name, String id) {
         List<SupplierProduct> SupplierProducts = supplierProductRepository.findAll();
         for(SupplierProduct s: SupplierProducts){
-            if(s.getProduct().getProductId() == id && s.getSupplier().getName().equals(name)){
+            if(s.getProduct().getProductId().equals(id) && s.getSupplier().getName().equals(name)){
                 return toDto(s);
             }
         }
         return null;
     }
     @Override
-    public List<SupplierProductDto> getSupplierProductsByProductId(int idProduct) {
+    public List<SupplierProductDto> getSupplierProductsByProductId(String idProduct) {
         List<SupplierProduct> SupplierProducts = supplierProductRepository.findAll();
         List<SupplierProductDto> supplierProductDtos = new ArrayList<>();
         for(SupplierProduct s: SupplierProducts){
-            if(s.getProduct().getProductId() == idProduct ){
+            if(s.getProduct().getProductId().equals(idProduct )){
                 supplierProductDtos.add(toDto(s));
             }
         }

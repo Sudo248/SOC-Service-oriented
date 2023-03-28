@@ -1,8 +1,8 @@
 package com.sudo248.discoveryservice.controller.dto;
 
 public class SupplierProductDto {
-    private int supplierId;
-    private int productId;
+    private String supplierId;
+    private String productId;
     private double distance;
 
     private int amountLeft;
@@ -10,7 +10,7 @@ public class SupplierProductDto {
     public SupplierProductDto() {
     }
 
-    public SupplierProductDto(int supplierId, int productId, int amountLeft, double price, double soldAmount, double rate) {
+    public SupplierProductDto(String supplierId, String productId, int amountLeft, double price, double soldAmount, double rate) {
         this.supplierId = supplierId;
         this.productId = productId;
         this.amountLeft = amountLeft;
@@ -19,7 +19,7 @@ public class SupplierProductDto {
         this.rate = rate;
     }
 
-    public SupplierProductDto(int supplierId, int productId, double distance, int amountLeft, double price, double soldAmount, double rate) {
+    public SupplierProductDto(String supplierId, String productId, double distance, int amountLeft, double price, double soldAmount, double rate) {
         this.supplierId = supplierId;
         this.productId = productId;
         this.distance = distance;
@@ -69,23 +69,23 @@ public class SupplierProductDto {
         this.rate = rate;
     }
 
-    public int getSupplierId() {
+    public String getSupplierId() {
         return supplierId;
     }
 
-    public void setSupplierId(int supplierId) {
+    public void setSupplierId(String supplierId) {
         this.supplierId = supplierId;
     }
 
-    public int getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 
-    public SupplierProductDto(int supplierId, int productId) {
+    public SupplierProductDto(String supplierId, String productId) {
         this.supplierId = supplierId;
         this.productId = productId;
     }

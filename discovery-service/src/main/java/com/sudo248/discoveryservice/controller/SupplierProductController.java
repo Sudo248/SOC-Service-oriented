@@ -16,25 +16,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RequestMapping("/api/v1/discovery")
+//@RequestMapping("/api/v1/discovery")
 @RestController
 public class SupplierProductController {
-    @Autowired
     private SupplierProductService supplierProductService;
+
+    public SupplierProductController(SupplierProductService supplierProductService) {
+        this.supplierProductService = supplierProductService;
+    }
+
     @GetMapping("/supplierProduct")
     public ResponseEntity<BaseResponse<?>> getAllSupplierProducts() {
         List<SupplierProductDto> supplierProducts = supplierProductService.getAllSupplierProducts();
-        return ResponseEntity.ok(new BaseResponse<>(200,true,"OK", supplierProducts));
+        return BaseResponse.ok(supplierProducts);
     }
     @GetMapping("/suppliers/{name}/products")
     public ResponseEntity<BaseResponse<?>> getProductBySupplierName(@PathVariable String name){
         List<ProductDto> productDtos = supplierProductService.getProductBySupplierName(name);
-        return ResponseEntity.ok(new BaseResponse<>(200,true,"OK", productDtos));
+        return BaseResponse.ok(productDtos);
     }
 
     @GetMapping("/suppliers/{name}/products/{id}")
-    public ResponseEntity<BaseResponse<?>> getProductInfoBySupplierNameProductId(@PathVariable("name") String name, @PathVariable("id") int id ){
+    public ResponseEntity<BaseResponse<?>> getProductInfoBySupplierNameProductId(@PathVariable("name") String name, @PathVariable("id") String id ){
         SupplierProductDto productDto = supplierProductService.getProductInfoBySupplierNameProductId(name, id);
-        return ResponseEntity.ok(new BaseResponse<>(200,true,"OK", productDto));
+        return BaseResponse.ok(productDto);
     }
 }

@@ -10,27 +10,30 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/api/v1/discovery")
+//@RequestMapping("/api/v1/discovery")
 @RestController
 public class SupplierController {
-    @Autowired
-    private SupplierService supplierService;
+    private final SupplierService supplierService;
+
+    public SupplierController(SupplierService supplierService) {
+        this.supplierService = supplierService;
+    }
 
     @PostMapping("/supplier")
     public ResponseEntity<BaseResponse<?>> addSupplier(@RequestBody SupplierDto supplierDto) {
         SupplierDto savedSupplier = supplierService.addSupplier(supplierDto);
-        return ResponseEntity.ok(new BaseResponse<>(200,true,"OK", savedSupplier));
+        return BaseResponse.ok(savedSupplier);
     }
 
     @GetMapping("/supplier")
     public ResponseEntity<BaseResponse<?>> getAllSuppliers() {
         List<SupplierDto> suppliers = supplierService.getAllSuppliers();
-        return ResponseEntity.ok(new BaseResponse<>(200,true,"OK", suppliers));
+        return BaseResponse.ok(suppliers);
     }
     @GetMapping("/supplier/{name}")
     @ResponseBody
     public ResponseEntity<BaseResponse<?>> getSupplierByName(@PathVariable String name) {
         SupplierDto supplier = supplierService.getSupplierByName(name);
-        return ResponseEntity.ok(new BaseResponse<>(200,true,"OK", supplier));
+        return BaseResponse.ok(supplier);
     }
 }

@@ -18,9 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    private int categoryId;
+    private String categoryId;
 
     @Column(name = "name")
     private String name;
@@ -28,17 +27,15 @@ public class Category {
     @Column(name = "image")
     private String image;
 
-    @Column(name = "supplierId")
-    private String supplierId;
+
 
     @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
     private List<CategoryProduct> categoryProducts;
 
-    public Category(int categoryId, String name, String image, String supplierId) {
+    public Category(String categoryId, String name, String image) {
         this.categoryId = categoryId;
         this.name = name;
         this.image = image;
-        this.supplierId = supplierId;
     }
 
 

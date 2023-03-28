@@ -13,7 +13,7 @@ public interface ProductService {
     List<ProductDto> getAllProducts();
     List<ProductDto> getProductsByName(String name);
 
-    ProductDto getProductById(int id);
+    ProductDto getProductById(String id);
     ProductDto toDto(Product product);
     Product toEntity(ProductDto productDto);
 

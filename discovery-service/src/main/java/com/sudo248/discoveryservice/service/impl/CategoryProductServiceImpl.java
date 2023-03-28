@@ -20,12 +20,12 @@ public class CategoryProductServiceImpl implements CategoryProductService {
     @Autowired
     private ProductService productService;
     @Override
-    public List<ProductDto> getProductByIdCategory(int id) {
+    public List<ProductDto> getProductByIdCategory(String id) {
         List<CategoryProduct> categoryProducts =  categoryProductRepository.findAll();
         List<ProductDto> productDtos = new ArrayList<>();
         for(CategoryProduct s: categoryProducts){
 
-            if(s.getCategory().getCategoryId() == id){
+            if(s.getCategory().getCategoryId().equals(id)){
 
                 productDtos.add(productService.toDto(s.getProduct()));
             }

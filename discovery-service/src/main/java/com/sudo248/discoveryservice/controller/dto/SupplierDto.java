@@ -3,19 +3,19 @@ package com.sudo248.discoveryservice.controller.dto;
 import java.util.List;
 
 public class SupplierDto {
-    private int supplierId;
+    private String supplierId;
     private String  name, avatar, location;
     private List<SupplierProductDto> supplierProducts;
     public SupplierDto() {
     }
 
-    public SupplierDto(int supplierId, String name, String avatar) {
+    public SupplierDto(String supplierId, String name, String avatar) {
         this.supplierId = supplierId;
         this.name = name;
         this.avatar = avatar;
     }
 
-    public SupplierDto(int supplierId, String name, String avatar, String location) {
+    public SupplierDto(String supplierId, String name, String avatar, String location) {
         this.supplierId = supplierId;
         this.name = name;
         this.avatar = avatar;
@@ -30,11 +30,11 @@ public class SupplierDto {
         this.location = location;
     }
 
-    public int getSupplierId() {
+    public String getSupplierId() {
         return supplierId;
     }
 
-    public void setSupplierId(int supplierId) {
+    public void setSupplierId(String supplierId) {
         this.supplierId = supplierId;
     }
 

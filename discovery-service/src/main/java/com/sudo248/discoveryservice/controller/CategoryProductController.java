@@ -13,14 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RequestMapping("/api/v1/discovery")
+//@RequestMapping("/api/v1/discovery")
 @RestController
 public class CategoryProductController {
-    @Autowired
     private CategoryProductService categoryProductService;
+
+    public CategoryProductController(CategoryProductService categoryProductService) {
+        this.categoryProductService = categoryProductService;
+    }
+
     @GetMapping("/categories/{id}/products")
-    public ResponseEntity<BaseResponse<?>> getProductByIdCategory(@PathVariable int id){
+    public ResponseEntity<BaseResponse<?>> getProductByIdCategory(@PathVariable String id){
         List<ProductDto> productDtos = categoryProductService.getProductByIdCategory(id);
-        return ResponseEntity.ok(new BaseResponse<>(200,true,"OK", productDtos));
+        return BaseResponse.ok(productDtos);
     }
 }

@@ -11,8 +11,8 @@ import java.util.List;
 public interface SupplierProductService {
     List<SupplierProductDto> getAllSupplierProducts();
     List<ProductDto> getProductBySupplierName(String name);
-    SupplierProductDto getProductInfoBySupplierNameProductId(String name, int id);
+    SupplierProductDto getProductInfoBySupplierNameProductId(String name, String id);
     SupplierProductDto toDto(SupplierProduct supplierProduct);
     SupplierProduct toEntity(SupplierProductDto supplierProductDto);
-    List<SupplierProductDto> getSupplierProductsByProductId(int idProduct);
+    List<SupplierProductDto> getSupplierProductsByProductId(String idProduct);
 }

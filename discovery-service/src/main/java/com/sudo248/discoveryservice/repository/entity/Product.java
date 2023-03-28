@@ -14,9 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
-    private int productId;
+    private String productId;
 
     @Column(name = "name")
     private String name;
@@ -36,7 +35,7 @@ public class Product {
     private List<CategoryProduct> categoryProducts;
 
 
-    public Product(int productId, String name, String description, String sku) {
+    public Product(String productId, String name, String description, String sku) {
         this.productId = productId;
         this.name = name;
         this.description = description;

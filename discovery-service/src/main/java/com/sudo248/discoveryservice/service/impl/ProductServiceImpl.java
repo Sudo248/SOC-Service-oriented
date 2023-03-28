@@ -41,10 +41,10 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-    public ProductDto getProductById(int id){
+    public ProductDto getProductById(String id){
         List<Product> products = ProductRepository.findAll();
         for(Product c: products){
-            if(c.getProductId() == id){
+            if(c.getProductId().equals(id)){
                return toDto(c);
 
             }

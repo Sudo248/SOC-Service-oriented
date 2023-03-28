@@ -6,7 +6,7 @@ import java.io.Serializable;
 @Embeddable
 public class SupplierProductKey implements Serializable {
     @Column(name="product_id")
-    int productId;
+    String productId;
     @Column(name="supplier_id")
-    int supplierId;
+    String supplierId;
 }

@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface ImageService {
     List<ImageDto> getAllImages();
-    List<ImageDto> getProductImageById(int id);
-    ProductDto addProductImageUrl(ImageDto imageDto, int id);
+    List<ImageDto> getProductImageById(String id);
+    ProductDto addProductImageUrl(ImageDto imageDto, String id);
     ImageDto toDto(Image image);
     Image toEntity(ImageDto imageDto);
 

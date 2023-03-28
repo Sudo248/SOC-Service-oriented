@@ -37,7 +37,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public List<ImageDto> getProductImageById(int id) {
+    public List<ImageDto> getProductImageById(String id) {
         Optional<Product> p =  ProductRepository.findById(id);
         List<Image> pImages = p.get().getImages();
         List<ImageDto> imageDtos = new ArrayList<>();
@@ -48,7 +48,7 @@ public class ImageServiceImpl implements ImageService {
         return imageDtos;
     }
     @Override
-    public ProductDto addProductImageUrl(ImageDto imageDto, int id){
+    public ProductDto addProductImageUrl(ImageDto imageDto, String id){
         Product product = new Product();
         Optional<Product> p =  ProductRepository.findById(id);
         Image image = new Image(imageDto.getImageId(), imageDto.getUrl(), imageDto.getOwnerId(), product);

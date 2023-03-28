@@ -12,27 +12,28 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/discovery")
+//@RequestMapping("/api/v1/discovery")
 public class CategoryController {
-
-    @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @PostMapping("/category")
     public ResponseEntity<BaseResponse<?>> addCategory(@RequestBody CategoryDto categoryDto) {
         CategoryDto savedCategory = categoryService.addCategory(categoryDto);
-        return ResponseEntity.ok(new BaseResponse<>(200,true,"Add categories oke", savedCategory));
+        return BaseResponse.ok(savedCategory);
     }
 
     @GetMapping("/category")
     public ResponseEntity<BaseResponse<?>> getAllCategories() {
         List<CategoryDto> categories = categoryService.getAllCategories();
-        return ResponseEntity.ok(new BaseResponse<>(200,true,"Get All categories oke", categories));
+        return BaseResponse.ok(categories);
     }
     @GetMapping("/category/{id}")
     @ResponseBody
-    public ResponseEntity<BaseResponse<?>> getCategoryById(@PathVariable int id) {
+    public ResponseEntity<BaseResponse<?>> getCategoryById(@PathVariable String id) {
         CategoryDto category = categoryService.getCategoryById(id);
-        return ResponseEntity.ok(new BaseResponse<>(200,true,"Get category by Id oke", category));
+        return BaseResponse.ok(category);
     }
 }

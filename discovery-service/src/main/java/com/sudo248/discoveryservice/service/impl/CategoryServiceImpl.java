@@ -29,10 +29,10 @@ public class CategoryServiceImpl implements CategoryService {
         categoryDto.setCategoryId(savedCategory.getCategoryId());
         return categoryDto;
     }
-    public CategoryDto getCategoryById(int id){
+    public CategoryDto getCategoryById(String id){
         List<Category> categories = categoryRepository.findAll();
         for(Category c: categories){
-            if(c.getCategoryId() == id){
+            if(c.getCategoryId().equals(id)){
                 return toDto(c);
             }
         }
@@ -45,7 +45,6 @@ public class CategoryServiceImpl implements CategoryService {
         categoryDto.setCategoryId(c.getCategoryId());
         categoryDto.setName(c.getName());
         categoryDto.setImage(c.getImage());
-        categoryDto.setSupplierId(c.getSupplierId());
         categoryDto.setProducts(categoryProductService.getProductByIdCategory(c.getCategoryId()));
         return categoryDto;
     }
@@ -56,7 +55,6 @@ public class CategoryServiceImpl implements CategoryService {
         category.setCategoryId(categoryDto.getCategoryId());
         category.setName(categoryDto.getName());
         category.setImage(categoryDto.getImage());
-        category.setSupplierId(categoryDto.getSupplierId());
         return category;
     }
 

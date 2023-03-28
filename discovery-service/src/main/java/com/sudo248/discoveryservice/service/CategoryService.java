@@ -13,7 +13,7 @@ public interface CategoryService {
     CategoryDto addCategory(CategoryDto categoryDto);
 
     List<CategoryDto> getAllCategories();
-    CategoryDto getCategoryById(int id);
+    CategoryDto getCategoryById(String id);
     CategoryDto toDto(Category category);
     Category toEntity(CategoryDto categoryDto);
 

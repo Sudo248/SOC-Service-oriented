@@ -13,33 +13,35 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/discovery")
+//@RequestMapping("/api/v1/discovery")
 public class ProductController {
+    private final ProductService productService;
 
-    @Autowired
-    private ProductService productService;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @PostMapping("/product")
     public ResponseEntity<BaseResponse<?>> addproduct(@RequestBody ProductDto productDto) {
         ProductDto savedproduct = productService.addProduct(productDto);
-        return ResponseEntity.ok(new BaseResponse<>(200,true,"OK", savedproduct));
+        return BaseResponse.ok(savedproduct);
     }
 
     @GetMapping("/product")
     public ResponseEntity<BaseResponse<?>> getAllProducts() {
         List<ProductDto> products = productService.getAllProducts();
-        return ResponseEntity.ok(new BaseResponse<>(200,true,"OK", products));
+        return BaseResponse.ok(products);
     }
     @GetMapping("/product/{id}")
     @ResponseBody
-    public ResponseEntity<BaseResponse<?>> getProductById(@PathVariable int id) {
+    public ResponseEntity<BaseResponse<?>> getProductById(@PathVariable String id) {
         ProductDto product = productService.getProductById(id);
-        return ResponseEntity.ok(new BaseResponse<>(200,true,"OK", product));
+        return BaseResponse.ok(product);
     }
     @GetMapping("/product/name/{name}")
     public ResponseEntity<BaseResponse<?>> getProductsByName(@PathVariable String name) {
         List<ProductDto> products = productService.getProductsByName(name);
-        return ResponseEntity.ok(new BaseResponse<>(200,true,"OK", products));
+        return BaseResponse.ok(products);
     }
 
 

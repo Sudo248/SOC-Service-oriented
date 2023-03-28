@@ -9,7 +9,7 @@ import com.sudo248.discoveryservice.repository.entity.Supplier;
 import java.util.List;
 
 public interface CategoryProductService {
-    List<ProductDto> getProductByIdCategory(int id);
+    List<ProductDto> getProductByIdCategory(String id);
     CategoryProductDto toDto(CategoryProduct categoryProduct);
     CategoryProduct toEntity(CategoryProductDto categoryProductDto);
 

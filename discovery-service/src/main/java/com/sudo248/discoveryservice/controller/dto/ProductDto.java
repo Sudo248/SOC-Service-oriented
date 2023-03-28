@@ -3,14 +3,14 @@ package com.sudo248.discoveryservice.controller.dto;
 import java.util.List;
 
 public class ProductDto {
-    private int productId;
+    private String productId;
     private String name,description,sku;
     private List<ImageDto> images;
     private List<SupplierProductDto> supplierProducts;
     public ProductDto() {
     }
 
-    public ProductDto(int productId, String name, String description, String sku) {
+    public ProductDto(String productId, String name, String description, String sku) {
         this.productId = productId;
         this.name = name;
         this.description = description;
@@ -19,7 +19,7 @@ public class ProductDto {
 
 
 
-    public ProductDto(int productId, String name, String description, String sku, List<ImageDto> images) {
+    public ProductDto(String productId, String name, String description, String sku, List<ImageDto> images) {
         this.productId = productId;
         this.name = name;
         this.description = description;
@@ -35,13 +35,7 @@ public class ProductDto {
         this.supplierProducts = supplierProducts;
     }
 
-//    public List<CategoryProductDto> getCategoryProducts() {
-//        return categoryProducts;
-//    }
-//
-//    public void setCategoryProducts(List<CategoryProductDto> categoryProducts) {
-//        this.categoryProducts = categoryProducts;
-//    }
+
 
     public List<ImageDto> getImages() {
         return images;
@@ -51,11 +45,11 @@ public class ProductDto {
         this.images = images;
     }
 
-    public int getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 
