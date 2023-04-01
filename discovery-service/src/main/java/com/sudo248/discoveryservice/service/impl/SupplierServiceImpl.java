@@ -52,6 +52,7 @@ public class SupplierServiceImpl implements SupplierService {
         supplier.setSupplierId(supplierDto.getSupplierId());
         supplier.setName(supplierDto.getName());
         supplier.setAvatar(supplierDto.getAvatar());
+        supplier.setLocation(supplierDto.getLocation());
         return supplier;
     }
 }
