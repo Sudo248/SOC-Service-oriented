@@ -4,7 +4,6 @@ public class SupplierProductDto {
     private int supplierId;
     private int productId;
     private double distance;
-
     private int amountLeft;
     private double price, soldAmount, rate;
     public SupplierProductDto() {

@@ -6,7 +6,6 @@ import com.sudo248.discoveryservice.repository.CategoryProductRepository;
 import com.sudo248.discoveryservice.repository.entity.CategoryProduct;
 import com.sudo248.discoveryservice.repository.entity.SupplierProduct;
 import com.sudo248.discoveryservice.service.CategoryProductService;
-import com.sudo248.discoveryservice.service.CategoryService;
 import com.sudo248.discoveryservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

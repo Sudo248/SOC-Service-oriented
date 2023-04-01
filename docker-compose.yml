@@ -14,6 +14,8 @@ services:
       - MYSQL_DATABASE=soc
     networks:
       - soc-network
+    ports:
+      - "3306:3306"
 
   soc-registry:
     image: sudo248dev/soc-registry:0.0.1

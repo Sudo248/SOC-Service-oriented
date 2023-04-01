@@ -42,6 +42,4 @@ public class Product {
         this.description = description;
         this.sku = sku;
     }
-
-
 }

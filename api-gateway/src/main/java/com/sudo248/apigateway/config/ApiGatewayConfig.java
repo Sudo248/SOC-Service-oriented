@@ -20,6 +20,7 @@ public class ApiGatewayConfig {
         return builder.routes()
                 .route("AUTH-SERVICE", r -> r.path("/api/v1/auth/**").filters(f -> f.filter(filter)).uri("lb://AUTH-SERVICE"))
                 .route("IMAGE-SERVICE", r -> r.path("/api/v1/images/**").filters(f -> f.filter(filter)).uri("lb://IMAGE-SERVICE"))
+                .route("DISCOVERY-SERVICE", r -> r.path("/api/v1/discovery/**").filters(f -> f.filter(filter)).uri("lb://DISCOVERY-SERVICE"))
                 .build();
     }
 }
