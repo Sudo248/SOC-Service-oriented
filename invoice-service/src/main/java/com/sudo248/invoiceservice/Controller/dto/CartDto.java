@@ -1,15 +1,11 @@
 package com.sudo248.invoiceservice.Controller.dto;
 
-import java.io.Serializable;
-import java.util.List;
-
-public class CartDto implements Serializable {
+public class CartDto {
     private String cartId;
     private Double totalPrice;
     private int totalAmount;
-    private String status;
-    private UserDto userDto;
-    private List<CartSupplierProductDto> cartSupplierProductDtoList;
+    private String userId;
+
     public String getCartId() {
         return cartId;
     }
@@ -34,56 +30,15 @@ public class CartDto implements Serializable {
         this.totalAmount = totalAmount;
     }
 
-    public UserDto getUserDto() {
-        return userDto;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserDto(UserDto userDto) {
-        this.userDto = userDto;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public List<CartSupplierProductDto> getCartSupplierProductDtoList() {
-        return cartSupplierProductDtoList;
-    }
-
-    public void setCartSupplierProductDtoList(List<CartSupplierProductDto> cartSupplierProductDtoList) {
-        this.cartSupplierProductDtoList = cartSupplierProductDtoList;
-    }
-
-    public CartDto() {
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public CartDto(String cartId, Double totalPrice, int totalAmount, String status, String userId, List<CartSupplierProductDto> list) {
+    public CartDto(String cartId) {
         this.cartId = cartId;
-        this.totalPrice = totalPrice;
-        this.totalAmount = totalAmount;
-        this.status = status;
-        cartSupplierProductDtoList = list;
     }
-
-    public CartDto(String cartId, Double totalPrice, int totalAmount, String status, String userId) {
-        this.cartId = cartId;
-        this.totalPrice = totalPrice;
-        this.totalAmount = totalAmount;
-        this.status = status;
-
-    }
-
-    public CartDto(String cartId, Double totalPrice, int totalAmount, String status, UserDto userDto, List<CartSupplierProductDto> cartSupplierProductDtoList) {
-        this.cartId = cartId;
-        this.totalPrice = totalPrice;
-        this.totalAmount = totalAmount;
-        this.status = status;
-        this.userDto = userDto;
-        this.cartSupplierProductDtoList = cartSupplierProductDtoList;
-    }
-
 }

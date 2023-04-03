@@ -18,7 +18,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class InvoiceServiceImpl implements InvoiceService {
@@ -37,7 +36,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public InvoiceDto getInvoiceByInvoiceId(String invoiceId) {
+    public InvoiceDto getOrderByInvoiceId(String invoiceId) {
         List<Invoice> invoiceList = invoiceRepository.findAll();
         List<InvoiceDto> invoiceDtoList = new ArrayList<>();
         for(Invoice invoice: invoiceList){
@@ -48,28 +47,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public InvoiceAddDto addInvoice(InvoiceAddDto invoiceAddDto) {
-        Invoice invoice = new Invoice();
-        invoice.setInvoiceId(UUID.randomUUID().toString());
-        invoice.setPaymentId(invoiceAddDto.getPaymentId());
-        invoice.setCartId(invoiceAddDto.getCartId());
-        invoice.setPromotionId(invoiceAddDto.getPromotionId());
-        invoice.setAddress(invoiceAddDto.getAddress());
-        invoice.setStatus(invoiceAddDto.getStatus());
-        invoice.setUserId(invoiceAddDto.getUserId());
-//        invoice.setTotalPrice(invoiceAddDto.getTotalPrice());
-//        invoice.setTotalPromotionPrice(invoiceAddDto.getTotalPromotionPrice());
-//        invoice.setFinalPrice(invoiceAddDto.getFinalPrice());
+    public InvoiceDto addInvoice(InvoiceDto invoiceDto) {
+        Invoice invoice = toEntity(invoiceDto);
         Invoice savedInvoice = invoiceRepository.save(invoice);
-        InvoiceDto invoiceDto = getInvoiceByInvoiceId(savedInvoice.getInvoiceId());
-        invoice.setTotalPrice(invoiceDto.getTotalPrice());
-        invoice.setTotalPromotionPrice(invoiceDto.getTotalPromotionPrice());
-        invoice.setFinalPrice( invoiceDto.getFinalPrice());
-        Invoice savedInvoice1 = invoiceRepository.save(invoice);
-        invoiceAddDto.setTotalPromotionPrice(invoice.getTotalPromotionPrice());
-        invoiceAddDto.setTotalPrice(invoice.getTotalPrice());
-        invoiceAddDto.setFinalPrice(invoice.getFinalPrice());
-        return invoiceAddDto;
+        invoiceDto.setInvoiceId(savedInvoice.getInvoiceId());
+        return invoiceDto;
     }
 
     @Override
@@ -91,16 +73,16 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public InvoiceDto toDto(Invoice invoice) {
         InvoiceDto invoiceDto = new InvoiceDto();
-//        invoiceDto.setUserDto(getUserById(invoice.getUserId()));
-        invoiceDto.setInvoiceId(invoice.getInvoiceId());
+        invoiceDto.setUserDto(getUserById(invoice.getUserId()));
         invoiceDto.setPaymentDto(getPaymentById(invoice.getPaymentId()));
         invoiceDto.setCartDto(getCartById(invoice.getCartId()));
+        invoiceDto.setUserDto(getUserById(invoice.getUserId()));
         invoiceDto.setPromotionDto(getPromotionById(invoice.getPromotionId()));
         invoiceDto.setAddress(invoice.getAddress());
+        invoiceDto.setTotalPrice(invoice.getTotalPrice());
         invoiceDto.setStatus(invoice.getStatus());
-        invoiceDto.setTotalPrice(invoiceDto.getCartDto().getTotalPrice());
-        invoiceDto.setTotalPromotionPrice(invoiceDto.getPromotionDto().getValue());
-        invoiceDto.setFinalPrice(invoiceDto.getCartDto().getTotalPrice() - invoiceDto.getTotalPromotionPrice());
+        invoiceDto.setTotalPromotionPrice(invoice.getTotalPromotionPrice());
+        invoiceDto.setFinalPrice(invoice.getFinalPrice());
         return invoiceDto;
     }
 
@@ -110,7 +92,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoice.setInvoiceId(invoiceDto.getInvoiceId());
         invoice.setPaymentId(invoiceDto.getPaymentDto().getPaymentId());
         invoice.setCartId(invoiceDto.getCartDto().getCartId());
-//        invoice.setUserId(invoiceDto.getUserDto().getUserId());
+        invoice.setUserId(invoiceDto.getUserDto().getUserId());
         invoice.setPromotionId(invoiceDto.getPromotionDto().getPromotionId());
         invoice.setAddress(invoiceDto.getAddress());
         invoice.setTotalPrice(invoiceDto.getTotalPrice());
@@ -146,18 +128,17 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         return promotionDto;
     }
-//    private UserDto getUserById(String userId){
-////        RestTemplate restTemplate = new RestTemplate();
-////        String url = "http://localhost:8081/api/v1/user/{userId}";
-////        UserDto userDto = restTemplate.exchange(url, HttpMethod.GET, null, UserDto.class, userId).getBody();
-//        return new UserDto(userId);
-//    }
+    private UserDto getUserById(String userId){
+//        RestTemplate restTemplate = new RestTemplate();
+//        String url = "http://localhost:8081/api/v1/user/{userId}";
+//        UserDto userDto = restTemplate.exchange(url, HttpMethod.GET, null, UserDto.class, userId).getBody();
+        return new UserDto(userId);
+    }
     private CartDto getCartById(String cartId){
-        RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:8086/api/v1/cart/service/{cartId}";
-        CartDto cartDto = restTemplate.exchange(url, HttpMethod.GET, null, CartDto.class, cartId).getBody();
-        System.out.println(cartDto.getCartId());
-        return cartDto;
+//        RestTemplate restTemplate = new RestTemplate();
+//        String url = "http://localhost:8081/api/v1/cart/{cartId}";
+//        CartDto cartDto = restTemplate.exchange(url, HttpMethod.GET, null, CartDto.class, cartId).getBody();
+        return new CartDto(cartId);
     }
     private PaymentDto getPaymentById(String paymentId){
 //        RestTemplate restTemplate = new RestTemplate();

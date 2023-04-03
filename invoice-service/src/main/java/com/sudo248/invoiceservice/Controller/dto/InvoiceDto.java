@@ -1,13 +1,11 @@
 package com.sudo248.invoiceservice.Controller.dto;
 
-import java.io.Serializable;
-
-public class InvoiceDto implements Serializable {
+public class InvoiceDto {
     private String invoiceId,address, status;
     private CartDto cartDto;
     private PaymentDto paymentDto;
     private PromotionDto promotionDto;
-//    private UserDto userDto;
+    private UserDto userDto;
     private Double totalPrice, totalPromotionPrice, finalPrice;
 
     public InvoiceDto() {
@@ -38,13 +36,13 @@ public class InvoiceDto implements Serializable {
         this.promotionDto = promotionDto;
     }
 
-//    public UserDto getUserDto() {
-//        return userDto;
-//    }
-//
-//    public void setUserDto(UserDto userDto) {
-//        this.userDto = userDto;
-//    }
+    public UserDto getUserDto() {
+        return userDto;
+    }
+
+    public void setUserDto(UserDto userDto) {
+        this.userDto = userDto;
+    }
 
     public String getInvoiceId() {
         return invoiceId;

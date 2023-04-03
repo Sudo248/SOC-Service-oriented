@@ -1,9 +1,8 @@
 package com.sudo248.invoiceservice.Controller.dto;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class UserDto implements Serializable {
+public class UserDto {
     private String userId;
     private String  fullName, phone, bio, gender, avatar, cover, address;
     private Date dob;
@@ -82,20 +81,5 @@ public class UserDto implements Serializable {
 
     public UserDto(String userId) {
         this.userId = userId;
-    }
-
-    public UserDto() {
-    }
-
-    public UserDto(String userId, String fullName, String phone, String bio, String gender, String avatar, String cover, String address, Date dob) {
-        this.userId = userId;
-        this.fullName = fullName;
-        this.phone = phone;
-        this.bio = bio;
-        this.gender = gender;
-        this.avatar = avatar;
-        this.cover = cover;
-        this.address = address;
-        this.dob = dob;
     }
 }
