@@ -1,7 +1,4 @@
-package com.sudo248.soc.domain.entity.auth
-
-import com.sudo248.base_android.base.ItemDiff
-import com.sudo248.soc.domain.entity.Product
+package com.sudo248.soc.domain.entity.discovery
 
 
 /**

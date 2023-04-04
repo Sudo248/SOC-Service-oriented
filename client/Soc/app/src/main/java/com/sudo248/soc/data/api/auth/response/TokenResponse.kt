@@ -1,7 +1,7 @@
 package com.sudo248.soc.data.api.auth.response
 
 import com.sudo248.soc.data.api.BaseResponse
-import com.sudo248.soc.data.dto.TokenDto
+import com.sudo248.soc.data.dto.auth.TokenDto
 
 
 /**

@@ -16,6 +16,8 @@ import retrofit2.create
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import com.sudo248.soc.BuildConfig
+import com.sudo248.soc.data.api.discovery.DiscoveryService
+import com.sudo248.soc.data.api.user.UserService
 
 
 /**
@@ -32,6 +34,14 @@ object DataModule {
     @Singleton
     @Provides
     fun provideAuthService(): AuthService = ApiService()
+
+    @Singleton
+    @Provides
+    fun provideDiscoveryService(): DiscoveryService = ApiService()
+
+    @Singleton
+    @Provides
+    fun provideUserService(): UserService = ApiService()
 
     @Singleton
     @Provides

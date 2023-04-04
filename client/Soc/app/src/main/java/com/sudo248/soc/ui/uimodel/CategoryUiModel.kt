@@ -12,8 +12,9 @@ import com.sudo248.base_android.base.ItemDiff
  */
 data class CategoryUiModel(
     val categoryId: String,
-    val imageUrl: ObservableField<String> = ObservableField(""),
-    val name: ObservableField<String> = ObservableField("")
+    val imageUrl: String = "",
+    val name: String = "",
+    var isSelected: Boolean = false,
 ) : ItemDiff {
     override fun isContentTheSame(other: ItemDiff): Boolean {
         return this == other

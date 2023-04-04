@@ -9,6 +9,7 @@
             type="com.sudo248.soc.ui.uimodel.CategoryUiModel" />
     </data>
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardContainer"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:layout_marginEnd="10dp"
@@ -18,7 +19,7 @@
         app:cardUseCompatPadding="true">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="110dp"
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
@@ -35,13 +36,17 @@
 
             <TextView
                 android:id="@+id/txtNameCategory"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="Burger"
                 android:textColor="@color/selector_white_gray"
                 android:textStyle="bold"
                 android:text="@{category.name}"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:layout_marginHorizontal="8dp"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

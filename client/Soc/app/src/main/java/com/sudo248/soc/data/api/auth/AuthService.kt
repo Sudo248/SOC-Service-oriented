@@ -9,7 +9,7 @@ import com.sudo248.soc.data.api.BaseResponse
 import com.sudo248.soc.data.api.auth.request.AccountRequest
 import com.sudo248.soc.data.api.auth.request.ChangePasswordRequest
 import com.sudo248.soc.data.api.auth.request.OtpRequest
-import com.sudo248.soc.data.dto.TokenDto
+import com.sudo248.soc.data.dto.auth.TokenDto
 import com.sudo248.soc.domain.common.Constants
 import retrofit2.Response
 import retrofit2.http.Body

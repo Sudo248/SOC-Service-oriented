@@ -18,7 +18,7 @@
         android:title="@string/order"
         android:icon="@drawable/ic_order"/>
     <item
-        android:id="@+id/accountFragment"
+        android:id="@+id/userFragment"
         android:enabled="true"
         android:title="@string/account"
         android:icon="@drawable/ic_account"/>

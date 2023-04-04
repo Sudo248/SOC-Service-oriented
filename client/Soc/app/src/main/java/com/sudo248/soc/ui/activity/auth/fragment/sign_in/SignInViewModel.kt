@@ -12,6 +12,7 @@ import com.sudo248.soc.domain.entity.auth.Account
 import com.sudo248.soc.domain.repository.AuthRepository
 import com.sudo248.soc.ui.activity.auth.AuthViewModel
 import com.sudo248.soc.ui.activity.main.MainActivity
+import com.sudo248.soc.ui.mapper.toAccount
 import com.sudo248.soc.ui.uimodel.AccountUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -44,11 +45,7 @@ class SignInViewModel @Inject constructor(
     fun signIn() = launch {
         parentViewModel?.setState(UiState.LOADING)
         delay(2000)
-        val account = Account(
-            phoneNumber = accountUiModel.phoneNumber.get() ?: "",
-            password = accountUiModel.password.get() ?: ""
-        )
-        authRepository.signIn(account).onState(
+        authRepository.signIn(accountUiModel.toAccount()).onState(
             onSuccess = {
                 authRepository.saveToken(it.token)
                 parentViewModel?.setState(UiState.SUCCESS)

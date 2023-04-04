@@ -1,4 +1,4 @@
-package com.sudo248.soc.data.dto
+package com.sudo248.soc.data.dto.auth
 
 
 /**

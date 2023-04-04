@@ -7,11 +7,11 @@ import com.sudo248.base_android.base.BaseViewModel
 import com.sudo248.base_android.core.UiState
 import com.sudo248.base_android.ktx.createActionIntentDirections
 import com.sudo248.base_android.ktx.onState
-import com.sudo248.soc.domain.entity.auth.Account
+import com.sudo248.soc.domain.common.Constants
 import com.sudo248.soc.domain.repository.AuthRepository
 import com.sudo248.soc.ui.activity.auth.AuthViewModel
-import com.sudo248.soc.domain.common.Constants
 import com.sudo248.soc.ui.activity.otp.OtpActivity
+import com.sudo248.soc.ui.mapper.toAccount
 import com.sudo248.soc.ui.uimodel.AccountUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -42,10 +42,7 @@ class SignUpViewModel @Inject constructor(
 
     fun signUp() = launch {
         parentViewModel?.setState(UiState.LOADING)
-        val account = Account(
-            phoneNumber = accountUiModel.phoneNumber.get() ?: "",
-            password = accountUiModel.password.get() ?: ""
-        )
+        val account = accountUiModel.toAccount()
         authRepository.signUp(account).onState(
             onSuccess = {
                 parentViewModel?.setState(UiState.SUCCESS)

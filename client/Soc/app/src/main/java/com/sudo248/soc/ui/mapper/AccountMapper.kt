@@ -12,14 +12,14 @@ import com.sudo248.soc.ui.uimodel.AccountUiModel
  * @since 11:08 - 12/03/2023
  */
 
-fun Account.toUiModel(): AccountUiModel {
+fun Account.toAccountUi(): AccountUiModel {
     return AccountUiModel(
         phoneNumber = ObservableField(phoneNumber),
         password = ObservableField(password)
     )
 }
 
-fun AccountUiModel.toDomain(): Account {
+fun AccountUiModel.toAccount(): Account {
     return Account(
         phoneNumber = phoneNumber.get() ?: "",
         password = password.get() ?: ""

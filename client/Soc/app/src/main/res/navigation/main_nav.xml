@@ -22,9 +22,13 @@
         android:label="ProductDetailFragment"
         tools:layout="@layout/fragment_product_detail">
         <argument
-            android:name="productId"
-            android:defaultValue="@null"
-            app:argType="string"
-            app:nullable="true" />
+            android:name="product"
+            app:argType="com.sudo248.soc.ui.uimodel.ProductUiModel"
+            app:nullable="false" />
     </fragment>
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.sudo248.soc.ui.activity.main.fragment.user.UserFragment"
+        android:label="UserFragment"
+        tools:layout="@layout/fragment_user"/>
 </navigation>

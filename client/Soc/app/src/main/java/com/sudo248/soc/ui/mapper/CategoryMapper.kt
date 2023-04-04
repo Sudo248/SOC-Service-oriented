@@ -1,7 +1,7 @@
 package com.sudo248.soc.ui.mapper
 
 import androidx.databinding.ObservableField
-import com.sudo248.soc.domain.entity.auth.Category
+import com.sudo248.soc.domain.entity.discovery.Category
 import com.sudo248.soc.ui.uimodel.CategoryUiModel
 
 
@@ -12,10 +12,10 @@ import com.sudo248.soc.ui.uimodel.CategoryUiModel
  * @since 23:12 - 12/03/2023
  */
 
-fun Category.toUiModel(): CategoryUiModel {
+fun Category.toCategoryUi(): CategoryUiModel {
     return CategoryUiModel(
         categoryId = categoryId,
-        name = ObservableField(name),
-        imageUrl = ObservableField(imageUrl)
+        name = name,
+        imageUrl = imageUrl
     )
 }

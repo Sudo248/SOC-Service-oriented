@@ -1,6 +1,7 @@
 package com.sudo248.soc.data.api
 
-import retrofit2.Response
+import com.sudo248.base_android.core.DataState
+import com.sudo248.base_android.exception.ApiException
 
 
 /**

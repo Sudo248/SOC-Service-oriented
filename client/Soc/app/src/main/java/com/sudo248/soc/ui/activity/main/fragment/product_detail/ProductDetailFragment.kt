@@ -1,5 +1,6 @@
 package com.sudo248.soc.ui.activity.main.fragment.product_detail
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.sudo248.base_android.base.BaseFragment
@@ -19,6 +20,8 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding, Product
     private val args: ProductDetailFragmentArgs by navArgs()
 
     override fun initView() {
-        args.productId
+//        binding.product = args.product
+        viewModel.product = args.product
+        binding.viewModel = viewModel
     }
 }

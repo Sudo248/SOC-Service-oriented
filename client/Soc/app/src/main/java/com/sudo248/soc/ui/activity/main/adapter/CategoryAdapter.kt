@@ -2,14 +2,12 @@ package com.sudo248.soc.ui.activity.main.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.sudo248.base_android.base.BaseListAdapter
 import com.sudo248.base_android.base.BaseViewHolder
-import com.sudo248.base_android.utils.DateUtils
 import com.sudo248.soc.R
 import com.sudo248.soc.databinding.ItemCategoryBinding
-import com.sudo248.soc.domain.entity.auth.Category
-import com.sudo248.soc.ui.activity.main.adapter.callback.OnItemClickListener
 import com.sudo248.soc.ui.uimodel.CategoryUiModel
 
 
@@ -22,6 +20,7 @@ import com.sudo248.soc.ui.uimodel.CategoryUiModel
 class CategoryAdapter(
     private val onItemClick: (CategoryUiModel) -> Unit
 ) : BaseListAdapter<CategoryUiModel, CategoryAdapter.ViewHolder>() {
+    private lateinit var lastSelectedItemBinding: ItemCategoryBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -36,10 +35,60 @@ class CategoryAdapter(
 
     inner class ViewHolder(binding: ItemCategoryBinding) :
         BaseViewHolder<CategoryUiModel, ItemCategoryBinding>(binding) {
+
         override fun onBind(item: CategoryUiModel) {
             binding.category = item
+            if (bindingAdapterPosition == 0) {
+                lastSelectedItemBinding = binding
+                selectedItem(binding)
+            }
             itemView.setOnClickListener {
-                onItemClick.invoke(item)
+                if (!it.isSelected) {
+                    setSelectedItem()
+                    onItemClick.invoke(item)
+                }
+            }
+        }
+
+        private fun setSelectedItem() {
+            notSelectedItem(lastSelectedItemBinding)
+            selectedItem(binding)
+            lastSelectedItemBinding = binding
+        }
+
+        private fun selectedItem(itemBinding: ItemCategoryBinding) {
+            itemBinding.apply {
+                root.isSelected = true
+                cardContainer.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.primaryColor
+                    )
+                )
+                txtNameCategory.setTextColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.white
+                    )
+                )
+            }
+        }
+
+        private fun notSelectedItem(itemBinding: ItemCategoryBinding) {
+            itemBinding.apply {
+                root.isSelected = false
+                cardContainer.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.white
+                    )
+                )
+                txtNameCategory.setTextColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.gray_88
+                    )
+                )
             }
         }
     }
