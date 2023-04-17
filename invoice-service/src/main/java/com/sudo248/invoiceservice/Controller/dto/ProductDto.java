@@ -1,57 +1,12 @@
 package com.sudo248.invoiceservice.Controller.dto;
 
-import java.io.Serializable;
-import java.util.List;
-
-public class ProductDto implements Serializable {
-    private String productId;
+public class ProductDto {
     private String name,description,sku;
-    private List<ImageDto> images;
-    private List<SupplierProductDto> supplierProducts;
-    public ProductDto() {
-    }
 
-    public ProductDto(String productId, String name, String description, String sku) {
-        this.productId = productId;
+    public ProductDto(String name, String description, String sku) {
         this.name = name;
         this.description = description;
         this.sku = sku;
-    }
-
-
-
-    public ProductDto(String productId, String name, String description, String sku, List<ImageDto> images) {
-        this.productId = productId;
-        this.name = name;
-        this.description = description;
-        this.sku = sku;
-        this.images = images;
-    }
-
-    public List<SupplierProductDto> getSupplierProducts() {
-        return supplierProducts;
-    }
-
-    public void setSupplierProducts(List<SupplierProductDto> supplierProducts) {
-        this.supplierProducts = supplierProducts;
-    }
-
-
-
-    public List<ImageDto> getImages() {
-        return images;
-    }
-
-    public void setImages(List<ImageDto> images) {
-        this.images = images;
-    }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
     }
 
     public String getName() {

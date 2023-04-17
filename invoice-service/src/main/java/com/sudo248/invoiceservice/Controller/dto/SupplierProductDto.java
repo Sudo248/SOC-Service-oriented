@@ -1,33 +1,20 @@
 package com.sudo248.invoiceservice.Controller.dto;
 
-import java.io.Serializable;
-
-public class SupplierProductDto implements Serializable {
-    private SupplierDto supplierDto;
+public class SupplierProductDto {
     private ProductDto productDto;
-    private double distance;
+    private SupplierDto supplierDto;
     private int amountLeft;
-    private double price, soldAmount, rate;
+    private double price;
+    private double soldAmount;
+    private double rate;
 
-    public SupplierProductDto() {
-    }
-
-    public SupplierProductDto(SupplierDto supplierDto, ProductDto productDto, double distance, int amountLeft, double price, double soldAmount, double rate) {
-        this.supplierDto = supplierDto;
+    public SupplierProductDto(ProductDto productDto, SupplierDto supplierDto, int amountLeft, double price, double soldAmount, double rate) {
         this.productDto = productDto;
-        this.distance = distance;
+        this.supplierDto = supplierDto;
         this.amountLeft = amountLeft;
         this.price = price;
         this.soldAmount = soldAmount;
         this.rate = rate;
-    }
-
-    public SupplierDto getSupplierDto() {
-        return supplierDto;
-    }
-
-    public void setSupplierDto(SupplierDto supplierDto) {
-        this.supplierDto = supplierDto;
     }
 
     public ProductDto getProductDto() {
@@ -38,12 +25,12 @@ public class SupplierProductDto implements Serializable {
         this.productDto = productDto;
     }
 
-    public double getDistance() {
-        return distance;
+    public SupplierDto getSupplierDto() {
+        return supplierDto;
     }
 
-    public void setDistance(double distance) {
-        this.distance = distance;
+    public void setSupplierDto(SupplierDto supplierDto) {
+        this.supplierDto = supplierDto;
     }
 
     public int getAmountLeft() {

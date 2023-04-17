@@ -1,26 +1,33 @@
 package com.sudo248.invoiceservice.Controller.dto;
 
 public class InvoiceAddDto {
-    private String address, status;
+    private String invoiceId,address, status;
     private String cartId;
     private String paymentId;
     private String promotionId;
-    private String userId;
+    private String UserId;
     private Double totalPrice, totalPromotionPrice, finalPrice;
 
-    public InvoiceAddDto( String address, String status, String cartId, String paymentId, String promotionId, String userId, Double totalPrice, Double totalPromotionPrice, Double finalPrice) {
+    public InvoiceAddDto(String invoiceId, String address, String status, String cartId, String paymentId, String promotionId, String userId, Double totalPrice, Double totalPromotionPrice, Double finalPrice) {
+        this.invoiceId = invoiceId;
         this.address = address;
         this.status = status;
         this.cartId = cartId;
         this.paymentId = paymentId;
         this.promotionId = promotionId;
-        this.userId = userId;
+        UserId = userId;
         this.totalPrice = totalPrice;
         this.totalPromotionPrice = totalPromotionPrice;
         this.finalPrice = finalPrice;
     }
 
+    public String getInvoiceId() {
+        return invoiceId;
+    }
 
+    public void setInvoiceId(String invoiceId) {
+        this.invoiceId = invoiceId;
+    }
 
     public String getAddress() {
         return address;
@@ -63,11 +70,11 @@ public class InvoiceAddDto {
     }
 
     public String getUserId() {
-        return userId;
+        return UserId;
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
+        UserId = userId;
     }
 
     public Double getTotalPrice() {

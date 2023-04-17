@@ -1,23 +1,16 @@
 package com.sudo248.invoiceservice.Controller.dto;
 
-import java.io.Serializable;
+import java.util.List;
 
-public class CartSupplierProductDto implements Serializable {
+public class CartSupplierProductDto {
     private SupplierProductDto supplierProductDto;
     private int amount;
     private Double totalPrice;
-    private String cartId;
+
     public CartSupplierProductDto(SupplierProductDto supplierProductDto, int amount, Double totalPrice) {
         this.supplierProductDto = supplierProductDto;
         this.amount = amount;
         this.totalPrice = totalPrice;
-    }
-
-    public CartSupplierProductDto(SupplierProductDto supplierProductDto, int amount, Double totalPrice, String cartId) {
-        this.supplierProductDto = supplierProductDto;
-        this.amount = amount;
-        this.totalPrice = totalPrice;
-        this.cartId = cartId;
     }
 
     public SupplierProductDto getSupplierProductDto() {
@@ -43,16 +36,4 @@ public class CartSupplierProductDto implements Serializable {
     public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
-
-    public String getCartId() {
-        return cartId;
-    }
-
-    public void setCartId(String cartId) {
-        this.cartId = cartId;
-    }
-
-    public CartSupplierProductDto() {
-    }
-
 }
