@@ -2,9 +2,11 @@ package com.sudo248.soc.data.di
 
 import com.sudo248.soc.data.repository.AuthRepositoryImpl
 import com.sudo248.soc.data.repository.DiscoveryRepositoryImpl
+import com.sudo248.soc.data.repository.PaymentRepositoryImpl
 import com.sudo248.soc.data.repository.UserRepositoryImpl
 import com.sudo248.soc.domain.repository.AuthRepository
 import com.sudo248.soc.domain.repository.DiscoveryRepository
+import com.sudo248.soc.domain.repository.PaymentRepository
 import com.sudo248.soc.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
@@ -30,4 +32,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindUserRepository(userRepository: UserRepositoryImpl): UserRepository
+
+    @Binds
+    abstract fun bindPaymentRepository(paymentRepository: PaymentRepositoryImpl): PaymentRepository
 }

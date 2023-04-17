@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import com.sudo248.soc.BuildConfig
 import com.sudo248.soc.data.api.discovery.DiscoveryService
+import com.sudo248.soc.data.api.payment.PaymentService
 import com.sudo248.soc.data.api.user.UserService
 
 
@@ -42,6 +43,10 @@ object DataModule {
     @Singleton
     @Provides
     fun provideUserService(): UserService = ApiService()
+
+    @Singleton
+    @Provides
+    fun providePaymentService(): PaymentService = ApiService()
 
     @Singleton
     @Provides

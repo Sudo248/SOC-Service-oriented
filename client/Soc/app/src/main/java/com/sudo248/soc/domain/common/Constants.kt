@@ -15,4 +15,33 @@ object Constants {
         const val PHONE_NUMBER = "PHONE_NUMBER"
         const val TOKEN = "TOKEN"
     }
+
+    object Payment {
+        const val KEY_URL = "url"
+        const val KEY_TMN_CODE = "tmn_code"
+        const val KEY_SCHEME = "scheme"
+        const val KEY_IS_SANDBOX = "is_sandbox"
+
+        const val TMN_CODE = "BQPK5W1P"
+        const val SCHEME = "resultactivity"
+        const val IS_SANDBOX = true
+
+        // Người dùng nhấn back từ sdk để quay lại
+        const val ACTION_APP_BACK = "AppBackAction"
+
+        //Người dùng nhấn chọn thanh toán qua app thanh toán (Mobile Banking, Ví...)
+        //lúc này app tích hợp sẽ cần lưu lại cái PNR, khi nào người dùng mở lại app tích hợp thì
+        // sẽ gọi kiểm tra trạng thái thanh toán của PNR Đó xem đã thanh toán hay chưa.
+        const val ACTION_CALL_MOBILE_BANKING_APP = "CallMobileBankingApp"
+
+        //Người dùng nhấn back từ trang thanh toán thành công khi thanh toán qua thẻ khi url
+        // có chứa: cancel.sdk.merchantbackapp
+        const val ACTION_WEB_BACK = "WebBackAction"
+
+        //giao dịch thanh toán bị failed
+        const val ACTION_FAILED = "FaildBackAction"
+
+        //thanh toán thành công trên webview
+        const val ACTION_SUCCESS = "SuccessBackAction"
+    }
 }

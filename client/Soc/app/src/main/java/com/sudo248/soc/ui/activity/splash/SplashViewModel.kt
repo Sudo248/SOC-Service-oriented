@@ -3,10 +3,7 @@ package com.sudo248.soc.ui.activity.splash
 import com.sudo248.base_android.base.BaseViewModel
 import com.sudo248.base_android.ktx.createActionIntentDirections
 import com.sudo248.base_android.navigation.IntentDirections
-import com.sudo248.soc.domain.common.Constants
-import com.sudo248.soc.ui.activity.auth.AuthActivity
-import com.sudo248.soc.ui.activity.main.MainActivity
-import com.sudo248.soc.ui.activity.otp.OtpActivity
+import com.sudo248.soc.ui.activity.payment.PaymentActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -25,7 +22,8 @@ class SplashViewModel : BaseViewModel<IntentDirections>() {
 //            navigator.navigateOff(OtpActivity::class.createActionIntentDirections{
 //                putExtra(Constants.Key.PHONE_NUMBER, "0989465270")
 //            })
-            navigator.navigateOff(MainActivity::class.createActionIntentDirections())
+//            navigator.navigateOff(MainActivity::class.createActionIntentDirections())
+            navigator.navigateOff(PaymentActivity::class.createActionIntentDirections())
         }
     }
 }
