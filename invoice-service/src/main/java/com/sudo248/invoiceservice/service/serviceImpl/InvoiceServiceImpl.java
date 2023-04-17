@@ -36,7 +36,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public InvoiceDto getOrderByInvoiceId(String invoiceId) {
+    public InvoiceDto getInvoiceByInvoiceId(String invoiceId) {
         List<Invoice> invoiceList = invoiceRepository.findAll();
         List<InvoiceDto> invoiceDtoList = new ArrayList<>();
         for(Invoice invoice: invoiceList){
@@ -47,11 +47,29 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public InvoiceDto addInvoice(InvoiceDto invoiceDto) {
-        Invoice invoice = toEntity(invoiceDto);
+    public InvoiceAddDto addInvoice(InvoiceAddDto invoiceAddDto) {
+        Invoice invoice = new Invoice();
+        invoice.setInvoiceId(invoiceAddDto.getInvoiceId());
+        invoice.setPaymentId(invoiceAddDto.getPaymentId());
+        invoice.setCartId(invoiceAddDto.getCartId());
+        invoice.setUserId(invoiceAddDto.getUserId());
+        invoice.setPromotionId(invoiceAddDto.getPromotionId());
+        invoice.setAddress(invoiceAddDto.getAddress());
+        invoice.setStatus(invoiceAddDto.getStatus());
+//        invoice.setTotalPrice(invoiceAddDto.getTotalPrice());
+//        invoice.setTotalPromotionPrice(invoiceAddDto.getTotalPromotionPrice());
+//        invoice.setFinalPrice(invoiceAddDto.getFinalPrice());
         Invoice savedInvoice = invoiceRepository.save(invoice);
-        invoiceDto.setInvoiceId(savedInvoice.getInvoiceId());
-        return invoiceDto;
+        InvoiceDto invoiceDto = getInvoiceByInvoiceId(invoiceAddDto.getInvoiceId());
+        invoice.setTotalPrice(invoiceDto.getTotalPrice());
+        invoice.setTotalPromotionPrice(invoiceDto.getTotalPromotionPrice());
+        invoice.setFinalPrice( invoiceDto.getFinalPrice());
+        Invoice savedInvoice1 = invoiceRepository.save(invoice);
+        invoiceAddDto.setInvoiceId(savedInvoice1.getInvoiceId());
+        invoiceAddDto.setTotalPromotionPrice(invoice.getTotalPromotionPrice());
+        invoiceAddDto.setTotalPrice(invoice.getTotalPrice());
+        invoiceAddDto.setFinalPrice(invoice.getFinalPrice());
+        return invoiceAddDto;
     }
 
     @Override
@@ -79,10 +97,10 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoiceDto.setUserDto(getUserById(invoice.getUserId()));
         invoiceDto.setPromotionDto(getPromotionById(invoice.getPromotionId()));
         invoiceDto.setAddress(invoice.getAddress());
-        invoiceDto.setTotalPrice(invoice.getTotalPrice());
         invoiceDto.setStatus(invoice.getStatus());
-        invoiceDto.setTotalPromotionPrice(invoice.getTotalPromotionPrice());
-        invoiceDto.setFinalPrice(invoice.getFinalPrice());
+        invoiceDto.setTotalPrice(54000.0);
+        invoiceDto.setTotalPromotionPrice(invoiceDto.getPromotionDto().getValue());
+        invoiceDto.setFinalPrice(54000.0 - invoiceDto.getTotalPromotionPrice());
         return invoiceDto;
     }
 

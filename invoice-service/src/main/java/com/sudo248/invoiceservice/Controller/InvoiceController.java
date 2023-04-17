@@ -1,6 +1,7 @@
 package com.sudo248.invoiceservice.Controller;
 
 import com.sudo248.domain.base.BaseResponse;
+import com.sudo248.invoiceservice.Controller.dto.InvoiceAddDto;
 import com.sudo248.invoiceservice.Controller.dto.InvoiceDto;
 import com.sudo248.invoiceservice.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,9 @@ public class InvoiceController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<BaseResponse<?>> addInvoice(@RequestBody InvoiceDto invoiceDto) {
-        InvoiceDto invoiceDto1 = invoiceService.addInvoice(invoiceDto);
-        return BaseResponse.ok(invoiceDto1);
+    public ResponseEntity<BaseResponse<?>> addInvoice(@RequestBody InvoiceAddDto invoiceAddDto) {
+        InvoiceAddDto invoiceAddDto1 = invoiceService.addInvoice(invoiceAddDto);
+        return BaseResponse.ok(invoiceAddDto1);
     }
     @GetMapping("/user/{userId}")
     public ResponseEntity<BaseResponse<?>> getInvoiceByUserId(@PathVariable String userId) {
@@ -29,7 +30,7 @@ public class InvoiceController {
     }
     @GetMapping("/{invoiceId}")
     public ResponseEntity<BaseResponse<?>> getInvoiceByInvoiceId(@PathVariable String invoiceId) {
-        InvoiceDto invoiceDto = invoiceService.getOrderByInvoiceId(invoiceId);
+        InvoiceDto invoiceDto = invoiceService.getInvoiceByInvoiceId(invoiceId);
         return BaseResponse.ok(invoiceDto);
     }
     @DeleteMapping("/{invoiceId}")
