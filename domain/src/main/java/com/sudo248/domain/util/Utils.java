@@ -23,11 +23,15 @@ public class Utils {
         }
     }
 
-    public String createId() {
+    public static String createIdOrElse(String id) {
+        return id != null ? id : createId();
+    }
+
+    public static String createId() {
         return UUID.randomUUID() + "-" + System.currentTimeMillis();
     }
 
-    public String createId(String key) {
+    public static String createId(String key) {
         return UUID.fromString(key) + "-" + System.currentTimeMillis();
     }
 }

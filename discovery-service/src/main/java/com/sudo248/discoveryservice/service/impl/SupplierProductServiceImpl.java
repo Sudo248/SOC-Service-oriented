@@ -4,8 +4,10 @@ import com.sudo248.discoveryservice.controller.dto.ProductDto;
 import com.sudo248.discoveryservice.controller.dto.SupplierProductDto;
 import com.sudo248.discoveryservice.repository.SupplierProductRepository;
 import com.sudo248.discoveryservice.repository.entity.SupplierProduct;
+import com.sudo248.discoveryservice.service.ProductService;
 import com.sudo248.discoveryservice.service.SupplierProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,14 +16,20 @@ import java.util.stream.Collectors;
 @Service
 
 public class SupplierProductServiceImpl implements SupplierProductService {
-    @Autowired
-    private SupplierProductRepository supplierProductRepository;
+    private final SupplierProductRepository supplierProductRepository;
+
+    private final ProductService productService;
+
+    @Lazy
+    public SupplierProductServiceImpl(SupplierProductRepository supplierProductRepository, ProductService productService) {
+        this.supplierProductRepository = supplierProductRepository;
+        this.productService = productService;
+    }
+
     @Override
     public List<SupplierProductDto> getAllSupplierProducts() {
         List<SupplierProduct> SupplierProducts = supplierProductRepository.findAll();
-        return SupplierProducts.stream().map(SupplierProduct -> {
-            return toDto(SupplierProduct);
-        }).collect(Collectors.toList());
+        return SupplierProducts.stream().map(this::toDto).collect(Collectors.toList());
     }
 
     @Override
@@ -31,12 +39,7 @@ public class SupplierProductServiceImpl implements SupplierProductService {
         for(SupplierProduct s: SupplierProducts){
 
             if(s.getSupplier().getName().equals(supplierName)){
-                ProductDto productDto = new ProductDto();
-                productDto.setProductId(s.getProduct().getProductId());
-                productDto.setName(s.getProduct().getName());
-                productDto.setDescription(s.getProduct().getDescription());
-                productDto.setSku(s.getProduct().getSku());
-                productDtos.add(productDto);
+                productDtos.add(productService.toDto(s.getProduct()));
             }
 
         }
@@ -47,7 +50,7 @@ public class SupplierProductServiceImpl implements SupplierProductService {
     public SupplierProductDto getProductInfoBySupplierNameProductId(String supplierName, String productId) {
         List<SupplierProduct> SupplierProducts = supplierProductRepository.findAll();
         for(SupplierProduct s: SupplierProducts){
-            if(s.getProduct().getProductId() == productId && s.getSupplier().getName().equals(supplierName)){
+            if(s.getProduct().getProductId().equals(productId) && s.getSupplier().getName().equals(supplierName)){
                 return toDto(s);
             }
         }
@@ -66,14 +69,13 @@ public class SupplierProductServiceImpl implements SupplierProductService {
     }
     @Override
     public SupplierProductDto toDto(SupplierProduct s) {
-        SupplierProductDto spd = new SupplierProductDto(
+        return new SupplierProductDto(
                 s.getSupplier().getSupplierId(),
                 s.getProduct().getProductId(),
                 calcDistance(s.getSupplier().getLocation()),
                 s.getAmountLeft(),s.getPrice(),
                 s.getSoldAmount(),s.getRate()
         );
-        return spd;
     }
 
     @Override
@@ -93,8 +95,6 @@ public class SupplierProductServiceImpl implements SupplierProductService {
 
         Double lonUser = Double.parseDouble(lonlatUser[0]);
         Double latUser = Double.parseDouble(lonlatUser[1]);
-        Double res = 0.0;
-        res = Math.sqrt( (lonSup - lonUser) * (lonSup - lonUser) + (latSup - latUser) * (latSup - latUser));
-        return res;
+        return Math.sqrt( (lonSup - lonUser) * (lonSup - lonUser) + (latSup - latUser) * (latSup - latUser));
     }
 }

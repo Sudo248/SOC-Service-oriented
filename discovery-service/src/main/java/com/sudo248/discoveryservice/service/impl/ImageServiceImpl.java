@@ -7,6 +7,7 @@ import com.sudo248.discoveryservice.repository.ProductRepository;
 import com.sudo248.discoveryservice.repository.entity.Image;
 import com.sudo248.discoveryservice.repository.entity.Product;
 import com.sudo248.discoveryservice.service.ImageService;
+import com.sudo248.domain.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +50,7 @@ public class ImageServiceImpl implements ImageService {
     public ProductDto addProductImageUrl(ImageDto imageDto, String productId) {
         Product product = new Product();
         Optional<Product> p = productRepository.findById(productId);
-        Image image = new Image(imageDto.getImageId(), imageDto.getUrl(), imageDto.getOwnerId(), product);
+        Image image = new Image(Utils.createIdOrElse(imageDto.getImageId()), imageDto.getUrl(), imageDto.getOwnerId(), product);
         List<Image> pImages = p.get().getImages();
         pImages.add(image);
         product.setProductId(productId);

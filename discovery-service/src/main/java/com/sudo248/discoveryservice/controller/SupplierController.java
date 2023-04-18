@@ -25,7 +25,6 @@ public class SupplierController {
             SupplierDto savedSupplier = supplierService.addSupplier(supplierDto);
             return BaseResponse.ok(savedSupplier);
         });
-
     }
 
     @GetMapping

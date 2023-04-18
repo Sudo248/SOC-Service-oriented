@@ -3,7 +3,9 @@ package com.sudo248.discoveryservice.service.impl;
 import com.sudo248.discoveryservice.controller.dto.SupplierDto;
 import com.sudo248.discoveryservice.repository.SupplierRepository;
 import com.sudo248.discoveryservice.repository.entity.Supplier;
+import com.sudo248.discoveryservice.service.SupplierProductService;
 import com.sudo248.discoveryservice.service.SupplierService;
+import com.sudo248.domain.util.Utils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +14,11 @@ import java.util.stream.Collectors;
 @Service
 public class SupplierServiceImpl implements SupplierService {
     private final SupplierRepository supplierRepository;
+    private final SupplierProductService supplierProductService;
 
-    public SupplierServiceImpl(SupplierRepository supplierRepository) {
+    public SupplierServiceImpl(SupplierRepository supplierRepository, SupplierProductService supplierProductService) {
         this.supplierRepository = supplierRepository;
+        this.supplierProductService = supplierProductService;
     }
 
     @Override
@@ -44,11 +48,13 @@ public class SupplierServiceImpl implements SupplierService {
         supplierDto.setSupplierId(supplier.getSupplierId());
         supplierDto.setName(supplier.getName());
         supplierDto.setAvatar(supplier.getAvatar());
+        supplierDto.setLocation(supplier.getLocation());
+        supplierDto.setSupplierProducts(supplier.getSupplierProducts().stream().map(supplierProductService::toDto).collect(Collectors.toList()));
         return supplierDto;
     }
     public Supplier toEntity(SupplierDto supplierDto){
         Supplier supplier = new Supplier();
-        supplier.setSupplierId(supplierDto.getSupplierId());
+        supplier.setSupplierId(Utils.createIdOrElse(supplierDto.getSupplierId()));
         supplier.setName(supplierDto.getName());
         supplier.setAvatar(supplierDto.getAvatar());
         supplier.setLocation(supplierDto.getLocation());

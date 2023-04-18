@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("product/images")
 public class ImageController {
     private final ImageService imageService;
 
@@ -18,7 +19,7 @@ public class ImageController {
         this.imageService = imageService;
     }
 
-    @GetMapping("/image")
+    @GetMapping
     public ResponseEntity<BaseResponse<?>> getAllImages() {
         return Utils.handleException(() -> {
             List<ImageDto> images = imageService.getAllImages();
@@ -26,8 +27,7 @@ public class ImageController {
         });
     }
 
-    @PostMapping("/product/addImage/{productId}")
-    @ResponseBody
+    @PostMapping("/{productId}")
     public ResponseEntity<BaseResponse<?>> addProductImage(@RequestBody ImageDto imageDto, @PathVariable("productId") String productId) {
         return Utils.handleException(() -> {
             ProductDto product = imageService.addProductImageUrl(imageDto, productId);
@@ -35,8 +35,7 @@ public class ImageController {
         });
     }
 
-    @GetMapping("/product/{productId}/images")
-    @ResponseBody
+    @GetMapping("/{productId}")
     public ResponseEntity<BaseResponse<?>> getProductImage(@PathVariable String productId) {
         return Utils.handleException(() -> {
             List<ImageDto> imageDtos = imageService.getProductImageById(productId);

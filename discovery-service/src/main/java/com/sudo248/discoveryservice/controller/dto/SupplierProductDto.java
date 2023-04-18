@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class SupplierProductDto {
     private String supplierId;
     private String productId;
-    private double distance;
-    private int amountLeft;
-    private double price, soldAmount, rate;
+    private double distance = 0.0;
+    private int amountLeft = 0;
+    private double price = 0.0, soldAmount = 0.0, rate = 0.0;
 }

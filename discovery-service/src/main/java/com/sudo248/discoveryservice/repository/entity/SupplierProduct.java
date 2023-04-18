@@ -6,11 +6,12 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "supplierProduct")
+@Table(name = "supplier_product")
 @NoArgsConstructor
+@AllArgsConstructor
 public class SupplierProduct {
     @EmbeddedId
-    SupplierProductEmbeddable embeddedId;
+    SupplierProductId supplierProductId;
 
     @ManyToOne
     @MapsId("productId")
@@ -33,4 +34,13 @@ public class SupplierProduct {
 
     @Column(name = "rate")
     private double rate;
+
+    public SupplierProduct(Product product, Supplier supplier, int amountLeft, double price, double soldAmount, double rate) {
+        this.product = product;
+        this.supplier = supplier;
+        this.amountLeft = amountLeft;
+        this.price = price;
+        this.soldAmount = soldAmount;
+        this.rate = rate;
+    }
 }

@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "image")
+@Table(name = "images")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Image {

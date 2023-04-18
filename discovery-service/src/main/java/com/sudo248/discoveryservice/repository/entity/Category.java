@@ -29,12 +29,8 @@ public class Category {
     @Column(name = "supplier_id")
     private String supplierId;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "category_product",
-            joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
+
+    @ManyToMany(mappedBy = "categories", cascade = CascadeType.ALL)
     private List<Product> products;
 }
 
