@@ -37,7 +37,8 @@ public class ApiFilter implements GatewayFilter {
                 "/logout",
                 "/generate-otp",
                 "/verify-otp",
-                "/images"
+                "/images",
+                "/return-vnpay"
         );
         final List<String> internalApiEndpoint = List.of("/internal");
 
