@@ -25,12 +25,12 @@ public class SupplierProductServiceImpl implements SupplierProductService {
     }
 
     @Override
-    public List<ProductDto> getProductBySupplierName(String name) {
+    public List<ProductDto> getProductBySupplierName(String supplierName) {
         List<SupplierProduct> SupplierProducts = supplierProductRepository.findAll();
         List<ProductDto> productDtos = new ArrayList<>();
         for(SupplierProduct s: SupplierProducts){
 
-            if(s.getSupplier().getName().equals(name)){
+            if(s.getSupplier().getName().equals(supplierName)){
                 ProductDto productDto = new ProductDto();
                 productDto.setProductId(s.getProduct().getProductId());
                 productDto.setName(s.getProduct().getName());
@@ -44,21 +44,21 @@ public class SupplierProductServiceImpl implements SupplierProductService {
     }
 
     @Override
-    public SupplierProductDto getProductInfoBySupplierNameProductId(String name, int id) {
+    public SupplierProductDto getProductInfoBySupplierNameProductId(String supplierName, String productId) {
         List<SupplierProduct> SupplierProducts = supplierProductRepository.findAll();
         for(SupplierProduct s: SupplierProducts){
-            if(s.getProduct().getProductId() == id && s.getSupplier().getName().equals(name)){
+            if(s.getProduct().getProductId() == productId && s.getSupplier().getName().equals(supplierName)){
                 return toDto(s);
             }
         }
         return null;
     }
     @Override
-    public List<SupplierProductDto> getSupplierProductsByProductId(int idProduct) {
+    public List<SupplierProductDto> getSupplierProductsByProductId(String productId) {
         List<SupplierProduct> SupplierProducts = supplierProductRepository.findAll();
         List<SupplierProductDto> supplierProductDtos = new ArrayList<>();
         for(SupplierProduct s: SupplierProducts){
-            if(s.getProduct().getProductId() == idProduct ){
+            if(s.getProduct().getProductId().equals(productId)){
                 supplierProductDtos.add(toDto(s));
             }
         }
@@ -66,16 +66,20 @@ public class SupplierProductServiceImpl implements SupplierProductService {
     }
     @Override
     public SupplierProductDto toDto(SupplierProduct s) {
-        SupplierProductDto spd = new SupplierProductDto(s.getSupplier().getSupplierId(),s.getProduct().getProductId(),calcDistance(s.getSupplier().getLocation()),s.getAmountLeft(),s.getPrice()
-                ,s.getSoldAmount(),s.getRate());
+        SupplierProductDto spd = new SupplierProductDto(
+                s.getSupplier().getSupplierId(),
+                s.getProduct().getProductId(),
+                calcDistance(s.getSupplier().getLocation()),
+                s.getAmountLeft(),s.getPrice(),
+                s.getSoldAmount(),s.getRate()
+        );
         return spd;
     }
 
     @Override
     public SupplierProduct toEntity(SupplierProductDto s) {
-        SupplierProduct supplierProduct = new SupplierProduct();
         //Waiting for other APIs
-        return supplierProduct;
+        return new SupplierProduct();
     }
 
 

@@ -1,30 +1,13 @@
 package com.sudo248.discoveryservice.controller.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CategoryProductDto {
-    private int categoryId;
-    private int productId;
-
-    public CategoryProductDto() {
-    }
-
-    public CategoryProductDto(int categoryId, int productId) {
-        this.categoryId = categoryId;
-        this.productId = productId;
-    }
-
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
+    private String categoryId;
+    private String productId;
 }

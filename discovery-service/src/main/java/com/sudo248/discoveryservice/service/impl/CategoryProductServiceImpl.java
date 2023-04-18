@@ -4,7 +4,6 @@ import com.sudo248.discoveryservice.controller.dto.CategoryProductDto;
 import com.sudo248.discoveryservice.controller.dto.ProductDto;
 import com.sudo248.discoveryservice.repository.CategoryProductRepository;
 import com.sudo248.discoveryservice.repository.entity.CategoryProduct;
-import com.sudo248.discoveryservice.repository.entity.SupplierProduct;
 import com.sudo248.discoveryservice.service.CategoryProductService;
 import com.sudo248.discoveryservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +13,21 @@ import java.util.ArrayList;
 import java.util.List;
 @Service
 public class CategoryProductServiceImpl implements CategoryProductService {
-    @Autowired
-    private CategoryProductRepository categoryProductRepository;
-    @Autowired
-    private ProductService productService;
+    private final CategoryProductRepository categoryProductRepository;
+    private final ProductService productService;
+
+    public CategoryProductServiceImpl(CategoryProductRepository categoryProductRepository, ProductService productService) {
+        this.categoryProductRepository = categoryProductRepository;
+        this.productService = productService;
+    }
+
     @Override
-    public List<ProductDto> getProductByIdCategory(int id) {
+    public List<ProductDto> getProductByIdCategory(String categoryId) {
         List<CategoryProduct> categoryProducts =  categoryProductRepository.findAll();
         List<ProductDto> productDtos = new ArrayList<>();
         for(CategoryProduct s: categoryProducts){
 
-            if(s.getCategory().getCategoryId() == id){
-
+            if(s.getCategory().getCategoryId().equals(categoryId)){
                 productDtos.add(productService.toDto(s.getProduct()));
             }
 

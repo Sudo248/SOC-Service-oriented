@@ -6,17 +6,15 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import java.util.List;
 
-@Getter
-@Setter
-@ToString
+@Data
 @Entity
-@Table(name = "product")
+@Table(name = "products")
 @NoArgsConstructor
+@AllArgsConstructor
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
-    private int productId;
+    private String productId;
 
     @Column(name = "name")
     private String name;
@@ -27,19 +25,12 @@ public class Product {
     @Column(name = "sku")
     private String sku;
 
-
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Image> images;
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<SupplierProduct> supplierProducts;
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
-    private List<CategoryProduct> categoryProducts;
 
-
-    public Product(int productId, String name, String description, String sku) {
-        this.productId = productId;
-        this.name = name;
-        this.description = description;
-        this.sku = sku;
-    }
+    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
+    private List<Category> categories;
 }

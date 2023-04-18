@@ -5,9 +5,9 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
-public class CatetoryProductKey implements Serializable {
+public class CategoryProductEmbeddable implements Serializable {
     @Column(name = "product_id")
-    int productId;
+    String productId;
     @Column(name = "category_id")
-    int categoryId;
+    String categoryId;
 }

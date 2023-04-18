@@ -4,44 +4,44 @@ import com.sudo248.discoveryservice.controller.dto.CategoryDto;
 import com.sudo248.discoveryservice.service.CategoryService;
 import com.sudo248.domain.base.BaseResponse;
 import com.sudo248.domain.util.Utils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
+@RequestMapping("/category")
 public class CategoryController {
+    private final CategoryService categoryService;
 
-    @Autowired
-    private CategoryService categoryService;
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
-    @PostMapping("/category")
+    @PostMapping
     public ResponseEntity<BaseResponse<?>> addCategory(@RequestBody CategoryDto categoryDto) {
         return Utils.handleException(() -> {
             CategoryDto savedCategory = categoryService.addCategory(categoryDto);
-            return ResponseEntity.ok(new BaseResponse<>(200,true,"Add categories oke", savedCategory));
+            return BaseResponse.ok(savedCategory);
         });
     }
 
-    @GetMapping("/category")
+    @GetMapping
     public ResponseEntity<BaseResponse<?>> getAllCategories() {
         return Utils.handleException(() -> {
             List<CategoryDto> categories = categoryService.getAllCategories();
-            return ResponseEntity.ok(new BaseResponse<>(200,true,"Get All categories oke", categories));
+            return BaseResponse.ok(categories);
         });
     }
-    @GetMapping("/category/{id}")
-    @ResponseBody
-    public ResponseEntity<BaseResponse<?>> getCategoryById(@PathVariable int id) {
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<BaseResponse<?>> getCategoryById(@PathVariable("categoryId") String categoryId) {
         return Utils.handleException(() -> {
-            CategoryDto category = categoryService.getCategoryById(id);
+            CategoryDto category = categoryService.getCategoryById(categoryId);
             if (category == null) {
                 return BaseResponse.status(HttpStatus.BAD_REQUEST, "Does not exist category");
             }
-            return ResponseEntity.ok(new BaseResponse<>(200,true,"Get category by Id oke", category));
+            return BaseResponse.ok(category);
         });
     }
 }

@@ -9,10 +9,7 @@ public interface SupplierService {
     SupplierDto addSupplier(SupplierDto supplierDto);
 
     List<SupplierDto> getAllSuppliers();
-    SupplierDto getSupplierByName(String name);
+    SupplierDto getSupplierByName(String supplierName);
     SupplierDto toDto(Supplier supplier);
     Supplier toEntity(SupplierDto supplierDto);
-
-    interface SupplierProductService {
-    }
 }

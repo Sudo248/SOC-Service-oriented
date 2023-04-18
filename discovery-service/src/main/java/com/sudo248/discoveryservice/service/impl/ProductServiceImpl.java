@@ -1,52 +1,51 @@
 package com.sudo248.discoveryservice.service.impl;
 
-import com.sudo248.discoveryservice.controller.dto.CategoryDto;
-import com.sudo248.discoveryservice.controller.dto.ImageDto;
 import com.sudo248.discoveryservice.controller.dto.ProductDto;
 import com.sudo248.discoveryservice.repository.CategoryRepository;
 import com.sudo248.discoveryservice.repository.ImageRepository;
 import com.sudo248.discoveryservice.repository.ProductRepository;
-import com.sudo248.discoveryservice.repository.entity.Category;
-import com.sudo248.discoveryservice.repository.entity.Image;
 import com.sudo248.discoveryservice.repository.entity.Product;
 import com.sudo248.discoveryservice.service.ProductService;
 import com.sudo248.discoveryservice.service.SupplierProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired
-    private ProductRepository ProductRepository;
-    @Autowired
-    private ImageRepository imageRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
-    private SupplierProductService supplierProductService;
+    private final ProductRepository productRepository;
+    private final ImageRepository imageRepository;
+    private final CategoryRepository categoryRepository;
+    private final SupplierProductService supplierProductService;
+
+    public ProductServiceImpl(
+            ProductRepository productRepository,
+            ImageRepository imageRepository,
+            CategoryRepository categoryRepository,
+            SupplierProductService supplierProductService) {
+        this.productRepository = productRepository;
+        this.imageRepository = imageRepository;
+        this.categoryRepository = categoryRepository;
+        this.supplierProductService = supplierProductService;
+    }
 
     @Override
     public ProductDto addProduct(ProductDto productDto) {
         Product product = toEntity(productDto);
-        Product savedProduct = ProductRepository.save(product);
+        Product savedProduct = productRepository.save(product);
         productDto.setProductId(savedProduct.getProductId());
         return productDto;
     }
 
 
-
-    public ProductDto getProductById(int id){
-        List<Product> products = ProductRepository.findAll();
-        for(Product c: products){
-            if(c.getProductId() == id){
-               return toDto(c);
-
+    public ProductDto getProductById(String productId) {
+        List<Product> products = productRepository.findAll();
+        for (Product c : products) {
+            if (c.getProductId().equals(productId) ) {
+                return toDto(c);
             }
         }
         return null;
@@ -77,18 +76,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> getAllProducts() {
-        List<Product> products = ProductRepository.findAll();
-        return products.stream().map(Product -> {
-            return toDto(Product);
-        }).collect(Collectors.toList());
+        List<Product> products = productRepository.findAll();
+        return products.stream().map(this::toDto).collect(Collectors.toList());
     }
 
     @Override
     public List<ProductDto> getProductsByName(String name) {
-        List<Product> products = ProductRepository.findAll();
+        List<Product> products = productRepository.findAll();
         List<ProductDto> productDtos = new ArrayList<>();
-        for(Product p: products){
-            if(p.getName().toLowerCase().contains(name.toLowerCase()))
+        for (Product p : products) {
+            if (p.getName().toLowerCase().contains(name.toLowerCase()))
                 productDtos.add(toDto(p));
         }
         return productDtos;

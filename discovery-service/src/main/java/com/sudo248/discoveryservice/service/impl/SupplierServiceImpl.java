@@ -4,7 +4,6 @@ import com.sudo248.discoveryservice.controller.dto.SupplierDto;
 import com.sudo248.discoveryservice.repository.SupplierRepository;
 import com.sudo248.discoveryservice.repository.entity.Supplier;
 import com.sudo248.discoveryservice.service.SupplierService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +11,11 @@ import java.util.stream.Collectors;
 
 @Service
 public class SupplierServiceImpl implements SupplierService {
+    private final SupplierRepository supplierRepository;
 
-    @Autowired
-    private SupplierRepository supplierRepository;
+    public SupplierServiceImpl(SupplierRepository supplierRepository) {
+        this.supplierRepository = supplierRepository;
+    }
 
     @Override
     public SupplierDto addSupplier(SupplierDto supplierDto) {
@@ -23,10 +24,10 @@ public class SupplierServiceImpl implements SupplierService {
         supplierDto.setSupplierId(savedSupplier.getSupplierId());
         return supplierDto;
     }
-    public SupplierDto getSupplierByName(String name){
+    public SupplierDto getSupplierByName(String supplierName){
         List<Supplier> suppliers = supplierRepository.findAll();
         for(Supplier c: suppliers){
-            if(c.getName().contains(name)){
+            if(c.getName().contains(supplierName)){
                 return toDto(c);
             }
         }
@@ -35,9 +36,7 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     public List<SupplierDto> getAllSuppliers() {
         List<Supplier> suppliers = supplierRepository.findAll();
-        return suppliers.stream().map(Supplier -> {
-            return toDto(Supplier);
-        }).collect(Collectors.toList());
+        return suppliers.stream().map(this::toDto).collect(Collectors.toList());
     }
 
     public SupplierDto toDto(Supplier supplier){

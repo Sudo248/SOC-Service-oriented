@@ -3,36 +3,34 @@ package com.sudo248.discoveryservice.service.impl;
 import com.sudo248.discoveryservice.controller.dto.CategoryDto;
 import com.sudo248.discoveryservice.repository.CategoryRepository;
 import com.sudo248.discoveryservice.repository.entity.Category;
+import com.sudo248.discoveryservice.repository.entity.CategoryProduct;
 import com.sudo248.discoveryservice.service.CategoryProductService;
 import com.sudo248.discoveryservice.service.CategoryService;
-import com.sudo248.discoveryservice.service.ProductService;
-import com.sun.jersey.api.NotFoundException;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
+    private final CategoryRepository categoryRepository;
+    private final CategoryProductService categoryProductService;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
-    private CategoryProductService categoryProductService;
+    public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryProductService categoryProductService) {
+        this.categoryRepository = categoryRepository;
+        this.categoryProductService = categoryProductService;
+    }
+
     @Override
     public CategoryDto addCategory(CategoryDto categoryDto) {
-
         Category savedCategory = categoryRepository.save(toEntity(categoryDto));
         categoryDto.setCategoryId(savedCategory.getCategoryId());
         return categoryDto;
     }
-    public CategoryDto getCategoryById(int id){
+    public CategoryDto getCategoryById(String categoryId){
         List<Category> categories = categoryRepository.findAll();
         for(Category c: categories){
-            if(c.getCategoryId() == id){
+            if(c.getCategoryId().equals(categoryId)){
                 return toDto(c);
             }
         }
@@ -44,8 +42,9 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryDto categoryDto = new CategoryDto();
         categoryDto.setCategoryId(c.getCategoryId());
         categoryDto.setName(c.getName());
-        categoryDto.setImage(c.getImage());
+        categoryDto.setImageUrl(c.getImageUrl());
         categoryDto.setSupplierId(c.getSupplierId());
+        c.getCategoryProducts().stream().map(CategoryProduct::getProduct).collect(Collectors.toList());
         categoryDto.setProducts(categoryProductService.getProductByIdCategory(c.getCategoryId()));
         return categoryDto;
     }
@@ -55,7 +54,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = new Category();
         category.setCategoryId(categoryDto.getCategoryId());
         category.setName(categoryDto.getName());
-        category.setImage(categoryDto.getImage());
+        category.setImageUrl(categoryDto.getImageUrl());
         category.setSupplierId(categoryDto.getSupplierId());
         return category;
     }
@@ -63,9 +62,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryDto> getAllCategories() {
         List<Category> categories = categoryRepository.findAll();
-        return categories.stream().map(category -> {
-            CategoryDto categoryDto = toDto(category);
-            return categoryDto;
-        }).collect(Collectors.toList());
+        return categories.stream().map(this::toDto).collect(Collectors.toList());
     }
 }
