@@ -15,6 +15,7 @@ import com.sudo248.authservice.service.OtpService;
 import com.sudo248.authservice.service.model.AccountModel;
 import com.sudo248.domain.base.BaseResponse;
 import com.sudo248.domain.exception.ApiException;
+import com.sudo248.domain.util.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -107,8 +108,7 @@ public class AccountServiceImpl implements AccountService {
     private void saveAccount(AccountModel accountModel, boolean isHashPassword) throws ApiException {
         try {
             if (accountModel.getUserId() == null || accountModel.getUserId().isEmpty()) {
-                int timestamp = LocalDateTime.now().getSecond();
-                accountModel.setUserId(UUID.randomUUID() + "-" + timestamp);
+                accountModel.setUserId(Utils.createIdOrElse(accountModel.getUserId()));
             }
             if (isHashPassword) {
                 String hashPassword = encoder.encode(accountModel.getPassword());

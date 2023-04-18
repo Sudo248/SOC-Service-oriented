@@ -10,37 +10,27 @@ import javax.persistence.Table;
 import javax.persistence.*;
 import java.util.List;
 
-@Getter
-@Setter
-@ToString
+@Data
 @Entity
-@Table(name = "category")
+@Table(name = "categories")
 @NoArgsConstructor
+@AllArgsConstructor
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    private int categoryId;
+    private String categoryId;
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "image")
-    private String image;
+    private String imageUrl;
 
-    @Column(name = "supplierId")
+    @Column(name = "supplier_id")
     private String supplierId;
 
-    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
-    private List<CategoryProduct> categoryProducts;
 
-    public Category(int categoryId, String name, String image, String supplierId) {
-        this.categoryId = categoryId;
-        this.name = name;
-        this.image = image;
-        this.supplierId = supplierId;
-    }
-
-
+    @ManyToMany(mappedBy = "categories", cascade = CascadeType.ALL)
+    private List<Product> products;
 }
 

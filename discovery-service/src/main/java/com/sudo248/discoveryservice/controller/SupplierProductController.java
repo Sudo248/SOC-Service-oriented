@@ -26,28 +26,31 @@ public class SupplierProductController {
     public ResponseEntity<BaseResponse<?>> getAllSupplierProducts() {
         return Utils.handleException(() -> {
             List<SupplierProductDto> supplierProducts = supplierProductService.getAllSupplierProducts();
-            return ResponseEntity.ok(new BaseResponse<>(200,true,"OK", supplierProducts));
+            return BaseResponse.ok(supplierProducts);
         });
 
     }
 
-    @GetMapping("/suppliers/{name}/products")
-    public ResponseEntity<BaseResponse<?>> getProductBySupplierName(@PathVariable String name){
+    @GetMapping("/suppliers/{supplierName}/products")
+    public ResponseEntity<BaseResponse<?>> getProductBySupplierName(@PathVariable String supplierName) {
         return Utils.handleException(() -> {
-            List<ProductDto> productDtos = supplierProductService.getProductBySupplierName(name);
-            return ResponseEntity.ok(new BaseResponse<>(200,true,"OK", productDtos));
+            List<ProductDto> productDtos = supplierProductService.getProductBySupplierName(supplierName);
+            return BaseResponse.ok(productDtos);
         });
 
     }
 
-    @GetMapping("/suppliers/{name}/products/{id}")
-    public ResponseEntity<BaseResponse<?>> getProductInfoBySupplierNameProductId(@PathVariable("name") String name, @PathVariable("id") int id ){
+    @GetMapping("/suppliers/{supplierName}/products/{productId}")
+    public ResponseEntity<BaseResponse<?>> getProductInfoBySupplierNameProductId(
+            @PathVariable("supplierName") String supplierName,
+            @PathVariable("productId") String productId
+    ) {
         return Utils.handleException(() -> {
-            SupplierProductDto productDto = supplierProductService.getProductInfoBySupplierNameProductId(name, id);
+            SupplierProductDto productDto = supplierProductService.getProductInfoBySupplierNameProductId(supplierName, productId);
             if (productDto == null) {
                 BaseResponse.status(HttpStatus.BAD_REQUEST, "Does not exist product");
             }
-            return ResponseEntity.ok(new BaseResponse<>(200,true,"OK", productDto));
+            return BaseResponse.ok(productDto);
         });
 
     }

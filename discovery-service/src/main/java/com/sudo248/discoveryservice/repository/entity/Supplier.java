@@ -10,24 +10,27 @@ import java.util.List;
 @Setter
 @ToString
 @Entity
-@Table(name = "supplier")
+@Table(name = "suppliers")
 @NoArgsConstructor
 public class Supplier{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "supplier_id")
-    private int supplierId;
 
+    @Id
+    @Column(name = "supplier_id")
+    private String supplierId;
 
     @Column(name = "name")
     private String name;
+
     @Column(name = "location")
     private String location;
+
     @Column(name = "avatar")
     private String avatar;
+
     @OneToMany(mappedBy = "supplier",cascade = CascadeType.ALL)
     private List<SupplierProduct> supplierProducts;
-    public Supplier(int supplierId, String name, String avatar) {
+
+    public Supplier(String supplierId, String name, String avatar) {
         this.supplierId = supplierId;
         this.name = name;
         this.avatar = avatar;

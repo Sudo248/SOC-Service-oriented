@@ -4,19 +4,18 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@ToString
+@Data
 @Entity
-@Table(name = "product")
+@Table(name = "products")
 @NoArgsConstructor
+@AllArgsConstructor
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
-    private int productId;
+    private String productId;
 
     @Column(name = "name")
     private String name;
@@ -27,19 +26,17 @@ public class Product {
     @Column(name = "sku")
     private String sku;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Image> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Image> images;
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
-    private List<SupplierProduct> supplierProducts;
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
-    private List<CategoryProduct> categoryProducts;
+    private List<SupplierProduct> supplierProducts = new ArrayList<>();
 
-
-    public Product(int productId, String name, String description, String sku) {
-        this.productId = productId;
-        this.name = name;
-        this.description = description;
-        this.sku = sku;
-    }
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "category_product",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<Category> categories = new ArrayList<>();
 }
