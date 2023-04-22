@@ -1,6 +1,6 @@
 package com.sudo248.apigateway.filter;
 
-import com.sudo248.apigateway.external.CommonService;
+import com.sudo248.apigateway.utils.TokenUtils;
 import com.sudo248.domain.common.Constants;
 import com.sudo248.domain.common.ErrorMessage;
 import com.sudo248.domain.exception.ApiException;
@@ -24,13 +24,13 @@ public class ApiFilter implements GatewayFilter {
 
     private final Logger log = LoggerFactory.getLogger(ApiFilter.class);
 
-    private final CommonService commonService;
+    private final TokenUtils tokenUtils;
 
     private final Predicate<ServerHttpRequest> isApiSecured;
     private final Predicate<ServerHttpRequest> isApiInternal;
 
-    public ApiFilter(CommonService commonService) {
-        this.commonService = commonService;
+    public ApiFilter(TokenUtils tokenUtils) {
+        this.tokenUtils = tokenUtils;
         final List<String> unsecuredApiEndpoints = List.of(
                 "/sign-in",
                 "/sign-up",
@@ -40,6 +40,7 @@ public class ApiFilter implements GatewayFilter {
                 "/images",
                 "/return-vnpay"
         );
+
         final List<String> internalApiEndpoint = List.of("/internal");
 
         this.isApiSecured = _request -> unsecuredApiEndpoints.stream().noneMatch(endpoint -> _request.getURI().getPath().contains(endpoint));
@@ -73,9 +74,10 @@ public class ApiFilter implements GatewayFilter {
             }
 
             try {
-                if (commonService.validateToken(token)) {
-                    String userId = commonService.getUserIdFromToken(token);
-                    request.getHeaders().add(Constants.HEADER_USER_ID, userId);
+                if (tokenUtils.validateToken(token)) {
+                    String userId = tokenUtils.getUserIdFromToken(token);
+                    request = request.mutate().header(Constants.HEADER_USER_ID, userId).build();
+                    exchange = exchange.mutate().request(request).build();
                 }
             } catch (ApiException e) {
                 log.error("Authentication failed :  : " + e.getMessage());

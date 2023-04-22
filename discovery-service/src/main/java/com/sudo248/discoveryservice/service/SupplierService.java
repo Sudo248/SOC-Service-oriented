@@ -6,10 +6,13 @@ import com.sudo248.discoveryservice.repository.entity.Supplier;
 import java.util.List;
 
 public interface SupplierService {
-    SupplierDto addSupplier(SupplierDto supplierDto);
+    SupplierDto addSupplier(String userId, SupplierDto supplierDto);
 
-    List<SupplierDto> getAllSuppliers();
-    SupplierDto getSupplierByName(String supplierName);
-    SupplierDto toDto(Supplier supplier);
-    Supplier toEntity(SupplierDto supplierDto);
+    List<SupplierDto> getAllSuppliers(String userId);
+    SupplierDto getSupplierByName(String userId, String supplierName);
+
+    SupplierDto getSupplierByUserId(String userId, boolean isDetail);
+
+    SupplierDto toDto(String userId, Supplier supplier);
+    Supplier toEntity(String userId, SupplierDto supplierDto);
 }

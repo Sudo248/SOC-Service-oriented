@@ -11,6 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 public class CategoryDto {
     private String categoryId;
-    private String  name, imageUrl, supplierId;
+    private String  name, image, supplierId;
     private List<ProductDto> products;
 }

@@ -76,6 +76,11 @@
             <version>3.1.5</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-jackson</artifactId>
+        </dependency>
+
         <!--        local module-->
         <dependency>
             <groupId>com.sudo248</groupId>

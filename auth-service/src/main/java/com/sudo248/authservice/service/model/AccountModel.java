@@ -1,11 +1,16 @@
 package com.sudo248.authservice.service.model;
 
 import com.sudo248.authservice.repository.entity.Provider;
+import com.sudo248.authservice.repository.entity.Role;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class AccountModel {
     private String userId;
 
@@ -20,36 +25,5 @@ public class AccountModel {
 
     private LocalDateTime createdAt;
 
-    public AccountModel() {
-    }
-
-    public AccountModel(String userId) {
-        this.userId = userId;
-        this.isValidated = true;
-    }
-
-    public AccountModel(String userId, String phoneNumber, String password, Provider provider, boolean isValidated, LocalDateTime createdAt) {
-        this.userId = userId;
-        this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.provider = provider;
-        this.isValidated = isValidated;
-        this.createdAt = createdAt;
-    }
-
-    public AccountModel(String phoneNumber, String password) {
-        this(phoneNumber, password, Provider.AUTH_SERVICE);
-    }
-
-    public AccountModel(String phoneNumber, String password, Provider provider) {
-        this(null, phoneNumber, password, provider);
-    }
-
-    public AccountModel(String userId, String phoneNumber, String password, Provider provider, LocalDateTime createdAt) {
-        this(userId, phoneNumber, password, provider, false, createdAt);
-    }
-
-    public AccountModel(String userId, String phoneNumber, String password, Provider provider) {
-        this(userId, phoneNumber, password, provider, LocalDateTime.now());
-    }
+    private Role role;
 }

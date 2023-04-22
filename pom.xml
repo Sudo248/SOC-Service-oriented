@@ -7,14 +7,31 @@
     <packaging>pom</packaging>
 
     <modules>
+
+<!--    port: 8761 -->
         <module>soc-registry</module>
+
+<!--    port: 9030    -->
         <module>api-gateway</module>
         <module>domain</module>
+
+<!--    port: 8082    -->
         <module>auth-service</module>
+
+<!--    port: 8081    -->
         <module>common-service</module>
+
+<!--    port: 8085    -->
         <module>image-service</module>
+
+<!--    port: 8083    -->
         <module>discovery-service</module>
+
+<!--    port: 8086    -->
         <module>payment-service</module>
+
+<!--    port: 8084    -->
+        <module>user-service</module>
     </modules>
 
 </project>

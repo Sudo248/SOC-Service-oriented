@@ -24,11 +24,10 @@ public class Category {
     private String name;
 
     @Column(name = "image")
-    private String imageUrl;
+    private String image;
 
     @Column(name = "supplier_id")
     private String supplierId;
-
 
     @ManyToMany(mappedBy = "categories", cascade = CascadeType.ALL)
     private List<Product> products;

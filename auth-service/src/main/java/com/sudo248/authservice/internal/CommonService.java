@@ -1,12 +1,11 @@
-package com.sudo248.authservice.external;
+package com.sudo248.authservice.internal;
 
-import com.sudo248.domain.exception.ApiException;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(value = "COMMON-SERVICE", url = "http://common-service:8081/internal")
+@FeignClient(value = "COMMON-SERVICE/internal")
 @Service
 public interface CommonService {
     @GetMapping("/token/generate/{userId}")
