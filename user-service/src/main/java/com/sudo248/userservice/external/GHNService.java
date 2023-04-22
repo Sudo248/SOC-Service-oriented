@@ -16,9 +16,6 @@ import java.util.List;
 @FeignClient(name = "GHN", url = "https://dev-online-gateway.ghn.vn/shiip/public-api")
 @Service
 public interface GHNService {
-//    https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province
-//    https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=201
-//    https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=1542
     @GetMapping(value = "/master-data/province", headers = "token="+ Constants.GHN_TOKEN)
     GHNResponse<List<GHNProvinceDto>> getGHNProvince();
 

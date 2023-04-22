@@ -14,8 +14,6 @@ services:
       - MYSQL_DATABASE=soc
     networks:
       - soc-network
-    ports:
-      - "3306:3306"
 
   soc-registry:
     image: sudo248dev/soc-registry:0.0.1
@@ -61,6 +59,26 @@ services:
     image: sudo248dev/auth-service:0.0.1
     container_name: auth-service
     hostname: auth-service
+    depends_on:
+      - soc-registry
+      - db-service
+    networks:
+      - soc-network
+
+  discovery-service:
+    image: sudo248dev/discovery-service:0.0.1
+    container_name: discovery-service
+    hostname: discovery-service
+    depends_on:
+      - soc-registry
+      - db-service
+    networks:
+      - soc-network
+
+  user-service:
+    image: sudo248dev/user-service:0.0.1
+    container_name: user-service
+    hostname: user-service
     depends_on:
       - soc-registry
       - db-service

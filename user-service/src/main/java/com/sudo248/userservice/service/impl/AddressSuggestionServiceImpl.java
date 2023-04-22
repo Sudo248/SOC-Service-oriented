@@ -23,7 +23,7 @@ public class AddressSuggestionServiceImpl implements AddressSuggestionService {
     }
 
     @Override
-    public List<AddressSuggestionDto> getProvinces() throws Exception {
+    public List<AddressSuggestionDto> getProvinces() throws ApiException {
         GHNResponse<List<GHNProvinceDto>> response = ghnService.getGHNProvince();
         if (response.getCode() != 200) {
             throw new ApiException(HttpStatus.BAD_REQUEST, response.getMessage());
@@ -32,7 +32,7 @@ public class AddressSuggestionServiceImpl implements AddressSuggestionService {
     }
 
     @Override
-    public List<AddressSuggestionDto> getDistricts(int provinceId) throws Exception {
+    public List<AddressSuggestionDto> getDistricts(int provinceId) throws ApiException {
         GHNResponse<List<GHNDistrictDto>> response = ghnService.getGHNDistrict(provinceId);
         if (response.getCode() != 200) {
             throw new ApiException(HttpStatus.BAD_REQUEST, response.getMessage());
@@ -41,7 +41,7 @@ public class AddressSuggestionServiceImpl implements AddressSuggestionService {
     }
 
     @Override
-    public List<AddressSuggestionDto> getWards(int districtId) throws Exception {
+    public List<AddressSuggestionDto> getWards(int districtId) throws ApiException {
         GHNResponse<List<GHNWardDto>> response = ghnService.getGHNWard(districtId);
         if (response.getCode() != 200) {
             throw new ApiException(HttpStatus.BAD_REQUEST, response.getMessage());

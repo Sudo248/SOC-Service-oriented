@@ -3,6 +3,8 @@ strings=(
   api-gateway:0.0.1
   common-service:0.0.1
   auth-service:0.0.1
+  discovery-service:0.0.1
+  user-service:0.0.1
 )
 admin="sudo248dev/"
 # shellcheck disable=SC2046
@@ -17,11 +19,10 @@ for i in "${strings[@]}"; do
   echo "Build docker image $i"
   # shellcheck disable=SC2034
   image="${admin}$i"
-
   folder=$(echo $i | cut -d':' -f 1)
   # shellcheck disable=SC2164
   cd "$folder"
-  docker bulild -t image .
+  docker build -t "${image}" .
   # shellcheck disable=SC2103
   cd ..
 

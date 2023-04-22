@@ -4,6 +4,9 @@ strings=(
   api-gateway
   common-service
   auth-service
+  discovery-service
+  payment-service
+  user-service
 )
 mvn clean
 
