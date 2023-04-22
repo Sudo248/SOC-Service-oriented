@@ -30,12 +30,12 @@ public class SupplierProduct {
     private double price;
 
     @Column(name = "sold_amount")
-    private double soldAmount;
+    private int soldAmount;
 
     @Column(name = "rate")
     private double rate;
 
-    public SupplierProduct(Product product, Supplier supplier, int amountLeft, double price, double soldAmount, double rate) {
+    public SupplierProduct(Product product, Supplier supplier, int amountLeft, double price, int soldAmount, double rate) {
         this.product = product;
         this.supplier = supplier;
         this.amountLeft = amountLeft;

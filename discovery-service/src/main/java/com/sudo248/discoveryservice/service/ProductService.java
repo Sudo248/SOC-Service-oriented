@@ -6,12 +6,12 @@ import com.sudo248.discoveryservice.repository.entity.Product;
 import java.util.List;
 
 public interface ProductService {
-    ProductDto addProduct(ProductDto productDto);
-    List<ProductDto> getAllProducts();
-    List<ProductDto> getProductsByName(String name);
+    ProductDto addProduct(String userId, ProductDto productDto);
+    List<ProductDto> getAllProducts(String userId);
+    List<ProductDto> getProductsByName(String userId, String name);
 
-    ProductDto getProductById(String productId);
-    ProductDto toDto(Product product);
+    ProductDto getProductById(String userId, String productId);
+    ProductDto toDto(String userId, Product product);
     Product toEntity(ProductDto productDto);
 
 }

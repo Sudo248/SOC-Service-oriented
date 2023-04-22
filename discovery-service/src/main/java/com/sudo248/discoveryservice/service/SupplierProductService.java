@@ -7,10 +7,13 @@ import com.sudo248.discoveryservice.repository.entity.SupplierProduct;
 import java.util.List;
 
 public interface SupplierProductService {
-    List<SupplierProductDto> getAllSupplierProducts();
-    List<ProductDto> getProductBySupplierName(String supplierName);
-    SupplierProductDto getProductInfoBySupplierNameProductId(String supplierName, String productId);
-    SupplierProductDto toDto(SupplierProduct supplierProduct);
+    List<SupplierProductDto> getAllSupplierProducts(String userId);
+    List<ProductDto> getProductBySupplierName(String userId, String supplierName);
+    SupplierProductDto getProductInfoBySupplierNameProductId(String userId, String supplierName, String productId);
+
+    SupplierProductDto orderProduct(String userId, String productId, String supplierId, int amount);
+
+    SupplierProductDto toDto(String userId, SupplierProduct supplierProduct);
     SupplierProduct toEntity(SupplierProductDto supplierProductDto);
-    List<SupplierProductDto> getSupplierProductsByProductId(String productId);
+    List<SupplierProductDto> getSupplierProductsByProductId(String userId, String productId);
 }

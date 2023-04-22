@@ -6,5 +6,5 @@ import org.springframework.http.ResponseEntity;
 import java.io.IOException;
 
 public interface HandleException {
-    ResponseEntity<BaseResponse<?>> handle() throws ApiException, IOException;
+    ResponseEntity<BaseResponse<?>> handle() throws Exception;
 }

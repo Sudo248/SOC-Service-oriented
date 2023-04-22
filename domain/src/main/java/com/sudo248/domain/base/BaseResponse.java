@@ -1,22 +1,24 @@
 package com.sudo248.domain.base;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.io.Serializable;
+
 @Data
-public class BaseResponse<D> {
+@NoArgsConstructor
+@AllArgsConstructor
+public class BaseResponse<D> implements Serializable {
+
+    public static final long serialVersionUID = 24082001L;
+
     private int statusCode;
     private boolean success;
     private String message;
     private D data;
-
-    public BaseResponse(int statusCode, boolean success, String message, D data) {
-        this.statusCode = statusCode;
-        this.success = success;
-        this.message = message;
-        this.data = data;
-    }
 
     public BaseResponse(int statusCode, String message, D data) {
         this.statusCode = statusCode;
@@ -83,7 +85,7 @@ public class BaseResponse<D> {
         return ResponseEntity.status(status).body(response);
     }
 
-    public static <Data> ResponseEntity<BaseResponse<?>> status(HttpStatus status, String message) {
+    public static ResponseEntity<BaseResponse<?>> status(HttpStatus status, String message) {
         var response = new BaseResponse<>(
                 status.value(),
                 message,

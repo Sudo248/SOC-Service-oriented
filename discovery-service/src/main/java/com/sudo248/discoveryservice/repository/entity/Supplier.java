@@ -21,11 +21,14 @@ public class Supplier{
     @Column(name = "name")
     private String name;
 
-    @Column(name = "location")
-    private String location;
+    @Column(name = "user_id")
+    private String userId;
 
     @Column(name = "avatar")
     private String avatar;
+
+    @Transient
+    private Location location;
 
     @OneToMany(mappedBy = "supplier",cascade = CascadeType.ALL)
     private List<SupplierProduct> supplierProducts;

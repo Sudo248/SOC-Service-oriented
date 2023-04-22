@@ -10,11 +10,11 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Getter
-@Setter
-@ToString
+@Data
 @Entity
-@Table(name = "account")
+@Table(name = "accounts")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Account {
     @Id
     @Column(name = "user_id")
@@ -34,21 +34,7 @@ public class Account {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    public Account() {
-    }
-
-    public Account(String userId) {
-        this.userId = userId;
-    }
-
-    public Account(String userId, String phoneNumber, String password, Provider provider, boolean isValidated, LocalDateTime createdAt) {
-        this.userId = userId;
-        this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.provider = provider;
-        this.isValidated = isValidated;
-        this.createdAt = createdAt;
-    }
+    private Role role;
 
     @Override
     public boolean equals(Object o) {

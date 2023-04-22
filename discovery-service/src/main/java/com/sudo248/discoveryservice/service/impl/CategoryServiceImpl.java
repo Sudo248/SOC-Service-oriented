@@ -1,7 +1,6 @@
 package com.sudo248.discoveryservice.service.impl;
 
 import com.sudo248.discoveryservice.controller.dto.CategoryDto;
-import com.sudo248.discoveryservice.controller.dto.ProductDto;
 import com.sudo248.discoveryservice.repository.CategoryRepository;
 import com.sudo248.discoveryservice.repository.entity.Category;
 import com.sudo248.discoveryservice.service.CategoryService;
@@ -29,24 +28,19 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryDto;
     }
 
-    public CategoryDto getCategoryById(String categoryId) {
-        List<Category> categories = categoryRepository.findAll();
-        for (Category c : categories) {
-            if (c.getCategoryId().equals(categoryId)) {
-                return toDto(c);
-            }
-        }
-        return null;
+    public CategoryDto getCategoryById(String userId, String categoryId) {
+        Category category = categoryRepository.getReferenceById(categoryId);
+        return toDto(userId, category);
     }
 
     @Override
-    public CategoryDto toDto(Category c) {
+    public CategoryDto toDto(String userId, Category c) {
         CategoryDto categoryDto = new CategoryDto();
         categoryDto.setCategoryId(c.getCategoryId());
         categoryDto.setName(c.getName());
-        categoryDto.setImageUrl(c.getImageUrl());
+        categoryDto.setImage(c.getImage());
         categoryDto.setSupplierId(c.getSupplierId());
-        categoryDto.setProducts(c.getProducts().stream().map((productService::toDto)).collect(Collectors.toList()));
+        categoryDto.setProducts(c.getProducts().stream().map((product -> productService.toDto(userId, product))).collect(Collectors.toList()));
         return categoryDto;
     }
 
@@ -55,14 +49,14 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = new Category();
         category.setCategoryId(Utils.createIdOrElse(categoryDto.getCategoryId()));
         category.setName(categoryDto.getName());
-        category.setImageUrl(categoryDto.getImageUrl());
+        category.setImage(categoryDto.getImage());
         category.setSupplierId(categoryDto.getSupplierId());
         return category;
     }
 
     @Override
-    public List<CategoryDto> getAllCategories() {
+    public List<CategoryDto> getAllCategories(String userId) {
         List<Category> categories = categoryRepository.findAll();
-        return categories.stream().map(this::toDto).collect(Collectors.toList());
+        return categories.stream().map(c -> toDto(userId, c)).collect(Collectors.toList());
     }
 }

@@ -7,7 +7,7 @@ import com.sudo248.authservice.contronller.dto.TokenDto;
 import com.sudo248.authservice.exception.PhoneNumberExistedException;
 import com.sudo248.authservice.exception.PhoneNumberInvalidException;
 import com.sudo248.authservice.exception.WrongPasswordException;
-import com.sudo248.authservice.external.CommonService;
+import com.sudo248.authservice.internal.CommonService;
 import com.sudo248.authservice.repository.AccountRepository;
 import com.sudo248.authservice.repository.entity.Account;
 import com.sudo248.authservice.service.AccountService;
@@ -23,9 +23,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -51,8 +48,8 @@ public class AccountServiceImpl implements AccountService {
             if (!accountRepository.existsByPhoneNumber(signInDto.getPhoneNumber())) {
                 throw new PhoneNumberInvalidException();
             }
-            AccountModel accountModel = mapper.map(accountRepository.getUserByPhoneNumber(signInDto.getPhoneNumber()), AccountModel.class);
-            if (!encoder.matches(signInDto.getPassword(), accountModel.getPhoneNumber())) {
+            AccountModel accountModel = mapper.map(accountRepository.getAccountByPhoneNumber(signInDto.getPhoneNumber()), AccountModel.class);
+            if (!encoder.matches(signInDto.getPassword(), accountModel.getPassword())) {
                 throw new WrongPasswordException();
             }
 //            if (!accountModel.isValidated()) {

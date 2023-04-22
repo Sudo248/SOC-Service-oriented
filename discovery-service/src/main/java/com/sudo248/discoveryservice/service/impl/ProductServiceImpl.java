@@ -2,10 +2,7 @@ package com.sudo248.discoveryservice.service.impl;
 
 import com.sudo248.discoveryservice.controller.dto.ProductDto;
 import com.sudo248.discoveryservice.repository.*;
-import com.sudo248.discoveryservice.repository.entity.Image;
-import com.sudo248.discoveryservice.repository.entity.Product;
-import com.sudo248.discoveryservice.repository.entity.SupplierProduct;
-import com.sudo248.discoveryservice.repository.entity.SupplierProductId;
+import com.sudo248.discoveryservice.repository.entity.*;
 import com.sudo248.discoveryservice.service.ImageService;
 import com.sudo248.discoveryservice.service.ProductService;
 import com.sudo248.discoveryservice.service.SupplierProductService;
@@ -35,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto addProduct(ProductDto productDto) {
+    public ProductDto addProduct(String userId, ProductDto productDto) {
         Product product = toEntity(productDto);
         product.setImages(productDto.getImages().stream().map(
                 (imageDto -> new Image(
@@ -64,29 +61,25 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList()));
 
         productRepository.save(product);
-        return toDto(product);
+        return toDto(userId, product);
     }
 
 
-    public ProductDto getProductById(String productId) {
-        List<Product> products = productRepository.findAll();
-        for (Product c : products) {
-            if (c.getProductId().equals(productId)) {
-                return toDto(c);
-            }
-        }
-        return null;
+    public ProductDto getProductById(String userId, String productId) {
+        Product product = productRepository.getReferenceById(productId);
+        return toDto(userId, product);
     }
 
     @Override
-    public ProductDto toDto(Product c) {
+    public ProductDto toDto(String userId, Product product) {
         ProductDto productDto = new ProductDto();
-        productDto.setProductId(c.getProductId());
-        productDto.setName(c.getName());
-        productDto.setDescription(c.getDescription());
-        productDto.setSku(c.getSku());
-        productDto.setImages(c.getImages().stream().map(imageService::toDto).collect(Collectors.toList()));
-        productDto.setSupplierProducts(c.getSupplierProducts().stream().map(supplierProductService::toDto).collect(Collectors.toList()));
+        productDto.setProductId(product.getProductId());
+        productDto.setName(product.getName());
+        productDto.setDescription(product.getDescription());
+        productDto.setSku(product.getSku());
+        productDto.setCategoryIds(product.getCategories().stream().map(Category::getCategoryId).collect(Collectors.toList()));
+        productDto.setImages(product.getImages().stream().map(imageService::toDto).collect(Collectors.toList()));
+        productDto.setSupplierProducts(product.getSupplierProducts().stream().map(supplierProduct -> supplierProductService.toDto(userId, supplierProduct)).collect(Collectors.toList()));
         return productDto;
     }
 
@@ -103,21 +96,19 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public List<ProductDto> getAllProducts() {
+    public List<ProductDto> getAllProducts(String userId) {
         List<Product> products = productRepository.findAll();
-        return products.stream().map(this::toDto).collect(Collectors.toList());
+        return products.stream().map(c -> toDto(userId, c)).collect(Collectors.toList());
     }
 
     @Override
-    public List<ProductDto> getProductsByName(String name) {
+    public List<ProductDto> getProductsByName(String userId, String name) {
         List<Product> products = productRepository.findAll();
         List<ProductDto> productDtos = new ArrayList<>();
         for (Product p : products) {
             if (p.getName().toLowerCase().contains(name.toLowerCase()))
-                productDtos.add(toDto(p));
+                productDtos.add(toDto(userId, p));
         }
         return productDtos;
     }
-
-
 }
