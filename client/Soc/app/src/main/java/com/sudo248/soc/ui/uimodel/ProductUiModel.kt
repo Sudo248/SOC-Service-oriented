@@ -2,6 +2,7 @@ package com.sudo248.soc.ui.uimodel
 
 import androidx.databinding.ObservableField
 import com.sudo248.base_android.base.ItemDiff
+import com.sudo248.soc.domain.entity.discovery.Route
 
 
 /**
@@ -16,14 +17,12 @@ data class ProductUiModel(
     val name: ObservableField<String> = ObservableField(""),
     val description: String = "",
     val sku: String = "",
+    val route: ObservableField<Route> = ObservableField(Route()),
     val images: ObservableField<List<String>> = ObservableField(listOf()),
     val amountLeft: ObservableField<Int> = ObservableField(0),
     val price: ObservableField<Double> = ObservableField(0.0),
-    val soldAmount: ObservableField<Double> = ObservableField(0.0),
+    val soldAmount: ObservableField<Int> = ObservableField(0),
     val rate: ObservableField<Double> = ObservableField(0.0),
-    val distance: ObservableField<Double> = ObservableField(0.0),
-    val location: ObservableField<String> = ObservableField(""),
-    val timeDelivery: ObservableField<String> = ObservableField(""),
     var isLike: ObservableField<Boolean> = ObservableField(false),
 ) : ItemDiff, java.io.Serializable {
     override fun isContentTheSame(other: ItemDiff): Boolean {

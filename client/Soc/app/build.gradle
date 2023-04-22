@@ -18,8 +18,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-//        buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:9030/api/v1/\"")
-        buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8083/api/v1/\"")
+        buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:9030/api/v1/\"")
+//        buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8083/api/v1/\"")
     }
 
     buildTypes {
@@ -75,8 +75,12 @@ dependencies {
 
     // vnpay
     implementation files("libs/merchant-1.0.25.aar")
+
     // support for vnpay sdk
     implementation("com.android.support:support-v4:19.0.0")
+
+    // location
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 }
 
 kapt {

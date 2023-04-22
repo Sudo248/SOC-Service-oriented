@@ -1,4 +1,4 @@
-package com.sudo248.soc.data.api.discovery.request
+package com.sudo248.soc.data.api.payment.request
 
 data class PaymentRequest(
     val paymentType: String,

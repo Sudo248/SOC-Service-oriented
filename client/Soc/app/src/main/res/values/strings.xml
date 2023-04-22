@@ -35,14 +35,21 @@
     <string name="user_title">Cá nhân</string>
     <string name="user_info">Thông tin người dùng</string>
     <string name="label_user_name">Tên đăng nhập</string>
+    <string name="full_name">Họ và tên</string>
+    <string name="required">* Bắt buộc</string>
     <string name="label_password">Mật khẩu</string>
     <string name="label_gender">Giới tính</string>
     <string name="label_phonenumber">Số điện thoại</string>
+    <string name="label_province">Thành phố/ Tỉnh</string>
+    <string name="label_district">Quận/ Huyện</string>
+    <string name="label_ward">Phường/ Xã</string>
     <string name="label_email">Email</string>
     <string name="label_address">Địa chỉ</string>
+    <string name="label_dob">Ngày sinh</string>
     <string name="label_bank">Ngân hàng liên kết</string>
     <string name="label_intro">Giới thiệu</string>
     <string name="log_out">Đăng xuất</string>
+    <string name="update">Cập nhật</string>
     <string name="more">more...</string>
     <string name="payment_method">Phương thức thanh toán</string>
     <string name="payment">Thanh toán</string>
@@ -60,4 +67,11 @@
     <string name="total_payment">Tổng tiền thanh toán:</string>
     <string name="choose_payment_method">Chọn phương thức\nthanh toán</string>
     <string name="agree">Đồng ý</string>
+    <string name="edit_user_title">Sửa hồ sơ</string>
+    <string name="edit_label">Sửa</string>
+    <string name="consumer">Thành viên</string>
+    <string name="staff">Nhân viên</string>
+    <string name="choose_province">Chọn Thành phố/ Tỉnh</string>
+    <string name="choose_district">Chọn Quận/ Huyện</string>
+    <string name="choose_ward">Chọn Phường/ Xã</string>
 </resources>

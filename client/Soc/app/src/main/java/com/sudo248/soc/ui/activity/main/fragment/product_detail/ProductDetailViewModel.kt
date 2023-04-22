@@ -26,6 +26,9 @@ class ProductDetailViewModel @Inject constructor(
     private val discoveryRepository: DiscoveryRepository
 ) : BaseViewModel<NavDirections>() {
 
+    private val _supplierLocation =MutableLiveData("")
+    val supplierLocation: LiveData<String> = _supplierLocation
+
     var error: SingleEvent<String?> = SingleEvent(null)
     // Khi khởi tạo view observer dữ liệu trong viewmodel nên sẽ hiển thị sai. Khi set lại value nhưng k notify nên k có dữ liệu
     var product: ProductUiModel = ProductUiModel()

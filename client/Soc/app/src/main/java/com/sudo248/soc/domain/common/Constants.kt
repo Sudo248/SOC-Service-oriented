@@ -10,6 +10,7 @@ package com.sudo248.soc.domain.common
 object Constants {
     const val TIMEOUT_OTP = 30_000L
     const val PATTERN_OTP = "(|^)\\d{6}"
+    const val UNKNOWN_ERROR = "Unknown error"
 
     object Key {
         const val PHONE_NUMBER = "PHONE_NUMBER"
@@ -43,5 +44,11 @@ object Constants {
 
         //thanh toán thành công trên webview
         const val ACTION_SUCCESS = "SuccessBackAction"
+    }
+
+    object Images{
+        const val DEFAULT_USER_IMAGE = "user_default.png"
+        const val DEFAULT_CATEGORY_IMAGE = "category_default.png"
+        const val DEFAULT_PRODUCT_IMAGE = "product_default.png"
     }
 }

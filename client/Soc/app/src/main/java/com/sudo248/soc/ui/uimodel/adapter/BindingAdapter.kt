@@ -18,6 +18,7 @@ import com.sudo248.soc.R
 
 @BindingAdapter("imageUrl")
 fun loadImage(image: ImageView, url: String) {
+    if (url.isEmpty()) return
     Glide
         .with(image.context)
         .load(url)

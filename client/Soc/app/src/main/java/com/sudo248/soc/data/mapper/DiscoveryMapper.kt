@@ -9,21 +9,19 @@ import com.sudo248.soc.domain.entity.discovery.SupplierProduct
 
 fun SupplierProductDto.toSupplierProduct(): SupplierProduct {
     return SupplierProduct(
-        supplierId = supplierId.toString(),
-        productId = productId.toString(),
-        distance = distance,
+        supplierId = supplierId,
+        productId = productId,
+        route = route,
         amountLeft = amountLeft,
         price = price,
         soldAmount = soldAmount,
         rate = rate,
-        location = "location",
-        timeDelivery = 0
     )
 }
 
 fun ProductDto.toProduct(): Product {
     return Product(
-        productId = productId.toString(),
+        productId = productId,
         name = name,
         description = description,
         sku = sku,
@@ -35,7 +33,7 @@ fun ProductDto.toProduct(): Product {
 
 fun CategoryDto.toCategory(): Category {
     return Category(
-        categoryId = categoryId.toString(),
+        categoryId = categoryId,
         name = name,
         imageUrl = image,
         products = products.map { it.toProduct() }

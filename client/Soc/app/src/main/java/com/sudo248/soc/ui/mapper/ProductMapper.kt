@@ -13,14 +13,12 @@ fun Product.toListProductUi(): List<ProductUiModel> {
             name = ObservableField(name),
             description = description,
             sku = sku,
+            route = ObservableField(it.route),
             images = ObservableField(images),
             amountLeft = ObservableField(it.amountLeft),
             price = ObservableField(it.price),
             soldAmount = ObservableField(it.soldAmount),
             rate = ObservableField(it.rate),
-            distance = ObservableField(it.distance),
-            location = ObservableField(it.location),
-            timeDelivery = ObservableField(TimeUtils.convertTimestampToString(it.timeDelivery)),
             isLike = ObservableField(isLike)
         )
     }

@@ -1,11 +1,18 @@
 package com.sudo248.soc.ui.util
 
+import android.annotation.SuppressLint
+import com.sudo248.base_android.utils.DateUtils
+import com.sudo248.soc.domain.entity.user.Gender
 import com.sudo248.soc.domain.ktx.format
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
+
 
 object Utils {
     private val locale = Locale("vi", "VN")
+    private const val dateFormat = "dd/MM/yyyy"
 
     fun format(value: Double, digit: Int): String {
         return value.format(digit)
@@ -43,5 +50,14 @@ object Utils {
             }
             append(value.substring(hideLength))
         }
+    }
+
+    fun formatDob(date: Date): String {
+        return DateUtils.format(date.time, dateFormat, locale)
+    }
+
+    fun parseDob(date: String): Date {
+        if (date.isEmpty()) return Date()
+        return DateUtils.parse(date, dateFormat) ?: Date()
     }
 }

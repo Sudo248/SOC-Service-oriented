@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class UserFragment : BaseFragment<FragmentUserBinding, UserViewModel>() {
-    override val viewModel: UserViewModel by viewModels()
+    override val viewModel: UserViewModel by activityViewModels()
     private val mainActivityViewModel: MainViewModel by activityViewModels()
     override val enableStateScreen: Boolean = true
 

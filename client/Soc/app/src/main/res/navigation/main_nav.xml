@@ -30,5 +30,14 @@
         android:id="@+id/userFragment"
         android:name="com.sudo248.soc.ui.activity.main.fragment.user.UserFragment"
         android:label="UserFragment"
-        tools:layout="@layout/fragment_user"/>
+        tools:layout="@layout/fragment_user">
+        <action
+            android:id="@+id/action_userFragment_to_userEditFragment"
+            app:destination="@id/userEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userEditFragment"
+        android:name="com.sudo248.soc.ui.activity.main.fragment.user.UserEditFragment"
+        android:label="UserEditFragment"
+        tools:layout="@layout/fragment_edit_user"/>
 </navigation>

@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="com.sudo248.soc.ui.util.Utils" />
+
+        <import type="com.sudo248.soc.domain.entity.auth.Role" />
 
         <variable
             name="viewModel"
@@ -73,7 +76,7 @@
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
                                 android:scaleType="centerCrop"
-                                app:imageUrl="@{viewModel.user.avatarUrl}"
+                                app:imageUrl="@{viewModel.user.avatar}"
                                 tools:background="@drawable/user_image" />
                         </com.google.android.material.card.MaterialCardView>
 
@@ -81,13 +84,15 @@
                             android:id="@+id/txtName"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:text="@{viewModel.user.name}"
+                            android:layout_marginHorizontal="15dp"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:text="@{viewModel.user.fullName}"
                             android:textColor="@color/white"
                             android:textSize="20sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toTopOf="@id/txtRole"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/imgSettings"
                             app:layout_constraintStart_toEndOf="@+id/cardImageUser"
                             app:layout_constraintTop_toTopOf="@+id/cardImageUser"
                             tools:text="DuongLH" />
@@ -108,6 +113,17 @@
                             app:layout_constraintStart_toStartOf="@+id/txtName"
                             app:layout_constraintTop_toBottomOf="@+id/txtName"
                             tools:text="Thành viên" />
+
+                        <ImageView
+                            android:id="@+id/imgSettings"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{(v) -> viewModel.navigateToEditFragment()}"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_settings"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/white" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -133,7 +149,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            app:layout_constraintGuide_percent="0.65" />
+                            app:layout_constraintGuide_percent="0.6" />
 
                         <TextView
                             android:id="@+id/titleInformationUser"
@@ -142,7 +158,7 @@
                             android:text="@string/user_info"
                             android:textAlignment="center"
                             android:textColor="@color/black"
-                            android:textSize="18dp"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -156,7 +172,7 @@
                             android:layout_marginTop="15dp"
                             android:layout_marginEnd="15dp"
                             android:singleLine="true"
-                            android:text="@{viewModel.user.userName}"
+                            android:text="@{viewModel.user.fullName}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/guidelineCenterHorizontal"
                             app:layout_constraintTop_toBottomOf="@+id/titleInformationUser"
@@ -167,7 +183,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="15dp"
-                            android:text="@string/label_user_name"
+                            android:text="@string/full_name"
                             app:layout_constraintBottom_toBottomOf="@+id/txtUserName"
                             app:layout_constraintEnd_toStartOf="@+id/txtUserName"
                             app:layout_constraintHorizontal_bias="0"
@@ -194,12 +210,39 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="15dp"
-                            android:text="@string/label_gender"
+                            android:text="@string/label_dob"
                             app:layout_constraintBottom_toBottomOf="@+id/txtGender"
                             app:layout_constraintEnd_toStartOf="@+id/txtGender"
                             app:layout_constraintHorizontal_bias="0"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/txtGender" />
+
+                        <TextView
+                            android:id="@+id/txtDob"
+                            style="@style/TextMedium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:singleLine="true"
+                            android:text="@{viewModel.user.dob}"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/guidelineCenterHorizontal"
+                            app:layout_constraintTop_toBottomOf="@+id/txtGender"
+                            tools:text="03/09/2001" />
+
+                        <TextView
+                            android:id="@+id/txtDobLabel"
+                            style="@style/TextMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:text="@string/label_gender"
+                            app:layout_constraintBottom_toBottomOf="@+id/txtDob"
+                            app:layout_constraintEnd_toStartOf="@+id/txtDob"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/txtDob" />
 
                         <TextView
                             android:id="@+id/txtPhoneNumber"
@@ -209,10 +252,10 @@
                             android:layout_marginTop="15dp"
                             android:layout_marginEnd="15dp"
                             android:singleLine="true"
-                            android:text="@{Utils.INSTANCE.formatHideInfo(viewModel.user.phoneNumber, 3)}"
+                            android:text="@{Utils.INSTANCE.formatHideInfo(viewModel.user.phone, 3)}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/guidelineCenterHorizontal"
-                            app:layout_constraintTop_toBottomOf="@+id/txtGender"
+                            app:layout_constraintTop_toBottomOf="@+id/txtDob"
                             tools:text="*******270" />
 
                         <TextView
@@ -234,8 +277,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
                             android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="15dp"
                             android:singleLine="true"
-                            android:text="@{viewModel.user.address}"
+                            android:text="@{viewModel.user.address.fullAddress}"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/guidelineCenterHorizontal"
                             app:layout_constraintTop_toBottomOf="@+id/txtPhoneNumber"
@@ -254,58 +299,31 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/txtAddress" />
 
-                        <TextView
-                            android:id="@+id/txtBank"
-                            style="@style/TextMedium"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginEnd="15dp"
-                            android:singleLine="true"
-                            android:text="@{viewModel.user.bank}"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="@id/guidelineCenterHorizontal"
-                            app:layout_constraintTop_toBottomOf="@+id/txtAddress"
-                            tools:text="Techcombank" />
+                        <!--                        <TextView-->
+                        <!--                            android:id="@+id/txtIntroduce"-->
+                        <!--                            style="@style/TextMedium"-->
+                        <!--                            android:layout_width="0dp"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_marginTop="15dp"-->
+                        <!--                            android:layout_marginEnd="15dp"-->
+                        <!--                            android:layout_marginBottom="15dp"-->
+                        <!--                            android:text="@string/more"-->
+                        <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                        <!--                            app:layout_constraintEnd_toEndOf="parent"-->
+                        <!--                            app:layout_constraintStart_toStartOf="@id/guidelineCenterHorizontal"-->
+                        <!--                            app:layout_constraintTop_toBottomOf="@+id/txtAddress" />-->
 
-                        <TextView
-                            android:id="@+id/textView5"
-                            style="@style/TextMedium"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:text="@string/label_bank"
-                            app:layout_constraintBottom_toBottomOf="@+id/txtBank"
-                            app:layout_constraintEnd_toStartOf="@+id/txtBank"
-                            app:layout_constraintHorizontal_bias="0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/txtBank" />
-
-                        <TextView
-                            android:id="@+id/txtIntroduce"
-                            style="@style/TextMedium"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginEnd="15dp"
-                            android:layout_marginBottom="15dp"
-                            android:text="@string/more"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="@id/guidelineCenterHorizontal"
-                            app:layout_constraintTop_toBottomOf="@+id/txtBank" />
-
-                        <TextView
-                            style="@style/TextMedium"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:text="@string/label_intro"
-                            app:layout_constraintBottom_toBottomOf="@+id/txtIntroduce"
-                            app:layout_constraintEnd_toStartOf="@+id/txtIntroduce"
-                            app:layout_constraintHorizontal_bias="0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/txtIntroduce" />
+                        <!--                        <TextView-->
+                        <!--                            style="@style/TextMedium"-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_marginStart="15dp"-->
+                        <!--                            android:text="@string/label_intro"-->
+                        <!--                            app:layout_constraintBottom_toBottomOf="@+id/txtIntroduce"-->
+                        <!--                            app:layout_constraintEnd_toStartOf="@+id/txtIntroduce"-->
+                        <!--                            app:layout_constraintHorizontal_bias="0"-->
+                        <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                        <!--                            app:layout_constraintTop_toTopOf="@+id/txtIntroduce" />-->
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -318,13 +336,15 @@
                     android:layout_marginTop="50dp"
                     android:layout_marginBottom="50dp"
                     android:background="@drawable/rectangle_conner_25"
+                    android:onClick="@{(v) -> viewModel.logout()}"
                     android:text="@string/log_out"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
                     app:backgroundTint="@color/primaryColor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cardInfo"
-                    android:onClick="@{(v) -> viewModel.logout()}"/>
+                    app:layout_constraintTop_toBottomOf="@+id/cardInfo" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

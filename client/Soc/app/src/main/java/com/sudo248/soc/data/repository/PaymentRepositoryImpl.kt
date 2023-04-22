@@ -3,7 +3,7 @@ package com.sudo248.soc.data.repository
 import com.sudo248.base_android.core.DataState
 import com.sudo248.base_android.data.api.handleResponse
 import com.sudo248.base_android.ktx.stateOn
-import com.sudo248.soc.data.api.discovery.request.PaymentRequest
+import com.sudo248.soc.data.api.payment.request.PaymentRequest
 import com.sudo248.soc.data.api.payment.PaymentService
 import com.sudo248.soc.data.ktx.errorBody
 import com.sudo248.soc.data.mapper.toPayment
