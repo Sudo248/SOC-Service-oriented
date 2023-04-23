@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".ui.SocApplication"
@@ -14,20 +16,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Soc"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.auth.AuthActivity"
+            android:name=".ui.activity.payment.PaymentActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.splash.SplashActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:name=".ui.activity.otp.OtpActivity"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.activity.auth.AuthActivity"
             android:exported="true"
-            android:label="@string/title_activity_splash"
-            android:theme="@style/Theme.Soc.Fullscreen">
+            android:windowSoftInputMode="adjustPan">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.activity.splash.SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,7 +54,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.activity.main.MainActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"

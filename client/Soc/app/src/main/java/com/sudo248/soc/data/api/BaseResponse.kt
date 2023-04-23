@@ -1,5 +1,8 @@
 package com.sudo248.soc.data.api
 
+import com.sudo248.base_android.core.DataState
+import com.sudo248.base_android.exception.ApiException
+
 
 /**
  * **Created by**
@@ -12,4 +15,12 @@ open class BaseResponse<Data> {
     var success: Boolean = false
     var message: String = ""
     var data: Data? = null
+
+    override fun toString(): String {
+        return "{ statusCode: $statusCode\n" +
+                "success: $success\n" +
+                "message: $message\n" +
+                "data: $data" +
+                "}"
+    }
 }

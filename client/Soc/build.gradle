@@ -11,6 +11,8 @@ buildscript {
         safeargs_version = '2.5.3'
         retrofit_version = '2.9.0'
         logging_version = '4.9.3'
+        glide_version = '4.15.0'
+        sms_user_consent_version = '20.4.1'
     }
 }
 

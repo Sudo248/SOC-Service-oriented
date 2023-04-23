@@ -18,12 +18,11 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:9030/api/v1/\"")
+//        buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8083/api/v1/\"")
     }
 
     buildTypes {
-        debug{
-            buildConfigField("String", "BASE_URL", "\"http://localhost:9030/api/v1\"")
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -44,6 +43,7 @@ android {
 }
 
 dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar","*.aar"])
 
     implementation "androidx.core:core-ktx:$core_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
@@ -67,6 +67,20 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     // navigation fragment
     implementation "androidx.navigation:navigation-fragment-ktx:$safeargs_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$safeargs_version"
+    // glide
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    // SMS User Consent API
+    implementation "com.google.android.gms:play-services-auth:$sms_user_consent_version"
+
+    // vnpay
+    implementation files("libs/merchant-1.0.25.aar")
+
+    // support for vnpay sdk
+    implementation("com.android.support:support-v4:19.0.0")
+
+    // location
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 }
 
 kapt {
