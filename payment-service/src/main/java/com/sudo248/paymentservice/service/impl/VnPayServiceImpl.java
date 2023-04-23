@@ -183,6 +183,7 @@ public class VnPayServiceImpl implements PaymentService, VnpayService {
             return checkAndUpdatePayment(
                     vnp_TxnRef,
                     vnp_Amount,
+                    vnp_BankCode,
                     vnp_TransactionStatus,
                     vnp_ResponseCode
             );
@@ -197,6 +198,7 @@ public class VnPayServiceImpl implements PaymentService, VnpayService {
     private VnPayResponse checkAndUpdatePayment(
             String paymentId,
             long amount,
+            String bankCode,
             String paymentStatus,
             String responseCode
     ) {
@@ -212,6 +214,9 @@ public class VnPayServiceImpl implements PaymentService, VnpayService {
                         payment.setStatus(PaymentStatus.SUCCESS);
                     } else {
                         payment.setStatus(PaymentStatus.FAILURE);
+                    }
+                    if (payment.getBankCode() == null || payment.getBankCode().isEmpty()) {
+                        payment.setBankCode(bankCode);
                     }
                     paymentRepository.save(payment);
                     return new VnPayResponse(

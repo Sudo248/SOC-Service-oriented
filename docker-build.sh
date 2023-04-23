@@ -4,6 +4,7 @@ strings=(
   common-service:0.0.1
   auth-service:0.0.1
   discovery-service:0.0.1
+  payment-service:0.0.1
   user-service:0.0.1
 )
 admin="sudo248dev/"

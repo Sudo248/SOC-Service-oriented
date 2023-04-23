@@ -75,6 +75,16 @@ services:
     networks:
       - soc-network
 
+  payment-service:
+    image: sudo248dev/payment-service:0.0.1
+    container_name: payment-service
+    hostname: payment-service
+    depends_on:
+      - soc-registry
+      - db-service
+    networks:
+      - soc-network
+
   user-service:
     image: sudo248dev/user-service:0.0.1
     container_name: user-service
