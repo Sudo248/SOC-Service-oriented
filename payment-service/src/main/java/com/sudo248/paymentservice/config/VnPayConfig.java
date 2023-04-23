@@ -3,6 +3,7 @@ package com.sudo248.paymentservice.config;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 public class VnPayConfig {
     public static final String vnp_TmnCode = "BQPK5W1P";
@@ -18,6 +19,26 @@ public class VnPayConfig {
     public static final String vnp_CurrCode = "VND";
     public static final String vnp_Locale = "vn";
     public static final String vnp_ReturnUrl = "";
+
+    public static String hashAllFields(Map fields) {
+        List fieldNames = new ArrayList(fields.keySet());
+        Collections.sort(fieldNames);
+        StringBuilder sb = new StringBuilder();
+        Iterator itr = fieldNames.iterator();
+        while (itr.hasNext()) {
+            String fieldName = (String) itr.next();
+            String fieldValue = (String) fields.get(fieldName);
+            if ((fieldValue != null) && (fieldValue.length() > 0)) {
+                sb.append(fieldName);
+                sb.append("=");
+                sb.append(fieldValue);
+            }
+            if (itr.hasNext()) {
+                sb.append("&");
+            }
+        }
+        return hmacSHA512(vnp_HashSecret,sb.toString());
+    }
 
     public static String hmacSHA512(final String key, final String data) {
         try {
