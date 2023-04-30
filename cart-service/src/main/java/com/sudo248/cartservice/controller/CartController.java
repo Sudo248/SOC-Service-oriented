@@ -3,11 +3,11 @@ package com.sudo248.cartservice.controller;
 import com.sudo248.cartservice.controller.dto.CartDto;
 import com.sudo248.cartservice.service.CartService;
 import com.sudo248.domain.base.BaseResponse;
+import com.sudo248.domain.common.Constants;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-
 public class CartController {
 
     private final CartService cartService;
@@ -30,8 +30,10 @@ public class CartController {
         CartDto cart = cartService.getCartById(cartId);
         return BaseResponse.ok(cart);
     }
-    @GetMapping("/{userId}/active")
-    public ResponseEntity<BaseResponse<?>> getActiveCartByUserId(@PathVariable String userId) {
+    @GetMapping("/active")
+    public ResponseEntity<BaseResponse<?>> getActiveCartByUserId(
+            @RequestHeader(Constants.HEADER_USER_ID) String userId
+    ) {
         CartDto activeCart = cartService. getActiveCartByUserId(userId);
         return BaseResponse.ok(activeCart);
     }

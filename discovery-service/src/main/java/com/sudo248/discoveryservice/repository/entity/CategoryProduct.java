@@ -11,11 +11,11 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Entity
-@Table(name = "categoryProduct")
+@Table(name = "category_product")
 @NoArgsConstructor
 public class CategoryProduct {
     @EmbeddedId
-    private CatetoryProductKey id;
+    private CategoryProductKey id;
     @ManyToOne
     @MapsId("productId")
     @JoinColumn(name="product_id")

@@ -3,11 +3,11 @@ package com.sudo248.cartservice.service.impl;
 import com.sudo248.cartservice.controller.dto.CartDto;
 import com.sudo248.cartservice.controller.dto.CartSupplierProductDto;
 import com.sudo248.cartservice.controller.dto.SupplierProductDto;
+import com.sudo248.cartservice.internal.DiscoveryService;
 import com.sudo248.cartservice.repository.CartRepository;
 import com.sudo248.cartservice.repository.entity.Cart;
 import com.sudo248.cartservice.repository.entity.CartSupplierProduct;
 import com.sudo248.cartservice.service.CartService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,8 +16,15 @@ import java.util.List;
 import java.util.UUID;
 @Service
 public class CartServiceImpl implements CartService {
-    @Autowired
-    private CartRepository cartRepository;
+    private final CartRepository cartRepository;
+
+    private final DiscoveryService discoveryService;
+
+    public CartServiceImpl(CartRepository cartRepository, DiscoveryService discoveryService) {
+        this.cartRepository = cartRepository;
+        this.discoveryService = discoveryService;
+    }
+
     @Override
     public CartDto creNewCart(String userId) {
         Cart cart = new Cart();
@@ -73,10 +80,11 @@ public class CartServiceImpl implements CartService {
     private List<CartSupplierProductDto> getSupplierProduct(List<CartSupplierProduct> list){
         List<CartSupplierProductDto> supplierProductDtos = new ArrayList<>();
         for(CartSupplierProduct s: list){
-            RestTemplate restTemplate = new RestTemplate();
-            String url = "http://127.0.0.1:8083/api/v1/discovery/service/supplierId/" + s.getId().getSupplierId() + "/productId/" + s.getId().getProductId();
-
-            SupplierProductDto supplierProductDto = restTemplate.getForObject(url, SupplierProductDto.class);
+//            RestTemplate restTemplate = new RestTemplate();
+//            String url = "http://DISCOVRY-SERVICE/api/v1/discovery/service/supplierId/" + s.getId().getSupplierId() + "/productId/" + s.getId().getProductId();
+//
+//            SupplierProductDto supplierProductDto = restTemplate.getForObject(url, SupplierProductDto.class);
+            SupplierProductDto supplierProductDto = discoveryService.getSupplierProduct(s.getId().getSupplierId(), s.getId().getProductId());
             supplierProductDtos.add(new CartSupplierProductDto(supplierProductDto, s.getAmount(),s.getAmount() * supplierProductDto.getPrice()));
         }
 

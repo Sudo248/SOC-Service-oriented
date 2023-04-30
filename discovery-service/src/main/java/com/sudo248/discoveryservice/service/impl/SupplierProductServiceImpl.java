@@ -119,7 +119,7 @@ public class SupplierProductServiceImpl implements SupplierProductService {
 
     @Override
     public SupplierProductDto toDto(String userId, SupplierProduct s) {
-        boolean isSameLocation = userId.equals(s.getSupplier().getUserId());
+        boolean isSameLocation = userId == null || userId.equals(s.getSupplier().getUserId());
         return new SupplierProductDto(
                 s.getSupplier().getSupplierId(),
                 s.getProduct().getProductId(),
