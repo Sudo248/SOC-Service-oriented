@@ -9,5 +9,5 @@ package com.sudo248.soc.domain.entity.auth
  */
 data class Token(
     val token: String,
-    val refreshToken: String,
+    val refreshToken: String?,
 )

@@ -1,8 +1,7 @@
-package com.sudo248.soc.data.ktx
+package com.sudo248.soc_staff.data.ktx
 
-import com.google.android.gms.common.api.Api
 import com.sudo248.base_android.exception.ApiException
-import com.sudo248.soc.data.api.BaseResponse
+import com.sudo248.soc_staff.data.api.BaseResponse
 
 
 /**

@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.sudo248.soc.ui.activity.auth.fragment.sign_up.SignUpViewModel" />
+            type="com.sudo248.soc_staff.ui.activity.auth.fragment.sign_up.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,17 +19,38 @@
         android:padding="15dp">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilPhoneNumber"
+            android:id="@+id/tilNameSupplier"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/phone_number"
+            android:hint="@string/label_supplier"
             app:boxBackgroundMode="outline"
             app:boxStrokeColor="@color/primaryColor"
             app:hintTextColor="@color/primaryColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="@={viewModel.nameSupplier}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPhoneNumber"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="@string/phone_number"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/primaryColor"
+            app:hintTextColor="@color/primaryColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilNameSupplier">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"

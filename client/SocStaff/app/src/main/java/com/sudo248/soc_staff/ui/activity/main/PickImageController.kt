@@ -1,4 +1,5 @@
 package com.sudo248.soc_staff.ui.activity.main
 
-interface PickImagController {
+interface PickImageController {
+    fun pickImage()
 }

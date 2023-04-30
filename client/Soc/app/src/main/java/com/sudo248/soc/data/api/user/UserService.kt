@@ -15,25 +15,25 @@ import retrofit2.http.GET
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
-@ApiService(baseUrl = BuildConfig.BASE_URL + "user/")
+@ApiService(baseUrl = BuildConfig.BASE_URL)
 @EnableAuthentication(Constants.Key.TOKEN)
 @LoggingLever(level = Level.BODY)
 interface UserService {
-    @GET
+    @GET("user/")
     suspend fun getUserInfo(): Response<BaseResponse<UserDto>>
 
-    @PUT
+    @PUT("user/")
     suspend fun updateUser(@Body userDto: UserDto): Response<BaseResponse<UserDto>>
 
-    @GET("address/suggestion/province")
+    @GET("user/address/suggestion/province")
     suspend fun getAddressSuggestionProvince(): Response<BaseResponse<List<AddressSuggestionDto>>>
 
-    @GET("address/suggestion/district/{provinceId}")
+    @GET("user/address/suggestion/district/{provinceId}")
     suspend fun getAddressSuggestionDistrict(
         @Path("provinceId") provinceId: Int
     ): Response<BaseResponse<List<AddressSuggestionDto>>>
 
-    @GET("address/suggestion/ward/{districtId}")
+    @GET("user/address/suggestion/ward/{districtId}")
     suspend fun getAddressSuggestionWard(
         @Path("districtId") districtId: Int
     ): Response<BaseResponse<List<AddressSuggestionDto>>>

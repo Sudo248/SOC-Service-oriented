@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Random;
 import java.util.UUID;
 
 public class Utils {
@@ -24,7 +25,7 @@ public class Utils {
     }
 
     public static String createIdOrElse(String id) {
-        return id != null ? id : createId();
+        return (id != null && !id.isEmpty()) ? id : createId();
     }
 
     public static String createId() {
@@ -33,5 +34,9 @@ public class Utils {
 
     public static String createId(String key) {
         return UUID.fromString(key) + "-" + System.currentTimeMillis();
+    }
+
+    public static String genSkuOrElse(String sku) {
+        return (sku != null && !sku.isEmpty()) ? sku : String.valueOf(new Random(System.currentTimeMillis()).nextInt(80000) + 10000);
     }
 }

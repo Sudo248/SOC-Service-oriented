@@ -1,5 +1,6 @@
 package com.sudo248.authservice.contronller.dto;
 
+import com.sudo248.authservice.repository.entity.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,6 @@ public class UserDto {
     private String cover = "user_default.png";
 
     private AddressDto address;
+
+    private Gender gender = Gender.OTHER;
 }

@@ -34,5 +34,9 @@ public class Payment {
     @Column(name = "payment_type")
     private String paymentType;
 
+    @Column(name = "ip_address")
+    private String ipAddress;
+
     private PaymentStatus status;
+
 }

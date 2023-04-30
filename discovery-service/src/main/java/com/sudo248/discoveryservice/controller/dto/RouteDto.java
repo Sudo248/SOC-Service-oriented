@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RouteDto {
     private double weight = 0.0;
-    private ValueDto duration;
-    private ValueDto distance;
+    private ValueDto duration = new ValueDto();
+    private ValueDto distance = new ValueDto();
 }

@@ -54,6 +54,16 @@ public class SupplierController {
         });
     }
 
+    @GetMapping("/{supplierId}/address")
+    public ResponseEntity<BaseResponse<?>> getSupplierAddressById(
+            @RequestHeader(Constants.HEADER_USER_ID) String userId,
+            @PathVariable("supplierId") String supplierId
+    ) {
+        return Utils.handleException(() -> {
+            return supplierService.getSupplierAddress(supplierId);
+        });
+    }
+
     @GetMapping("/user")
     public ResponseEntity<BaseResponse<?>> getSupplierByUserId(
             @RequestHeader(Constants.HEADER_USER_ID) String userId,

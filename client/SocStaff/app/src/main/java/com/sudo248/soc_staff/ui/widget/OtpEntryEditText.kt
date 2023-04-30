@@ -14,9 +14,8 @@ import android.util.TypedValue
 import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
-import com.sudo248.soc.R
+import com.sudo248.soc_staff.R
 
 
 /**

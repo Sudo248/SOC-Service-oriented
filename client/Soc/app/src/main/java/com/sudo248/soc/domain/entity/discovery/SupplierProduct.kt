@@ -8,4 +8,4 @@ data class SupplierProduct(
     val price: Double,
     val soldAmount: Int,
     val rate: Double,
-)
+) : java.io.Serializable

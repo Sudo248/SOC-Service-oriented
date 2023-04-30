@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.sudo248.soc_staff.ui.activity.main.fragment.home.HomeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imgHeader"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/img_header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/img_logo"
+            app:layout_constraintBottom_toBottomOf="@id/imgHeader"
+            app:layout_constraintEnd_toEndOf="@id/imgHeader"
+            app:layout_constraintStart_toStartOf="@id/imgHeader"
+            app:layout_constraintTop_toTopOf="@id/imgHeader"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="35dp"
+            android:layout_marginTop="100dp"
+            android:background="@color/white"
+            app:cardCornerRadius="40dp"
+            app:cardElevation="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.15">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="30dp">
+
+                <TextView
+                    android:id="@+id/txtCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/rectangle_conner_25_primary"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:onClick="@{(v) -> viewModel.navigateToCategory()}"
+                    android:paddingVertical="15dp"
+                    android:text="@string/label_category"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/rectangle_conner_25_primary"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:onClick="@{(v) -> viewModel.navigateToProduct()}"
+                    android:paddingVertical="15dp"
+                    android:text="@string/label_product"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtPromotion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/rectangle_conner_25_primary"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:onClick="@{(v) -> viewModel.navigateToPromotion()}"
+                    android:paddingVertical="15dp"
+                    android:text="@string/label_promotion"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/rectangle_conner_25_primary"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:onClick="@{(v) -> viewModel.navigateToUser()}"
+                    android:paddingVertical="15dp"
+                    android:text="@string/label_account"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="50dp"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

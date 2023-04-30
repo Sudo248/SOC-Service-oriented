@@ -35,15 +35,6 @@ services:
     ports:
       - "9030:9030"
 
-  common-service:
-    image: sudo248dev/common-service:0.0.1
-    container_name: common-service
-    hostname: common-service
-    depends_on:
-      - soc-registry
-    networks:
-      - soc-network
-
   image-service:
     image: sudo248dev/image-service:0.0.1
     container_name: image-service

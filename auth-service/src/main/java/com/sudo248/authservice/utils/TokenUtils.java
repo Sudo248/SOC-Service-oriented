@@ -1,4 +1,4 @@
-package com.sudo248.commonservice.util;
+package com.sudo248.authservice.utils;
 
 import com.sudo248.domain.common.ErrorMessage;
 import com.sudo248.domain.exception.ApiException;

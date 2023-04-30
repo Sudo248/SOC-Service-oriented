@@ -30,6 +30,8 @@ public class User {
 
     private String cover;
 
+    private Gender gender;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Address address;

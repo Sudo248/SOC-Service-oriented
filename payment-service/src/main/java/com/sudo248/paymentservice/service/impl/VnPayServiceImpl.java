@@ -1,6 +1,7 @@
 package com.sudo248.paymentservice.service.impl;
 
 import com.sudo248.domain.base.BaseResponse;
+import com.sudo248.domain.util.Utils;
 import com.sudo248.paymentservice.config.VnPayConfig;
 import com.sudo248.paymentservice.controller.dto.PaymentDto;
 import com.sudo248.paymentservice.controller.dto.VnPayResponse;
@@ -31,6 +32,7 @@ public class VnPayServiceImpl implements PaymentService, VnpayService {
     public ResponseEntity<BaseResponse<?>> pay(PaymentDto paymentDto) {
         return handleException(() -> {
             Payment payment = toEntity(paymentDto);
+            paymentRepository.save(payment);
 
             Map<String, String> vnp_Params = new HashMap<>();
             vnp_Params.put("vnp_Version", VnPayConfig.vnp_Version);
@@ -89,20 +91,35 @@ public class VnPayServiceImpl implements PaymentService, VnpayService {
             String vnp_SecureHash = VnPayConfig.hmacSHA512(VnPayConfig.vnp_HashSecret, hashData.toString());
             queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
             String paymentUrl = VnPayConfig.vnp_Url + "?" + queryUrl;
-            paymentRepository.save(payment);
-            return BaseResponse.ok(paymentUrl);
+
+            return BaseResponse.ok(toDto(payment, paymentUrl));
         });
     }
 
     private Payment toEntity(PaymentDto paymentDto) {
         return new Payment(
-                createId(),
+                Utils.createIdOrElse(paymentDto.getPaymentId()),
                 paymentDto.getOrderId(),
                 paymentDto.getOrderType(),
                 paymentDto.getAmount(),
                 paymentDto.getBankCode(),
                 paymentDto.getPaymentType(),
+                paymentDto.getIpAddress(),
                 PaymentStatus.PENDING
+        );
+    }
+
+    private PaymentDto toDto(Payment payment, String paymentUrl) {
+        return new PaymentDto(
+                payment.getPaymentId(),
+                payment.getOrderId(),
+                payment.getOrderType(),
+                payment.getBankCode(),
+                payment.getAmount(),
+                payment.getPaymentType(),
+                payment.getIpAddress(),
+                paymentUrl,
+                payment.getStatus()
         );
     }
 

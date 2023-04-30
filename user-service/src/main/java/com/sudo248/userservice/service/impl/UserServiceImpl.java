@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService {
         user.setBio(userDto.getBio());
         user.setAvatar(userDto.getAvatar());
         user.setCover(userDto.getCover());
+        user.setGender(userDto.getGender());
 
         AddressDto addressDto = userDto.getAddress();
 
@@ -75,6 +76,7 @@ public class UserServiceImpl implements UserService {
         userDto.setBio(user.getBio());
         userDto.setAvatar(user.getAvatar());
         userDto.setCover(user.getCover());
+        userDto.setGender(user.getGender());
         Address address = user.getAddress();
         AddressDto addressDto = new AddressDto(
                 address.getAddressId(),
@@ -102,6 +104,7 @@ public class UserServiceImpl implements UserService {
         user.setBio(userDto.getBio());
         user.setAvatar(userDto.getAvatar());
         user.setCover(userDto.getCover());
+        user.setGender(userDto.getGender());
         AddressDto addressDto = userDto.getAddress();
 
         Address address = new Address(

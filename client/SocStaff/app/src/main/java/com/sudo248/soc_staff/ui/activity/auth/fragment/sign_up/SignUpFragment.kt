@@ -3,12 +3,11 @@ package com.sudo248.soc_staff.ui.activity.auth.fragment.sign_up
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.sudo248.base_android.base.BaseFragment
-import com.sudo248.base_android.ktx.createActionIntentDirections
-import com.sudo248.soc.R
-import com.sudo248.soc.databinding.FragmentSignUpBinding
-import com.sudo248.soc.ui.activity.auth.AuthActivity
-import com.sudo248.soc.ui.activity.auth.AuthViewModel
-import com.sudo248.soc.ui.activity.otp.OtpActivity
+import com.sudo248.base_android.utils.DialogUtils
+import com.sudo248.soc_staff.R
+import com.sudo248.soc_staff.databinding.FragmentSignUpBinding
+import com.sudo248.soc_staff.ui.activity.auth.AuthActivity
+import com.sudo248.soc_staff.ui.activity.auth.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

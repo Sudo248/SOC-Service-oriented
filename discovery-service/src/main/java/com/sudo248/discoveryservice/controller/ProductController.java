@@ -35,6 +35,17 @@ public class ProductController {
         });
     }
 
+    @PutMapping
+    public ResponseEntity<BaseResponse<?>> putProduct(
+            @RequestHeader(Constants.HEADER_USER_ID) String userId,
+            @RequestBody ProductDto productDto
+    ) {
+        return Utils.handleException(() -> {
+            ProductDto savedProduct = productService.putProduct(userId, productDto);
+            return BaseResponse.ok(savedProduct);
+        });
+    }
+
     @GetMapping
     public ResponseEntity<BaseResponse<?>> getAllProducts(
             @RequestHeader(Constants.HEADER_USER_ID) String userId,
@@ -63,8 +74,8 @@ public class ProductController {
         });
     }
 
-    @GetMapping("/name/{productName}")
-    public ResponseEntity<BaseResponse<?>> getProductsByName(
+    @GetMapping("/search/{productName}")
+    public ResponseEntity<BaseResponse<?>> getSearchProductsByName(
             @RequestHeader(Constants.HEADER_USER_ID) String userId,
             @PathVariable("productName") String productName
     ) {

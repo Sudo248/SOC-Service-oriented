@@ -1,5 +1,6 @@
 package com.sudo248.userservice.controller.dto;
 
+import com.sudo248.userservice.repository.entitity.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,6 @@ public class UserDto {
     private String cover;
 
     private AddressDto address;
+
+    private Gender gender;
 }

@@ -1,13 +1,11 @@
 package com.sudo248.soc_staff.ui.util
 
-import android.annotation.SuppressLint
+import android.os.Build
 import com.sudo248.base_android.utils.DateUtils
-import com.sudo248.soc.domain.entity.user.Gender
-import com.sudo248.soc.domain.ktx.format
+import com.sudo248.soc_staff.BuildConfig
+import com.sudo248.soc_staff.domain.ktx.format
 import java.text.NumberFormat
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 
 object Utils {
@@ -56,8 +54,16 @@ object Utils {
         return DateUtils.format(date.time, dateFormat, locale)
     }
 
+//    fun formatDobToServer(date: Date): Date {
+//
+//    }
+
     fun parseDob(date: String): Date {
         if (date.isEmpty()) return Date()
         return DateUtils.parse(date, dateFormat) ?: Date()
+    }
+
+    fun getImageUrl(name: String): String {
+        return BuildConfig.BASE_URL + "images/$name"
     }
 }

@@ -9,6 +9,6 @@ package com.sudo248.soc.data.dto.auth
  */
 data class TokenDto(
     val token: String,
-    val refreshToken: String,
+    val refreshToken: String? = null,
 )
 

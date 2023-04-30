@@ -1,4 +1,4 @@
-package com.sudo248.soc.ui.activity.otp
+package com.sudo248.soc_staff.ui.activity.otp
 
 import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
@@ -10,9 +10,9 @@ import com.sudo248.base_android.ktx.createActionIntentDirections
 import com.sudo248.base_android.ktx.onState
 import com.sudo248.base_android.navigation.IntentDirections
 import com.sudo248.base_android.utils.DateUtils
-import com.sudo248.soc.domain.repository.AuthRepository
-import com.sudo248.soc.domain.common.Constants
-import com.sudo248.soc.ui.activity.main.MainActivity
+import com.sudo248.soc_staff.domain.common.Constants
+import com.sudo248.soc_staff.domain.repository.AuthRepository
+import com.sudo248.soc_staff.ui.activity.main.MainActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern

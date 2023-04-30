@@ -1,12 +1,16 @@
 package com.sudo248.discoveryservice.service.impl;
 
 import com.sudo248.discoveryservice.cache.CacheLocationManager;
+import com.sudo248.discoveryservice.controller.dto.AddressDto;
 import com.sudo248.discoveryservice.controller.dto.SupplierDto;
+import com.sudo248.discoveryservice.internal.UserService;
 import com.sudo248.discoveryservice.repository.SupplierRepository;
 import com.sudo248.discoveryservice.repository.entity.Supplier;
 import com.sudo248.discoveryservice.service.SupplierProductService;
 import com.sudo248.discoveryservice.service.SupplierService;
+import com.sudo248.domain.base.BaseResponse;
 import com.sudo248.domain.util.Utils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,11 +21,14 @@ public class SupplierServiceImpl implements SupplierService {
     private final SupplierRepository supplierRepository;
     private final SupplierProductService supplierProductService;
 
+    private final UserService userService;
+
     private final CacheLocationManager cacheLocationManager;
 
-    public SupplierServiceImpl(SupplierRepository supplierRepository, SupplierProductService supplierProductService, CacheLocationManager cacheLocationManager) {
+    public SupplierServiceImpl(SupplierRepository supplierRepository, SupplierProductService supplierProductService, UserService userService, CacheLocationManager cacheLocationManager) {
         this.supplierRepository = supplierRepository;
         this.supplierProductService = supplierProductService;
+        this.userService = userService;
         this.cacheLocationManager = cacheLocationManager;
     }
 
@@ -57,6 +64,13 @@ public class SupplierServiceImpl implements SupplierService {
             supplier.setLocation(cacheLocationManager.getLocation(userId));
             return supplierDto;
         }
+    }
+
+    @Override
+    public ResponseEntity<BaseResponse<?>> getSupplierAddress(String supplierId) {
+        Supplier supplier = supplierRepository.getRawSupplierById(supplierId);
+        ResponseEntity<BaseResponse<?>> response = userService.getAddressSupplier(supplier.getUserId());
+        return response;
     }
 
     @Override

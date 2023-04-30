@@ -2,6 +2,7 @@ package com.sudo248.discoveryservice.controller;
 
 import com.sudo248.discoveryservice.controller.dto.ProductDto;
 import com.sudo248.discoveryservice.controller.dto.SupplierProductDto;
+import com.sudo248.discoveryservice.controller.dto.SupplierProductInfoDto;
 import com.sudo248.discoveryservice.service.SupplierProductService;
 import com.sudo248.domain.base.BaseResponse;
 import com.sudo248.domain.common.Constants;
@@ -57,7 +58,19 @@ public class SupplierProductController {
             }
             return BaseResponse.ok(productDto);
         });
+    }
 
+    @GetMapping("/suppliers/products")
+    public ResponseEntity<BaseResponse<?>> getAllProductInfo(
+            @RequestHeader(Constants.HEADER_USER_ID) String userId
+    ) {
+        return Utils.handleException(() -> {
+            List<SupplierProductInfoDto> supplierProductInfoDtos = supplierProductService.getAllSupplierProductInfo(userId);
+            if (supplierProductInfoDtos == null) {
+                BaseResponse.status(HttpStatus.BAD_REQUEST, "Does not exist product");
+            }
+            return BaseResponse.ok(supplierProductInfoDtos);
+        });
     }
 
     @PatchMapping("/order/{productId}/{supplierId}/{amount}")

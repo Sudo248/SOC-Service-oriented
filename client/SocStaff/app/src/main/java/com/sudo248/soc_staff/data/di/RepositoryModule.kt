@@ -1,13 +1,13 @@
 package com.sudo248.soc_staff.data.di
 
-import com.sudo248.soc.data.repository.AuthRepositoryImpl
-import com.sudo248.soc.data.repository.DiscoveryRepositoryImpl
-import com.sudo248.soc.data.repository.PaymentRepositoryImpl
-import com.sudo248.soc.data.repository.UserRepositoryImpl
-import com.sudo248.soc.domain.repository.AuthRepository
-import com.sudo248.soc.domain.repository.DiscoveryRepository
-import com.sudo248.soc.domain.repository.PaymentRepository
-import com.sudo248.soc.domain.repository.UserRepository
+import com.sudo248.soc_staff.data.repository.AuthRepositoryImpl
+import com.sudo248.soc_staff.data.repository.DiscoveryRepositoryImpl
+import com.sudo248.soc_staff.data.repository.ImageRepositoryImpl
+import com.sudo248.soc_staff.data.repository.UserRepositoryImpl
+import com.sudo248.soc_staff.domain.repository.AuthRepository
+import com.sudo248.soc_staff.domain.repository.DiscoveryRepository
+import com.sudo248.soc_staff.domain.repository.ImageRepository
+import com.sudo248.soc_staff.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -34,5 +34,6 @@ abstract class RepositoryModule {
     abstract fun bindUserRepository(userRepository: UserRepositoryImpl): UserRepository
 
     @Binds
-    abstract fun bindPaymentRepository(paymentRepository: PaymentRepositoryImpl): PaymentRepository
+    abstract fun bindImageRepository(imageRepository: ImageRepositoryImpl): ImageRepository
+
 }

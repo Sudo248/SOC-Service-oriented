@@ -15,4 +15,4 @@ data class Product(
     val images: List<String>,
     val supplierProducts: List<SupplierProduct>,
     val isLike: Boolean = false,
-)
+) :  java.io.Serializable

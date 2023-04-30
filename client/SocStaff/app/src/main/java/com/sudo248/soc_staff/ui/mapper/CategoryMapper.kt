@@ -1,8 +1,7 @@
 package com.sudo248.soc_staff.ui.mapper
 
-import androidx.databinding.ObservableField
-import com.sudo248.soc.domain.entity.discovery.Category
-import com.sudo248.soc.ui.uimodel.CategoryUiModel
+import com.sudo248.soc_staff.domain.entity.discovery.Category
+import com.sudo248.soc_staff.ui.uimodel.CategoryUiModel
 
 
 /**

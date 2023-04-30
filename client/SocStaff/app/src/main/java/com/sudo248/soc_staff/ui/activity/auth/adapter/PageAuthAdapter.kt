@@ -3,8 +3,8 @@ package com.sudo248.soc_staff.ui.activity.auth.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.sudo248.soc.ui.activity.auth.fragment.sign_in.SignInFragment
-import com.sudo248.soc.ui.activity.auth.fragment.sign_up.SignUpFragment
+import com.sudo248.soc_staff.ui.activity.auth.fragment.sign_in.SignInFragment
+import com.sudo248.soc_staff.ui.activity.auth.fragment.sign_up.SignUpFragment
 
 
 /**

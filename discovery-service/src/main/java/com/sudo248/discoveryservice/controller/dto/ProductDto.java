@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -11,10 +12,10 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductDto {
     private String productId;
-    private String name,description,sku;
-    private List<ImageDto> images;
-    private List<String> categoryIds;
-    private List<SupplierProductDto> supplierProducts;
+    private String name = "",description = "",sku = "";
+    private List<ImageDto> images = new ArrayList<>();
+    private List<String> categoryIds = new ArrayList<>();
+    private List<SupplierProductDto> supplierProducts = new ArrayList<>();
 
     public ProductDto(String productId, String name, String description, String sku, List<ImageDto> images) {
         this.productId = productId;

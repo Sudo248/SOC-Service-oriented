@@ -25,7 +25,7 @@ public class Address {
     private int districtID;
 
     @Column(name = "ward_code")
-    private int wardCode;
+    private String wardCode;
 
     @Column(name = "province_name")
     private String provinceName;
@@ -50,7 +50,7 @@ public class Address {
     @Transient
     private String fullAddress;
 
-    public Address(String userId, int provinceID, int districtID, int wardCode, String provinceName, String districtName, String wardName, String address, Location location, User user) {
+    public Address(String userId, int provinceID, int districtID, String wardCode, String provinceName, String districtName, String wardName, String address, Location location, User user) {
         this.userId = userId;
         this.provinceID = provinceID;
         this.districtID = districtID;
@@ -63,7 +63,7 @@ public class Address {
         this.user = user;
     }
 
-    public Address(String userId, int provinceID, int districtID, int wardCode, String provinceName, String districtName, String wardName, String address, Location location) {
+    public Address(String userId, int provinceID, int districtID, String wardCode, String provinceName, String districtName, String wardName, String address, Location location) {
         this.userId = userId;
         this.provinceID = provinceID;
         this.districtID = districtID;

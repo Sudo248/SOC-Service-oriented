@@ -1,5 +1,5 @@
 admin="sudo248dev/"
-service="discovery-service:0.0.1"
+service="payment-service:0.0.1"
 
 # shellcheck disable=SC2046
 docker rm -f $(docker container ps -a -q)

@@ -1,6 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:id="@+id/main_nav">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/homeFragment">
 
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.sudo248.soc_staff.ui.activity.main.fragment.user.UserFragment"
+        android:label="UserFragment"
+        tools:layout="@layout/fragment_user">
+        <action
+            android:id="@+id/action_userFragment_to_userEditFragment"
+            app:destination="@id/userEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userEditFragment"
+        android:name="com.sudo248.soc_staff.ui.activity.main.fragment.user.UserEditFragment"
+        android:label="UserEditFragment"
+        tools:layout="@layout/fragment_edit_user"/>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.sudo248.soc_staff.ui.activity.main.fragment.home.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_userFragment"
+            app:destination="@id/userFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_productFragment"
+            app:destination="@id/productFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_promotionFragment"
+            app:destination="@id/promotionFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_userEditFragment"
+            app:destination="@id/userEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.sudo248.soc_staff.ui.activity.main.fragment.category.CategoryFragment"
+        android:label="CategoryFragment"
+        tools:layout="@layout/fragment_category"/>
+    <fragment
+        android:id="@+id/productFragment"
+        android:name="com.sudo248.soc_staff.ui.activity.main.fragment.product.ProductFragment"
+        android:label="ProductFragment"
+        tools:layout="@layout/fragment_product">
+        <action
+            android:id="@+id/action_productFragment_to_searchCategoryFragment"
+            app:destination="@id/searchCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/promotionFragment"
+        android:name="com.sudo248.soc_staff.ui.activity.main.fragment.promotion.PromotionFragment"
+        android:label="PromotionFragment"
+        tools:layout="@layout/fragment_promotion"/>
+    <fragment
+        android:id="@+id/searchCategoryFragment"
+        android:name="com.sudo248.soc_staff.ui.activity.main.fragment.search.SearchCategoryFragment"
+        android:label="SearchCategoryFragment"
+        tools:layout="@layout/fragment_search_category"/>
 </navigation>

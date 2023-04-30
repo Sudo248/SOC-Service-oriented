@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class SupplierProductDto {
     private String supplierId;
     private String productId;
-    private RouteDto route;
+    private RouteDto route = new RouteDto();
     private int amountLeft = 0;
     private double price = 0.0;
     private int soldAmount = 0;

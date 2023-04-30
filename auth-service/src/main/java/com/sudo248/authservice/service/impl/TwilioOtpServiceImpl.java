@@ -3,11 +3,12 @@ package com.sudo248.authservice.service.impl;
 import com.sudo248.authservice.contronller.dto.*;
 import com.sudo248.authservice.exception.PhoneNumberInvalidException;
 import com.sudo248.authservice.exception.UserException;
-import com.sudo248.authservice.internal.CommonService;
 import com.sudo248.authservice.internal.UserService;
 import com.sudo248.authservice.repository.AccountRepository;
+import com.sudo248.authservice.repository.entity.Gender;
 import com.sudo248.authservice.service.OtpService;
 import com.sudo248.authservice.service.model.AccountModel;
+import com.sudo248.authservice.utils.TokenUtils;
 import com.sudo248.domain.base.BaseResponse;
 import com.twilio.Twilio;
 import com.twilio.rest.verify.v2.service.Verification;
@@ -33,15 +34,16 @@ public class TwilioOtpServiceImpl implements OtpService {
     @Value("${twilio.verify-SOC}")
     private String verifySoc;
 
-    private final CommonService commonService;
+    private final TokenUtils tokenUtils;
     private final UserService userService;
 
     private final AccountRepository accountRepository;
 
     private final ModelMapper mapper;
 
-    public TwilioOtpServiceImpl(CommonService commonService, UserService userService, AccountRepository accountRepository, ModelMapper mapper) {
-        this.commonService = commonService;
+    public TwilioOtpServiceImpl(TokenUtils tokenUtils, UserService userService, AccountRepository accountRepository, ModelMapper mapper) {
+        this.tokenUtils = tokenUtils;
+
         this.userService = userService;
         this.accountRepository = accountRepository;
         this.mapper = mapper;
@@ -86,6 +88,7 @@ public class TwilioOtpServiceImpl implements OtpService {
             AddressDto addressDto = new AddressDto();
             addressDto.setLocation(new LocationDto());
             userDto.setAddress(addressDto);
+            userDto.setGender(Gender.OTHER);
 
             ResponseEntity<BaseResponse<?>> response = userService.createUser(userDto);
 
@@ -93,7 +96,7 @@ public class TwilioOtpServiceImpl implements OtpService {
                 throw new UserException();
             }
 
-            TokenDto token = new TokenDto(commonService.generateToken(accountModel.getUserId()));
+            TokenDto token = new TokenDto(tokenUtils.generateToken(accountModel.getUserId()));
 
             return BaseResponse.ok(token);
         });

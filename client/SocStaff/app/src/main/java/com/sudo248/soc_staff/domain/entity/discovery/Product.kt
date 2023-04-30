@@ -1,4 +1,4 @@
-package com.sudo248.soc.domain.entity.discovery
+package com.sudo248.soc_staff.domain.entity.discovery
 
 
 /**
@@ -13,6 +13,7 @@ data class Product(
     val description: String,
     val sku: String,
     val images: List<String>,
+    val categoryId: String = "",
     val supplierProducts: List<SupplierProduct>,
     val isLike: Boolean = false,
 )

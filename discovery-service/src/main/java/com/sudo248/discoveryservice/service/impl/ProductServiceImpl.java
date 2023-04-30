@@ -1,6 +1,7 @@
 package com.sudo248.discoveryservice.service.impl;
 
 import com.sudo248.discoveryservice.controller.dto.ProductDto;
+import com.sudo248.discoveryservice.controller.dto.SupplierProductDto;
 import com.sudo248.discoveryservice.repository.*;
 import com.sudo248.discoveryservice.repository.entity.*;
 import com.sudo248.discoveryservice.service.ImageService;
@@ -20,19 +21,24 @@ public class ProductServiceImpl implements ProductService {
     private final ImageService imageService;
     private final CategoryRepository categoryRepository;
 
+    private final SupplierProductRepository supplierProductRepository;
+
     private final SupplierRepository supplierRepository;
     private final SupplierProductService supplierProductService;
 
-    public ProductServiceImpl(ProductRepository productRepository, ImageService imageService, CategoryRepository categoryRepository, SupplierRepository supplierRepository, SupplierProductService supplierProductService) {
+    public ProductServiceImpl(ProductRepository productRepository, ImageService imageService, CategoryRepository categoryRepository, SupplierProductRepository supplierProductRepository, SupplierRepository supplierRepository, SupplierProductService supplierProductService) {
         this.productRepository = productRepository;
         this.imageService = imageService;
         this.categoryRepository = categoryRepository;
+        this.supplierProductRepository = supplierProductRepository;
         this.supplierRepository = supplierRepository;
         this.supplierProductService = supplierProductService;
     }
 
     @Override
     public ProductDto addProduct(String userId, ProductDto productDto) {
+        productDto.setSku(Utils.genSkuOrElse(productDto.getSku()));
+
         Product product = toEntity(productDto);
         product.setImages(productDto.getImages().stream().map(
                 (imageDto -> new Image(
@@ -62,6 +68,37 @@ public class ProductServiceImpl implements ProductService {
 
         productRepository.save(product);
         return toDto(userId, product);
+    }
+
+    @Override
+    public ProductDto putProduct(String userId, ProductDto productDto) {
+        Product oldProduct = productRepository.getReferenceById(productDto.getProductId());
+        oldProduct.setName(productDto.getName());
+        oldProduct.setDescription(productDto.getDescription());
+        oldProduct.setCategories(productDto.getCategoryIds().stream().map(categoryRepository::getReferenceById)
+                .collect(Collectors.toList()));
+        oldProduct.setImages(productDto.getImages().stream().map(
+                (imageDto -> new Image(
+                        Utils.createIdOrElse(imageDto.getImageId()),
+                        imageDto.getUrl(),
+                        imageDto.getOwnerId(),
+                        oldProduct
+                ))).collect(Collectors.toList()));
+
+        SupplierProductDto supplierProductDto = productDto.getSupplierProducts().get(0);
+
+        SupplierProduct oldSupplierProduct = supplierProductRepository.getBySupplierProductId(new SupplierProductId(
+                oldProduct.getProductId(),
+                supplierProductDto.getSupplierId()
+        ));
+
+        oldSupplierProduct.setAmountLeft(supplierProductDto.getAmountLeft());
+        oldSupplierProduct.setPrice(supplierProductDto.getPrice());
+
+        supplierProductRepository.save(oldSupplierProduct);
+        productRepository.save(oldProduct);
+
+        return toDto(userId, oldProduct);
     }
 
 
@@ -103,12 +140,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> getProductsByName(String userId, String name) {
-        List<Product> products = productRepository.findAll();
-        List<ProductDto> productDtos = new ArrayList<>();
-        for (Product p : products) {
-            if (p.getName().toLowerCase().contains(name.toLowerCase()))
-                productDtos.add(toDto(userId, p));
-        }
-        return productDtos;
+        List<Product> products = productRepository.findByNameContainsIgnoreCase(name);
+        return products.stream().map(c -> toDto(userId, c)).collect(Collectors.toList());
     }
 }

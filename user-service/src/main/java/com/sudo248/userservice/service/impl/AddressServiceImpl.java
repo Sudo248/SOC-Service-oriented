@@ -74,7 +74,7 @@ public class AddressServiceImpl implements AddressService {
                 addressDto.getAddressId(),
                 addressDto.getProvinceID(),
                 addressDto.getDistrictID(),
-                addressDto.getProvinceID(),
+                addressDto.getWardCode(),
                 addressDto.getProvinceName(),
                 addressDto.getDistrictName(),
                 addressDto.getWardName(),

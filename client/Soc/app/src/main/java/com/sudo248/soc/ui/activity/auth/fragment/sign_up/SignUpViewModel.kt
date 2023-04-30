@@ -1,5 +1,6 @@
 package com.sudo248.soc.ui.activity.auth.fragment.sign_up
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavDirections
@@ -61,8 +62,10 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun onConfirmPasswordTextChange(text: CharSequence) {
-        if (text != accountUiModel.password.get()) {
+        if (text.toString() != accountUiModel.password.get()) {
             _error.postValue("Incorrect password")
+        } else {
+            _error.postValue("")
         }
     }
 }

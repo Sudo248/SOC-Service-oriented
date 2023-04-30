@@ -2,6 +2,7 @@ package com.sudo248.soc.ui.mapper
 
 import androidx.databinding.ObservableField
 import com.sudo248.soc.domain.entity.discovery.Category
+import com.sudo248.soc.domain.entity.discovery.CategoryInfo
 import com.sudo248.soc.ui.uimodel.CategoryUiModel
 
 
@@ -17,5 +18,14 @@ fun Category.toCategoryUi(): CategoryUiModel {
         categoryId = categoryId,
         name = name,
         imageUrl = imageUrl
+    )
+}
+
+fun CategoryInfo.toCategory(): Category {
+    return Category(
+        categoryId = categoryId,
+        name = name,
+        imageUrl = image,
+        products = listOf()
     )
 }

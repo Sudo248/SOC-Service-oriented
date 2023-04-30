@@ -1,6 +1,7 @@
-package com.sudo248.soc.data.api.auth.request
+package com.sudo248.soc_staff.data.api.auth.request
 
-import com.sudo248.soc.domain.entity.auth.Provider
+import com.sudo248.soc_staff.domain.entity.auth.Provider
+import com.sudo248.soc_staff.domain.entity.auth.Role
 
 
 /**
@@ -12,5 +13,6 @@ import com.sudo248.soc.domain.entity.auth.Provider
 data class AccountRequest(
     val phoneNumber: String,
     val password: String,
-    val provider: Provider? = null
+    val provider: Provider? = null,
+    val role: Role = Role.STAFF
 )

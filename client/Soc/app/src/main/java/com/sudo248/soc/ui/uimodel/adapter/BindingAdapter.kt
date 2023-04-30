@@ -1,11 +1,13 @@
 package com.sudo248.soc.ui.uimodel.adapter
 
+import android.net.Uri
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.sudo248.base_android.ktx.setHorizontalViewPort
+import com.sudo248.soc.BuildConfig
 import com.sudo248.soc.R
 
 
@@ -19,9 +21,21 @@ import com.sudo248.soc.R
 @BindingAdapter("imageUrl")
 fun loadImage(image: ImageView, url: String) {
     if (url.isEmpty()) return
+    var imageUrl = url
+    if (!imageUrl.startsWith("http")) imageUrl = "${BuildConfig.BASE_URL}images/$url"
     Glide
         .with(image.context)
-        .load(url)
+        .load(imageUrl)
+        .diskCacheStrategy(DiskCacheStrategy.NONE)
+        .error(R.drawable.ic_error)
+        .into(image)
+}
+
+@BindingAdapter("imageUri")
+fun loadImage(image: ImageView, uri: Uri) {
+    Glide
+        .with(image.context)
+        .load(uri)
         .diskCacheStrategy(DiskCacheStrategy.NONE)
         .error(R.drawable.ic_error)
         .into(image)

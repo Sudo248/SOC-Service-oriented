@@ -1,6 +1,6 @@
 package com.sudo248.soc_staff.ui.uimodel
 
-import com.sudo248.soc.R
+import com.sudo248.soc_staff.R
 
 enum class StepChooseAddress(val value: Int) {
     PROVINCE(R.string.choose_province) {

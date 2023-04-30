@@ -4,14 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavDirections
 import com.sudo248.base_android.base.BaseViewModel
+import com.sudo248.base_android.core.UiState
 import com.sudo248.base_android.event.SingleEvent
 import com.sudo248.base_android.ktx.bindUiState
 import com.sudo248.base_android.ktx.createActionIntentDirections
 import com.sudo248.base_android.ktx.onError
 import com.sudo248.base_android.ktx.onSuccess
+import com.sudo248.base_android.utils.SharedPreferenceUtils
 import com.sudo248.soc.domain.common.Constants
 import com.sudo248.soc.domain.entity.user.AddressSuggestion
 import com.sudo248.soc.domain.repository.AuthRepository
+import com.sudo248.soc.domain.repository.ImageRepository
 import com.sudo248.soc.domain.repository.UserRepository
 import com.sudo248.soc.ui.activity.auth.AuthActivity
 import com.sudo248.soc.ui.activity.main.MainViewModel
@@ -29,6 +32,7 @@ import javax.inject.Inject
 class UserViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val authRepository: AuthRepository,
+    private val imageRepository: ImageRepository
 ) : BaseViewModel<NavDirections>() {
 
     private var viewController: ViewController? = null
@@ -41,6 +45,8 @@ class UserViewModel @Inject constructor(
 
     private val _user = MutableLiveData(UserUiModel())
     val user: LiveData<UserUiModel> = _user
+
+    private var isUpdateLocation = false
 
     var error: SingleEvent<String?> = SingleEvent(null)
 
@@ -71,6 +77,7 @@ class UserViewModel @Inject constructor(
     fun logout() = launch {
         authRepository.logout()
             .onSuccess {
+                SharedPreferenceUtils.putString(Constants.Key.TOKEN, "")
                 navigateToAuthActivity()
             }
             .onError {
@@ -80,7 +87,7 @@ class UserViewModel @Inject constructor(
 
     private fun navigateToAuthActivity() {
         parentViewModel.navigator()
-            .navigateOffAll(AuthActivity::class.createActionIntentDirections())
+            .navigateOff(AuthActivity::class.createActionIntentDirections())
     }
 
     fun showDialogDatePicker() {
@@ -92,12 +99,25 @@ class UserViewModel @Inject constructor(
     }
 
     fun updateUser() = launch {
-        userRepository.updateUser(_user.value!!.toUser())
+        setState(UiState.LOADING)
+        parentViewModel.imageUri.value?.let {
+            viewController?.run {
+                val imageUrl = imageRepository.uploadImage(getPathImageFromUri(it)).get()
+                _user.value?.avatar?.set(imageUrl)
+            }
+        }
+        userRepository.updateUser(_user.value!!.toUser(), isUpdateLocation)
             .onSuccess {
+                setState(UiState.SUCCESS)
+                parentViewModel.setImageUri(null)
+                _user.value?.address?.run {
+                    fullAddress.set("${address.get()}, ${wardName.get()}, ${districtName.get()}, ${provinceName.get()}")
+                }
                 navigator.back()
             }
             .onError {
                 viewController?.toast(it.message ?: Constants.UNKNOWN_ERROR)
+                setState(UiState.ERROR)
             }
     }
 
@@ -137,6 +157,7 @@ class UserViewModel @Inject constructor(
     }
 
     fun onChooseAddress(address: AddressSuggestion) {
+        isUpdateLocation = true
         stepChooseAddress.value?.run {
             when (this) {
                 StepChooseAddress.PROVINCE -> {
@@ -156,7 +177,7 @@ class UserViewModel @Inject constructor(
                 StepChooseAddress.WARD -> {
                     _user.value?.address?.apply {
                         wardCode = address.addressCode
-                        districtName.set(address.addressName)
+                        wardName.set(address.addressName)
                     }
                 }
                 else -> {
@@ -166,6 +187,10 @@ class UserViewModel @Inject constructor(
 
             _stepChooseAddress.postValue(nextStep())
         }
+    }
+
+    fun pickImage() {
+        viewController?.pickImage()
     }
 
     fun back() {

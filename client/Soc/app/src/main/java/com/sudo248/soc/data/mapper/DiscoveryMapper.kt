@@ -1,9 +1,11 @@
 package com.sudo248.soc.data.mapper
 
 import com.sudo248.soc.data.dto.discovery.CategoryDto
+import com.sudo248.soc.data.dto.discovery.CategoryInfoDto
 import com.sudo248.soc.data.dto.discovery.ProductDto
 import com.sudo248.soc.data.dto.discovery.SupplierProductDto
 import com.sudo248.soc.domain.entity.discovery.Category
+import com.sudo248.soc.domain.entity.discovery.CategoryInfo
 import com.sudo248.soc.domain.entity.discovery.Product
 import com.sudo248.soc.domain.entity.discovery.SupplierProduct
 
@@ -37,5 +39,11 @@ fun CategoryDto.toCategory(): Category {
         name = name,
         imageUrl = image,
         products = products.map { it.toProduct() }
+    )
+}
+
+fun CategoryInfoDto.toCategoryInfo(): CategoryInfo {
+    return CategoryInfo(
+        categoryId, name, image, supplierId
     )
 }

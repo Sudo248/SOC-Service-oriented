@@ -4,13 +4,13 @@ import com.sudo248.base_android_annotation.apiservice.ApiService
 import com.sudo248.base_android_annotation.apiservice.EnableAuthentication
 import com.sudo248.base_android_annotation.apiservice.logging_level.Level
 import com.sudo248.base_android_annotation.apiservice.logging_level.LoggingLever
-import com.sudo248.soc.BuildConfig
-import com.sudo248.soc.data.api.BaseResponse
-import com.sudo248.soc.data.api.auth.request.AccountRequest
-import com.sudo248.soc.data.api.auth.request.ChangePasswordRequest
-import com.sudo248.soc.data.api.auth.request.OtpRequest
-import com.sudo248.soc.data.dto.auth.TokenDto
-import com.sudo248.soc.domain.common.Constants
+import com.sudo248.soc_staff.BuildConfig
+import com.sudo248.soc_staff.data.api.BaseResponse
+import com.sudo248.soc_staff.data.api.auth.request.AccountRequest
+import com.sudo248.soc_staff.data.api.auth.request.ChangePasswordRequest
+import com.sudo248.soc_staff.data.api.auth.request.OtpRequest
+import com.sudo248.soc_staff.data.dto.auth.TokenDto
+import com.sudo248.soc_staff.domain.common.Constants
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -29,6 +29,9 @@ import retrofit2.http.Path
 @EnableAuthentication(Constants.Key.TOKEN)
 @LoggingLever(level = Level.BODY)
 interface AuthService {
+
+    @GET("try-token")
+    suspend fun tryGetToken(): Response<BaseResponse<TokenDto>>
 
     @POST("sign-in")
     suspend fun signIn(@Body accountRequest: AccountRequest): Response<BaseResponse<TokenDto>>

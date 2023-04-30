@@ -51,4 +51,6 @@ object Constants {
         const val DEFAULT_CATEGORY_IMAGE = "category_default.png"
         const val DEFAULT_PRODUCT_IMAGE = "product_default.png"
     }
+
+    var location: String = ""
 }

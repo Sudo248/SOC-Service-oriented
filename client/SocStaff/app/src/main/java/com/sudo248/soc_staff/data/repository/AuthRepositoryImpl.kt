@@ -1,24 +1,20 @@
 package com.sudo248.soc_staff.data.repository
 
-import android.util.Log
 import com.sudo248.base_android.core.DataState
 import com.sudo248.base_android.data.api.handleResponse
-import com.sudo248.base_android.exception.ApiException
 import com.sudo248.base_android.ktx.state
 import com.sudo248.base_android.ktx.stateOn
 import com.sudo248.base_android.utils.SharedPreferenceUtils
-import com.sudo248.soc.data.api.BaseResponse
-import com.sudo248.soc.data.api.auth.AuthService
-import com.sudo248.soc.data.api.auth.request.AccountRequest
-import com.sudo248.soc.data.api.auth.request.ChangePasswordRequest
-import com.sudo248.soc.data.api.auth.request.OtpRequest
-import com.sudo248.soc.data.ktx.errorBody
-import com.sudo248.soc.data.ktx.fromResponse
-import com.sudo248.soc.data.mapper.toToken
-import com.sudo248.soc.domain.common.Constants
-import com.sudo248.soc.domain.entity.auth.Account
-import com.sudo248.soc.domain.entity.auth.Token
-import com.sudo248.soc.domain.repository.AuthRepository
+import com.sudo248.soc_staff.data.api.auth.request.AccountRequest
+import com.sudo248.soc_staff.data.api.auth.request.ChangePasswordRequest
+import com.sudo248.soc_staff.data.api.auth.request.OtpRequest
+import com.sudo248.soc_staff.data.ktx.errorBody
+import com.sudo248.soc_staff.data.api.auth.AuthService
+import com.sudo248.soc_staff.data.mapper.toToken
+import com.sudo248.soc_staff.domain.common.Constants
+import com.sudo248.soc_staff.domain.entity.auth.Account
+import com.sudo248.soc_staff.domain.entity.auth.Token
+import com.sudo248.soc_staff.domain.repository.AuthRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,11 +32,25 @@ class AuthRepositoryImpl @Inject constructor(
     private val authService: AuthService,
     private val ioDispatcher: CoroutineDispatcher
 ) : AuthRepository {
+    override suspend fun tryGetToken(): DataState<Token, Exception> = stateOn(ioDispatcher) {
+        val token = SharedPreferenceUtils.withApplicationSharedPreference().getString(Constants.Key.TOKEN, "")
+        if (token.isEmpty()) {
+            throw Exception()
+        } else {
+            val response = handleResponse(authService.tryGetToken())
+            if (response.isSuccess) {
+                val token = response.get().data!!.toToken()
+                saveToken(token.token)
+                token
+            } else {
+                throw response.error().errorBody()
+            }
+        }
+    }
+
     override suspend fun saveToken(token: String): DataState<Unit, Exception> = state {
-        Log.d("Sudoo", "saveToken: $token")
         SharedPreferenceUtils.withApplicationSharedPreference()
             .putString(Constants.Key.TOKEN, token)
-        Log.d("Sudoo", "after saveToken: ${SharedPreferenceUtils.getString(Constants.Key.TOKEN)}")
     }
 
     override suspend fun signIn(account: Account): DataState<Token, Exception> =

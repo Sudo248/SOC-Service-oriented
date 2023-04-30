@@ -1,4 +1,4 @@
-package com.sudo248.soc.domain.entity.auth
+package com.sudo248.soc_staff.domain.entity.auth
 
 enum class Role(val value: String) {
     CONSUMER("Thành viên"),

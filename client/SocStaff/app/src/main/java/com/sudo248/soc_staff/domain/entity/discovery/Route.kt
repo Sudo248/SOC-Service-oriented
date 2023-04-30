@@ -1,4 +1,4 @@
-package com.sudo248.soc.domain.entity.discovery
+package com.sudo248.soc_staff.domain.entity.discovery
 
 data class Route(
     val weight: Double = 0.0,

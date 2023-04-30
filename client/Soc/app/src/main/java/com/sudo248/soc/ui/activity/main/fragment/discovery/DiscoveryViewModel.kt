@@ -14,6 +14,7 @@ import com.sudo248.soc.domain.entity.discovery.Category
 import com.sudo248.soc.domain.repository.DiscoveryRepository
 import com.sudo248.soc.ui.activity.main.adapter.CategoryAdapter
 import com.sudo248.soc.ui.activity.main.adapter.ProductAdapter
+import com.sudo248.soc.ui.mapper.toCategory
 import com.sudo248.soc.ui.mapper.toCategoryUi
 import com.sudo248.soc.ui.mapper.toListProductUi
 import com.sudo248.soc.ui.uimodel.CategoryUiModel
@@ -48,9 +49,9 @@ class DiscoveryViewModel @Inject constructor(
 
     init {
         launch {
-            discoveryRepository.getAllCategory()
-                .onSuccess {
-                    categories.addAll(it)
+            discoveryRepository.getCategoryInfo()
+                .onSuccess { categoryInfo ->
+                    categories.addAll(categoryInfo.map { it.toCategory() })
                     categoryAdapter.submitList(getListCategoryUi())
                     productAdapter.submitList(getListProductFromCategory(categories.first()))
                 }
@@ -64,16 +65,24 @@ class DiscoveryViewModel @Inject constructor(
         return categories.map { it.toCategoryUi() }
     }
 
-    private fun getListProductUiByCategoryId(categoryId: String): List<ProductUiModel> {
+    private suspend fun getListProductUiByCategoryId(categoryId: String): List<ProductUiModel> {
         return getListProductFromCategory(categories.first { it.categoryId == categoryId })
     }
 
-    private fun getListProductFromCategory(category: Category): List<ProductUiModel> {
+    private suspend fun getListProductFromCategory(category: Category): List<ProductUiModel> {
         _categoryName.postValue(category.name)
+        if (category.products.isEmpty()) {
+            setState(UiState.LOADING)
+            discoveryRepository.getCategoryById(category.categoryId)
+                .onSuccess { category.products = it.products }
+                .onError {
+                    error = SingleEvent(it.message)
+                }.bindUiState(_uiState)
+        }
         return category.products.flatMap { it.toListProductUi() }
     }
 
-    private fun onCategoryItemClick(item: CategoryUiModel) {
+    private fun onCategoryItemClick(item: CategoryUiModel) = launch {
         setState(UiState.LOADING)
         productAdapter.submitList(getListProductUiByCategoryId(item.categoryId))
         setState(UiState.SUCCESS)
@@ -84,6 +93,6 @@ class DiscoveryViewModel @Inject constructor(
     }
 
     fun navigateToSearchView() {
-
+        navigator.navigateTo(DiscoveryFragmentDirections.actionDiscoveryFragmentToSearchFragment())
     }
 }

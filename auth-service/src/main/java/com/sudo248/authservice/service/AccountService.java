@@ -8,6 +8,8 @@ import com.sudo248.domain.base.BaseService;
 import org.springframework.http.ResponseEntity;
 
 public interface AccountService extends BaseService {
+
+    ResponseEntity<BaseResponse<?>> tryGetToken(String userId);
     ResponseEntity<BaseResponse<?>> signIn(SignInDto signInDto);
 
     ResponseEntity<BaseResponse<?>> signUp(SignUpDto signUpDto);

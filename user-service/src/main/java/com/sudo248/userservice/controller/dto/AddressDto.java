@@ -15,7 +15,7 @@ public class AddressDto {
 
     private int districtID;
 
-    private int wardCode;
+    private String wardCode;
 
     private String provinceName;
 

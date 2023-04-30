@@ -1,7 +1,6 @@
 strings=(
   soc-registry:0.0.1
   api-gateway:0.0.1
-  common-service:0.0.1
   auth-service:0.0.1
   discovery-service:0.0.1
   payment-service:0.0.1

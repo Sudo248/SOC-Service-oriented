@@ -6,11 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.auth.api.phone.SmsRetrieverClient
 import com.sudo248.base_android.base.BaseViewModel
 import com.sudo248.base_android.core.UiState
+import com.sudo248.base_android.ktx.createActionIntentDirections
 import com.sudo248.base_android.ktx.onState
 import com.sudo248.base_android.navigation.IntentDirections
 import com.sudo248.base_android.utils.DateUtils
 import com.sudo248.soc.domain.repository.AuthRepository
 import com.sudo248.soc.domain.common.Constants
+import com.sudo248.soc.ui.activity.main.MainActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
@@ -68,6 +70,7 @@ class OtpViewModel @Inject constructor(
             onSuccess = {
                 authRepository.saveToken(it.token)
                 setState(UiState.SUCCESS)
+                navigator.navigateOff(MainActivity::class.createActionIntentDirections())
             },
             onError = {
                 errorMessage = it.message
@@ -85,7 +88,10 @@ class OtpViewModel @Inject constructor(
     }
 
     fun submitOtp() = launch {
-
+        _otp.value?.let {
+            if (it.length == 6)
+                onFullFillListener(it)
+        }
     }
 
     fun back() {

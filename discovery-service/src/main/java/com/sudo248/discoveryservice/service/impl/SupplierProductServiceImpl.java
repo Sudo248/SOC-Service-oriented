@@ -1,19 +1,19 @@
 package com.sudo248.discoveryservice.service.impl;
 
 import com.sudo248.discoveryservice.cache.CacheLocationManager;
-import com.sudo248.discoveryservice.controller.dto.ProductDto;
-import com.sudo248.discoveryservice.controller.dto.RouteDto;
-import com.sudo248.discoveryservice.controller.dto.SupplierProductDto;
-import com.sudo248.discoveryservice.controller.dto.ValueDto;
+import com.sudo248.discoveryservice.controller.dto.*;
 import com.sudo248.discoveryservice.controller.dto.mapbox.MapBoxDistanceDto;
 import com.sudo248.discoveryservice.controller.dto.mapbox.MapBoxRouteDto;
 import com.sudo248.discoveryservice.external.MapBoxService;
 import com.sudo248.discoveryservice.repository.SupplierProductRepository;
+import com.sudo248.discoveryservice.repository.SupplierRepository;
 import com.sudo248.discoveryservice.repository.entity.Location;
+import com.sudo248.discoveryservice.repository.entity.Supplier;
 import com.sudo248.discoveryservice.repository.entity.SupplierProduct;
 import com.sudo248.discoveryservice.repository.entity.SupplierProductId;
 import com.sudo248.discoveryservice.service.ProductService;
 import com.sudo248.discoveryservice.service.SupplierProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +22,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-
+@Slf4j
 public class SupplierProductServiceImpl implements SupplierProductService {
     private final SupplierProductRepository supplierProductRepository;
+
+    private final SupplierRepository supplierRepository;
 
     private final ProductService productService;
 
@@ -33,8 +35,9 @@ public class SupplierProductServiceImpl implements SupplierProductService {
     private final MapBoxService mapBoxService;
 
     @Lazy
-    public SupplierProductServiceImpl(SupplierProductRepository supplierProductRepository, ProductService productService, CacheLocationManager cacheLocationManager, MapBoxService mapBoxService) {
+    public SupplierProductServiceImpl(SupplierProductRepository supplierProductRepository, SupplierRepository supplierRepository, ProductService productService, CacheLocationManager cacheLocationManager, MapBoxService mapBoxService) {
         this.supplierProductRepository = supplierProductRepository;
+        this.supplierRepository = supplierRepository;
         this.productService = productService;
         this.cacheLocationManager = cacheLocationManager;
         this.mapBoxService = mapBoxService;
@@ -67,6 +70,26 @@ public class SupplierProductServiceImpl implements SupplierProductService {
             }
         }
         return null;
+    }
+
+    @Override
+    public List<SupplierProductInfoDto> getAllSupplierProductInfo(String userId) {
+        Supplier supplier = supplierRepository.getSupplierByUserId(userId);
+        List<SupplierProduct> supplierProducts = supplier.getSupplierProducts();
+        return supplierProducts.stream().map((supplierProduct -> new SupplierProductInfoDto(
+                supplier.getSupplierId(),
+                supplierProduct.getProduct().getProductId(),
+                supplierProduct.getProduct().getCategories().get(0).getCategoryId(),
+                supplierProduct.getProduct().getImages().stream().map(image -> new ImageDto(image.getImageId(), image.getUrl(), image.getOwnerId())).collect(Collectors.toList()),
+                supplierProduct.getProduct().getDescription(),
+                supplierProduct.getProduct().getName(),
+                supplierProduct.getProduct().getCategories().get(0).getName(),
+                supplierProduct.getAmountLeft(),
+                supplierProduct.getPrice(),
+                supplierProduct.getSoldAmount(),
+                supplierProduct.getRate(),
+                supplierProduct.getProduct().getSku()
+        ))).collect(Collectors.toList());
     }
 
     @Override
@@ -115,14 +138,19 @@ public class SupplierProductServiceImpl implements SupplierProductService {
     }
 
     private RouteDto getRouteMapBox(Location from, Location to) {
-        MapBoxDistanceDto mapBoxDistanceDto = mapBoxService.getDistance(from.getLongitude(), from.getLatitude(), to.getLongitude(), to.getLatitude());
-        MapBoxRouteDto mapBoxRouteDto = mapBoxDistanceDto.getRoutes().get(0);
-
-        return new RouteDto(
-                mapBoxRouteDto.getWeight(),
-                getDurationValue(mapBoxRouteDto.getDuration()),
-                getDistanceValue(mapBoxRouteDto.getDistance())
-        );
+        try {
+            MapBoxDistanceDto mapBoxDistanceDto = mapBoxService.getDistance(from.getLongitude(), from.getLatitude(), to.getLongitude(), to.getLatitude());
+            MapBoxRouteDto mapBoxRouteDto = mapBoxDistanceDto.getRoutes().get(0);
+            log.info("Sudoo: " + mapBoxRouteDto.getDistance() + " " + mapBoxRouteDto.getDuration());
+            return new RouteDto(
+                    mapBoxRouteDto.getWeight(),
+                    getDurationValue(mapBoxRouteDto.getDuration()),
+                    getDistanceValue(mapBoxRouteDto.getDistance())
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new RouteDto();
+        }
     }
 
     private ValueDto getDurationValue(double duration) {

@@ -1,10 +1,15 @@
 package com.sudo248.soc.ui.activity.main.fragment.user
 
+import android.app.Dialog
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.sudo248.base_android.ktx.setTransparentBackground
 import com.sudo248.soc.databinding.FragmentChooseAddressBinding
 import com.sudo248.soc.ui.activity.main.adapter.AddressSuggestionAdapter
 import com.sudo248.soc.ui.uimodel.StepChooseAddress
@@ -15,7 +20,7 @@ class ChooseAddressBottomSheetFragment private constructor(
 
     private lateinit var binding: FragmentChooseAddressBinding
     private val adapter: AddressSuggestionAdapter by lazy {
-        AddressSuggestionAdapter{
+        AddressSuggestionAdapter {
             viewModel.onChooseAddress(address = it)
         }
     }
@@ -25,6 +30,29 @@ class ChooseAddressBottomSheetFragment private constructor(
         fun newInstance(viewModel: UserViewModel): ChooseAddressBottomSheetFragment {
             return ChooseAddressBottomSheetFragment(viewModel)
         }
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        dialog.setOnShowListener {
+            val bottomSheetDialog = it as BottomSheetDialog
+            bottomSheetDialog.setCancelable(false)
+            bottomSheetDialog.setTransparentBackground()
+            val parentLayout = bottomSheetDialog.findViewById<View>(
+                com.google.android.material.R.id.design_bottom_sheet
+            )
+            parentLayout?.let { bottomSheet ->
+                val behaviour = BottomSheetBehavior.from(bottomSheet)
+                behaviour.isDraggable = false
+                val layoutParams = bottomSheet.layoutParams
+//                layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT
+                layoutParams.height =
+                    (Resources.getSystem().displayMetrics.heightPixels * 0.9f).toInt()
+                bottomSheet.layoutParams = layoutParams
+                behaviour.state = BottomSheetBehavior.STATE_EXPANDED
+            }
+        }
+        return dialog
     }
 
     override fun onCreateView(
@@ -47,12 +75,16 @@ class ChooseAddressBottomSheetFragment private constructor(
 
     private fun observer() {
         viewModel.stepChooseAddress.observe(viewLifecycleOwner) {
-            if (it == StepChooseAddress.CLOSE) dismiss()
-            binding.txtTitle.text = getString(it.value)
+            if (it == StepChooseAddress.CLOSE) {
+                dismiss()
+            } else {
+                binding.txtTitle.text = getString(it.value)
+            }
         }
 
-        viewModel.suggestionAddress.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+        viewModel.suggestionAddress.observe(viewLifecycleOwner) { addressSuggestions ->
+            binding.rcvAddress.scrollToPosition(0)
+            adapter.submitList(addressSuggestions.sortedBy { it.addressName })
         }
     }
 

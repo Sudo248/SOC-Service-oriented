@@ -3,9 +3,9 @@ package com.sudo248.soc_staff.ui.activity.auth
 import androidx.activity.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sudo248.base_android.base.BaseActivity
-import com.sudo248.soc.R
-import com.sudo248.soc.databinding.ActivityAuthBinding
-import com.sudo248.soc.ui.activity.auth.adapter.PageAuthAdapter
+import com.sudo248.soc_staff.R
+import com.sudo248.soc_staff.databinding.ActivityAuthBinding
+import com.sudo248.soc_staff.ui.activity.auth.adapter.PageAuthAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

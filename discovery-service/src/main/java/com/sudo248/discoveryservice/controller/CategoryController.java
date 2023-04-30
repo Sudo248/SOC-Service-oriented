@@ -2,6 +2,7 @@ package com.sudo248.discoveryservice.controller;
 
 import com.sudo248.discoveryservice.cache.CacheLocationManager;
 import com.sudo248.discoveryservice.controller.dto.CategoryDto;
+import com.sudo248.discoveryservice.controller.dto.CategoryInfoDto;
 import com.sudo248.discoveryservice.controller.dto.ProductDto;
 import com.sudo248.discoveryservice.service.CategoryService;
 import com.sudo248.domain.base.BaseResponse;
@@ -28,6 +29,14 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<BaseResponse<?>> addCategory(@RequestBody CategoryDto categoryDto) {
         return Utils.handleException(() -> {
+            CategoryDto savedCategory = categoryService.putCategory(categoryDto);
+            return BaseResponse.ok(savedCategory);
+        });
+    }
+
+    @PutMapping
+    public ResponseEntity<BaseResponse<?>> putCategory(@RequestBody CategoryDto categoryDto) {
+        return Utils.handleException(() -> {
             CategoryDto savedCategory = categoryService.addCategory(categoryDto);
             return BaseResponse.ok(savedCategory);
         });
@@ -41,6 +50,16 @@ public class CategoryController {
         return Utils.handleException(() -> {
             cacheLocationManager.saveLocation(userId, location);
             List<CategoryDto> categories = categoryService.getAllCategories(userId);
+            return BaseResponse.ok(categories);
+        });
+    }
+
+    @GetMapping("/info")
+    public ResponseEntity<BaseResponse<?>> getAllCategoriesInfo(
+            @RequestHeader(Constants.HEADER_USER_ID) String userId
+    ) {
+        return Utils.handleException(() -> {
+            List<CategoryInfoDto> categories = categoryService.getAllCategoriesInfo();
             return BaseResponse.ok(categories);
         });
     }

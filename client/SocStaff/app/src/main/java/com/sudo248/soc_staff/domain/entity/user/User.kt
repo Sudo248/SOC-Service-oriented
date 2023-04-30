@@ -1,6 +1,8 @@
-package com.sudo248.soc.domain.entity.user
+package com.sudo248.soc_staff.domain.entity.user
 
-import com.sudo248.soc.domain.entity.auth.Role
+import com.sudo248.soc_staff.domain.entity.auth.Role
+import com.sudo248.soc_staff.domain.entity.user.Address
+import com.sudo248.soc_staff.domain.entity.user.Gender
 import java.util.Date
 
 data class User(
@@ -12,5 +14,5 @@ data class User(
     val phone: String = "",
     val address: Address = Address(),
     val dob: Date = Date(),
-    val role: Role = Role.CONSUMER
+    val role: Role = Role.STAFF
 )

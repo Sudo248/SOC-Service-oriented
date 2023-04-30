@@ -22,6 +22,22 @@ object Utils {
         return NumberFormat.getCurrencyInstance(locale).format(value)
     }
 
+    fun formatDistance(distance: Double, unit: String): String {
+        return if (unit == "m") {
+            "${distance.toInt()}$unit"
+        } else {
+            "${distance.format(2)}$unit"
+        }
+    }
+
+    fun formatDuration(duration: Double, unit: String): String {
+        return if (unit == "ngày" || unit == "giờ") {
+            "${duration.format(2)} $unit"
+        } else {
+            "${duration.toInt()} $unit"
+        }
+    }
+
     fun formatShortSold(value: Double): String {
         return if (value >= 100) {
             " . 100+"

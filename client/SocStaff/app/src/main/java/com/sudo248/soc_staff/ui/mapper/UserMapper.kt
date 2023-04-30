@@ -1,15 +1,15 @@
 package com.sudo248.soc.ui.mapper
 
 import androidx.databinding.ObservableField
-import com.sudo248.soc.domain.common.Constants
-import com.sudo248.soc.domain.entity.auth.Role
-import com.sudo248.soc.domain.entity.user.Address
-import com.sudo248.soc.domain.entity.user.Gender
-import com.sudo248.soc.domain.entity.user.Location
-import com.sudo248.soc.domain.entity.user.User
-import com.sudo248.soc.ui.uimodel.AddressUiModel
-import com.sudo248.soc.ui.uimodel.UserUiModel
-import com.sudo248.soc.ui.util.Utils
+import com.sudo248.soc_staff.domain.common.Constants
+import com.sudo248.soc_staff.domain.entity.auth.Role
+import com.sudo248.soc_staff.domain.entity.user.Address
+import com.sudo248.soc_staff.domain.entity.user.Gender
+import com.sudo248.soc_staff.domain.entity.user.Location
+import com.sudo248.soc_staff.domain.entity.user.User
+import com.sudo248.soc_staff.ui.uimodel.AddressUiModel
+import com.sudo248.soc_staff.ui.uimodel.UserUiModel
+import com.sudo248.soc_staff.ui.util.Utils
 
 fun Address.toAddressUi(): AddressUiModel {
     return AddressUiModel(
@@ -56,9 +56,9 @@ fun User.toUserUi(): UserUiModel {
 fun UserUiModel.toUser(location: Location? = null): User {
     return User(
         userId = userId,
-        avatar = avatar.get() ?: Constants.Images.DEFAULT_USER_IMAGE,
+        avatar = this.avatar.get() ?: Constants.Images.DEFAULT_USER_IMAGE,
         cover = cover.get().orEmpty(),
-        fullName = cover.get().orEmpty(),
+        fullName = fullName.get().orEmpty(),
         gender = Gender.fromStringValue(gender.get().orEmpty()),
         phone = phone.get().orEmpty(),
         address = address.toAddress(location ?: Location()),

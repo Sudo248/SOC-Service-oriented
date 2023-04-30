@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Soc</string>
+
+    <string name="facebook_app_id">6161985857254099</string>
+    <string name="facebook_client_token">10e127048d1937c440d0a55941d08f28</string>
+
     <string name="title_activity_splash">SplashActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
@@ -74,4 +78,5 @@
     <string name="choose_province">Chọn Thành phố/ Tỉnh</string>
     <string name="choose_district">Chọn Quận/ Huyện</string>
     <string name="choose_ward">Chọn Phường/ Xã</string>
+    <string name="not_found_product">Not found product</string>
 </resources>

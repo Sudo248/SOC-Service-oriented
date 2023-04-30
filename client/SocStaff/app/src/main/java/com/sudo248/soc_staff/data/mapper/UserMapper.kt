@@ -1,12 +1,12 @@
 package com.sudo248.soc_staff.data.mapper
 
-import com.sudo248.soc.data.dto.user.AddressDto
-import com.sudo248.soc.data.dto.user.AddressSuggestionDto
-import com.sudo248.soc.data.dto.user.UserDto
-import com.sudo248.soc.domain.entity.user.Address
-import com.sudo248.soc.domain.entity.user.AddressSuggestion
-import com.sudo248.soc.domain.entity.user.Location
-import com.sudo248.soc.domain.entity.user.User
+import com.sudo248.soc_staff.data.dto.user.AddressDto
+import com.sudo248.soc_staff.data.dto.user.AddressSuggestionDto
+import com.sudo248.soc_staff.data.dto.user.UserDto
+import com.sudo248.soc_staff.domain.entity.user.Address
+import com.sudo248.soc_staff.domain.entity.user.AddressSuggestion
+import com.sudo248.soc_staff.domain.entity.user.Location
+import com.sudo248.soc_staff.domain.entity.user.User
 
 fun AddressSuggestionDto.toAddressSuggestion(): AddressSuggestion {
     return AddressSuggestion(
@@ -18,6 +18,7 @@ fun AddressSuggestionDto.toAddressSuggestion(): AddressSuggestion {
 
 fun AddressDto.toAddress(): Address {
     return Address(
+        addressId,
         provinceID,
         districtID,
         wardCode,
@@ -32,6 +33,7 @@ fun AddressDto.toAddress(): Address {
 
 fun Address.toAddressDto(location: Location? = null): AddressDto {
     return AddressDto(
+        addressId,
         provinceID,
         districtID,
         wardCode,

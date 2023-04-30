@@ -5,4 +5,5 @@ import com.sudo248.soc.domain.entity.payment.Payment
 
 interface PaymentRepository {
     suspend fun getPaymentUrl(payment: Payment): DataState<Payment, Exception>
+    suspend fun payWithCOD(payment: Payment): DataState<Payment, Exception>
 }

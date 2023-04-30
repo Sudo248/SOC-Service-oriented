@@ -1,7 +1,7 @@
 package com.sudo248.soc_staff.ui.uimodel
 
 import androidx.databinding.ObservableField
-import com.sudo248.soc.domain.entity.user.Location
+import com.sudo248.soc_staff.domain.entity.user.Location
 
 data class AddressUiModel(
     var provinceID: Int = 0,

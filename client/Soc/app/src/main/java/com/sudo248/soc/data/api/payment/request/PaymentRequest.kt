@@ -6,4 +6,5 @@ data class PaymentRequest(
     val orderId: String,
     val orderType: String = "100000",
     val ipAddress: String? = null,
+    val amount: Double = 0.0
 )

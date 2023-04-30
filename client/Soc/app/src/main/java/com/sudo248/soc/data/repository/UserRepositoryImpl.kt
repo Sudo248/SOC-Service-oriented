@@ -2,14 +2,17 @@ package com.sudo248.soc.data.repository
 
 import android.annotation.SuppressLint
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.Priority
 import com.sudo248.base_android.core.DataState
 import com.sudo248.base_android.data.api.handleResponse
 import com.sudo248.base_android.ktx.stateOn
 import com.sudo248.soc.data.api.user.UserService
 import com.sudo248.soc.data.ktx.data
+import com.sudo248.soc.data.ktx.errorBody
 import com.sudo248.soc.data.mapper.toAddressSuggestion
 import com.sudo248.soc.data.mapper.toUserDto
 import com.sudo248.soc.data.mapper.toUser
+import com.sudo248.soc.domain.common.Constants
 import com.sudo248.soc.domain.entity.user.AddressSuggestion
 import com.sudo248.soc.domain.entity.user.Location
 import com.sudo248.soc.domain.entity.user.User
@@ -31,10 +34,15 @@ class UserRepositoryImpl @Inject constructor(
         response.data().toUser()
     }
 
-    override suspend fun updateUser(user: User): DataState<User, Exception> = stateOn(ioDispatcher){
-        val userDto = user.toUserDto(getCurrentLocation())
+    override suspend fun updateUser(user: User, isUpdate: Boolean): DataState<User, Exception> = stateOn(ioDispatcher){
+        val location = if (isUpdate) getCurrentLocation() else null
+        val userDto = user.toUserDto(location)
         val response = handleResponse(userService.updateUser(userDto))
-        user
+        if (response.isSuccess) {
+            response.data().toUser()
+        } else {
+            throw response.error().errorBody()
+        }
     }
 
     override suspend fun getAddressSuggestionProvince(): DataState<List<AddressSuggestion>, Exception> = stateOn(ioDispatcher) {
@@ -54,8 +62,15 @@ class UserRepositoryImpl @Inject constructor(
 
     @SuppressLint("MissingPermission")
     private suspend fun getCurrentLocation(): Location = suspendCoroutine { continuation ->
-        locationService.lastLocation.addOnCompleteListener {
-            it.result.run {
+//        locationService.lastLocation.addOnCompleteListener {
+//            it.result.run {
+//                continuation.resume(Location(longitude, latitude))
+//            }
+//        }
+
+        locationService.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null).addOnSuccessListener {
+            it.run {
+                Constants.location = "$longitude,$latitude"
                 continuation.resume(Location(longitude, latitude))
             }
         }

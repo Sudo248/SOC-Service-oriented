@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.sudo248.soc.ui.activity.payment.PaymentViewModel" />
@@ -19,12 +20,12 @@
             android:id="@+id/imgBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{(v) -> viewModel.onBack()}"
             android:padding="15dp"
             android:src="@drawable/ic_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/primaryColor"
-            android:onClick="@{(v) -> viewModel.onBack()}"/>
+            app:tint="@color/primaryColor" />
 
         <TextView
             android:id="@+id/headerPayment"
@@ -46,11 +47,11 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
+            android:clipToPadding="true"
             app:layout_constraintBottom_toTopOf="@+id/btnOrderNow"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/headerPayment"
-            android:clipToPadding="true">
+            app:layout_constraintTop_toBottomOf="@+id/headerPayment">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -98,6 +99,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
+                            android:text="@{viewModel.userInfo}"
                             android:textColor="@color/black"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -118,8 +120,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cardInformationUser"
-                    tools:listitem="@layout/item_payment"
-                    tools:itemCount="2" />
+                    tools:itemCount="2"
+                    tools:listitem="@layout/item_payment" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardShipper"
@@ -291,11 +293,11 @@
                     android:id="@+id/lnPaymentMethod"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@color/white"
                     android:layout_marginTop="15dp"
-                    android:padding="5dp"
+                    android:background="@color/white"
                     android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/constrainVoucherPayment">
 
@@ -307,25 +309,25 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/payment_method"
                         android:layout_marginStart="10dp"
+                        android:text="@string/payment_method"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
                     <View
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
 
                     <TextView
                         android:id="@+id/txtPaymentMethod"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewModel.currentPaymentType == null ? @string/choose_payment_method : viewModel.currentPaymentType.value}"
                         android:layout_marginStart="5dp"
+                        android:text="@{viewModel.currentPaymentType == null ? @string/choose_payment_method : viewModel.currentPaymentType.value}"
                         android:textColor="@color/primaryColor"
                         android:textSize="14sp"
-                        tools:text="@string/choose_payment_method"/>
+                        tools:text="@string/choose_payment_method" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -476,6 +478,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="50dp"
                         android:textColor="@color/primaryColor"
                         android:textSize="20sp"
                         android:textStyle="bold"
@@ -484,8 +487,7 @@
                         app:layout_constraintHorizontal_bias="1"
                         app:layout_constraintStart_toEndOf="@+id/textFinalSumPayment"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="50.000đ"
-                        android:layout_marginBottom="50dp" />
+                        tools:text="50.000đ" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -494,17 +496,18 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/btnOrderNow"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/btnOrderNow"
-            android:background="@color/white" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btnOrderNow" />
 
         <TextView
             android:id="@+id/btnOrderNow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangle_conner_25_primary"
+            android:onClick="@{(v) -> viewModel.onPayment()}"
             android:paddingHorizontal="30dp"
             android:paddingVertical="15dp"
             android:text="@string/payment"
@@ -512,8 +515,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:onClick="@{(v) -> viewModel.onPayment()}"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/txtTitleSum"

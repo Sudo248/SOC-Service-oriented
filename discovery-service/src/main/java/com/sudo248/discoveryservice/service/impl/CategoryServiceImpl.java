@@ -1,6 +1,7 @@
 package com.sudo248.discoveryservice.service.impl;
 
 import com.sudo248.discoveryservice.controller.dto.CategoryDto;
+import com.sudo248.discoveryservice.controller.dto.CategoryInfoDto;
 import com.sudo248.discoveryservice.repository.CategoryRepository;
 import com.sudo248.discoveryservice.repository.entity.Category;
 import com.sudo248.discoveryservice.service.CategoryService;
@@ -19,6 +20,13 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryServiceImpl(CategoryRepository categoryRepository, ProductService productService) {
         this.categoryRepository = categoryRepository;
         this.productService = productService;
+    }
+
+    @Override
+    public CategoryDto putCategory(CategoryDto categoryDto) {
+        Category savedCategory = categoryRepository.save(toEntity(categoryDto));
+        categoryDto.setCategoryId(savedCategory.getCategoryId());
+        return categoryDto;
     }
 
     @Override
@@ -58,5 +66,16 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryDto> getAllCategories(String userId) {
         List<Category> categories = categoryRepository.findAll();
         return categories.stream().map(c -> toDto(userId, c)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CategoryInfoDto> getAllCategoriesInfo() {
+        List<Category> categories = categoryRepository.findAll();
+        return categories.stream().map((category -> new CategoryInfoDto(
+                category.getCategoryId(),
+                category.getName(),
+                category.getImage(),
+                category.getSupplierId()
+        ))).collect(Collectors.toList());
     }
 }

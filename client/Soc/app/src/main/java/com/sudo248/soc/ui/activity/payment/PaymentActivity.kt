@@ -4,7 +4,9 @@ import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
@@ -21,6 +23,7 @@ import com.sudo248.soc.domain.common.Constants
 import com.sudo248.soc.ui.ktx.showErrorDialog
 import com.vnpay.authentication.VNP_AuthenticationActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.annotation.meta.When
 
@@ -90,6 +93,18 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding, PaymentViewModel>()
         }
     }
 
+    override fun payWithCODSuccess() {
+        // navigate to delivery
+        lifecycleScope.launch{
+            delay(1000)
+            finish()
+        }
+    }
+
+    override fun toast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
     private fun getIntentVnPay(vnPayUrl: String): Intent {
         return Intent(this, VNP_AuthenticationActivity::class.java).apply {
             putExtra(Constants.Payment.KEY_URL, vnPayUrl)
@@ -101,6 +116,7 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding, PaymentViewModel>()
 
     private fun setupSdkCompletedCallback() {
         VNP_AuthenticationActivity.setSdkCompletedCallback {
+            Log.d("Sudoo", "VNPaySdkCompletedCallback: $it")
             when(it) {
                 Constants.Payment.ACTION_APP_BACK -> {
                     onVnPaySdkActionAppBack()

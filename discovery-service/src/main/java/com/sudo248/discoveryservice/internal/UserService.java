@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface UserService {
 
     @GetMapping("/api/v1/user/address")
-    ResponseEntity<BaseResponse<AddressDto>> getAddressSupplier(@RequestHeader(Constants.HEADER_USER_ID) String userId);
+    ResponseEntity<BaseResponse<?>> getAddressSupplier(@RequestHeader(Constants.HEADER_USER_ID) String userId);
 
     @GetMapping("/api/v1/user/address/internal/location")
     Location getLocation(@RequestHeader(Constants.HEADER_USER_ID) String userId);

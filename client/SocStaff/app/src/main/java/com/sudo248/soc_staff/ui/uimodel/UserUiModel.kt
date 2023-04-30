@@ -1,9 +1,8 @@
 package com.sudo248.soc_staff.ui.uimodel
 
 import androidx.databinding.ObservableField
-import com.sudo248.soc.domain.entity.auth.Role
-import com.sudo248.soc.domain.entity.user.Gender
-import com.sudo248.soc.domain.entity.user.User
+import com.sudo248.soc_staff.domain.entity.auth.Role
+import com.sudo248.soc_staff.domain.entity.user.Gender
 
 data class UserUiModel(
     var userId: String = "",
@@ -14,5 +13,5 @@ data class UserUiModel(
     val phone: ObservableField<String> = ObservableField(""),
     val address: AddressUiModel = AddressUiModel(),
     val dob: ObservableField<String> = ObservableField(""),
-    val role: ObservableField<String> = ObservableField(Role.CONSUMER.value)
+    val role: ObservableField<String> = ObservableField(Role.STAFF.value)
 )

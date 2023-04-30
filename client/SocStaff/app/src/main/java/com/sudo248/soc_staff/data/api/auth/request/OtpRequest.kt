@@ -1,4 +1,4 @@
-package com.sudo248.soc.data.api.auth.request
+package com.sudo248.soc_staff.data.api.auth.request
 
 
 /**

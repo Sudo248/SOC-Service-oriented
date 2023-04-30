@@ -143,24 +143,23 @@
                             android:text="@{Utils.INSTANCE.formatSold(viewModel.product.soldAmount)}"
                             android:textColor="@color/black"
                             app:layout_constraintBottom_toBottomOf="@id/txtNumberStart"
-                            app:layout_constraintEnd_toStartOf="@+id/imgHeart"
+                            app:layout_constraintEnd_toStartOf="@+id/btnSendMessage"
                             app:layout_constraintHorizontal_bias="0.9"
                             app:layout_constraintStart_toEndOf="@+id/txtNumberStart"
                             app:layout_constraintTop_toTopOf="@id/txtNumberStart"
                             tools:text="Đã bán: 5,2k" />
 
-                        <ImageView
-                            android:id="@+id/imgHeart"
+                        <com.facebook.share.widget.SendButton
+                            android:id="@+id/btnSendMessage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="20dp"
                             android:background="@color/white"
-                            android:onClick="@{(v) -> viewModel.onClickLike()}"
-                            android:src="@{viewModel.product.isLike().booleanValue() ? @drawable/ic_heart_active : @drawable/ic_heart}"
+                            android:drawableTint="@color/light_blue_A400"
+                            android:text="@null"
                             app:layout_constraintBottom_toBottomOf="@id/txtNumberSold"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/txtNumberSold"
-                            tools:src="@drawable/ic_heart_active"/>
+                            app:layout_constraintTop_toTopOf="@id/txtNumberSold"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -183,6 +182,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="30dp"
                     android:maxLines="2"
+                    android:ellipsize="end"
                     android:text="@{viewModel.supplierLocation}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -210,7 +210,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text="@{viewModel.product.route.duration.value + ' ' + viewModel.product.route.duration.unit}"
+                    android:text="@{Utils.INSTANCE.formatDuration(viewModel.product.route.duration.value, viewModel.product.route.duration.unit)}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/imgClock"

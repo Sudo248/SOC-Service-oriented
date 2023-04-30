@@ -1,6 +1,7 @@
-package com.sudo248.soc.domain.entity.user
+package com.sudo248.soc_staff.domain.entity.user
 
 data class Address(
+    val addressId: String = "",
     val provinceID: Int = 0,
     val districtID: Int = 0,
     val wardCode: String = "",

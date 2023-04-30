@@ -18,9 +18,10 @@ import com.sudo248.soc.ui.uimodel.CategoryUiModel
  * @since 09:37 - 12/03/2023
  */
 class CategoryAdapter(
-    private val onItemClick: (CategoryUiModel) -> Unit
+    private val onItemClick: (CategoryUiModel) -> Unit,
 ) : BaseListAdapter<CategoryUiModel, CategoryAdapter.ViewHolder>() {
     private lateinit var lastSelectedItemBinding: ItemCategoryBinding
+    private var currentSelectedPosition = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -38,7 +39,7 @@ class CategoryAdapter(
 
         override fun onBind(item: CategoryUiModel) {
             binding.category = item
-            if (bindingAdapterPosition == 0) {
+            if (bindingAdapterPosition == currentSelectedPosition) {
                 lastSelectedItemBinding = binding
                 selectedItem(binding)
             }
@@ -47,6 +48,7 @@ class CategoryAdapter(
                     setSelectedItem()
                     onItemClick.invoke(item)
                 }
+                currentSelectedPosition = bindingAdapterPosition
             }
         }
 

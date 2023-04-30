@@ -1,9 +1,9 @@
-package com.sudo248.soc.ui.ktx
+package com.sudo248.soc_staff.ui.ktx
 
 import android.app.Dialog
 import android.content.Context
 import com.sudo248.base_android.utils.DialogUtils
-import com.sudo248.soc.R
+import com.sudo248.soc_staff.R
 
 
 /**

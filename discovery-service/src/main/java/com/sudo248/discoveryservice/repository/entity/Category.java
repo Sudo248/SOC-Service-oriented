@@ -29,7 +29,7 @@ public class Category {
     @Column(name = "supplier_id")
     private String supplierId;
 
-    @ManyToMany(mappedBy = "categories", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "categories", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> products;
 }
 

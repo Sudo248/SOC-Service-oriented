@@ -7,12 +7,12 @@ import com.sudo248.authservice.contronller.dto.TokenDto;
 import com.sudo248.authservice.exception.PhoneNumberExistedException;
 import com.sudo248.authservice.exception.PhoneNumberInvalidException;
 import com.sudo248.authservice.exception.WrongPasswordException;
-import com.sudo248.authservice.internal.CommonService;
 import com.sudo248.authservice.repository.AccountRepository;
 import com.sudo248.authservice.repository.entity.Account;
 import com.sudo248.authservice.service.AccountService;
 import com.sudo248.authservice.service.OtpService;
 import com.sudo248.authservice.service.model.AccountModel;
+import com.sudo248.authservice.utils.TokenUtils;
 import com.sudo248.domain.base.BaseResponse;
 import com.sudo248.domain.exception.ApiException;
 import com.sudo248.domain.util.Utils;
@@ -30,16 +30,25 @@ public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
     private final PasswordEncoder encoder;
     private final ModelMapper mapper;
-    private final CommonService commonService;
+
+    private final TokenUtils tokenUtils;
 
     private final OtpService otpService;
 
-    public AccountServiceImpl(AccountRepository accountRepository, PasswordEncoder encoder, ModelMapper mapper, CommonService commonService, @Qualifier("TwilioOtpService") OtpService otpService) {
+    public AccountServiceImpl(AccountRepository accountRepository, PasswordEncoder encoder, ModelMapper mapper, TokenUtils tokenUtils, @Qualifier("TwilioOtpService") OtpService otpService) {
         this.accountRepository = accountRepository;
         this.encoder = encoder;
         this.mapper = mapper;
-        this.commonService = commonService;
+        this.tokenUtils = tokenUtils;
         this.otpService = otpService;
+    }
+
+    @Override
+    public ResponseEntity<BaseResponse<?>> tryGetToken(String userId) {
+        return handleException(()->{
+            TokenDto token = new TokenDto(tokenUtils.generateToken(userId));
+            return BaseResponse.ok(token);
+        });
     }
 
     @Override
@@ -60,7 +69,7 @@ public class AccountServiceImpl implements AccountService {
 //                    return result;
 //                }
 //            }
-            TokenDto token = new TokenDto(commonService.generateToken(accountModel.getUserId()));
+            TokenDto token = new TokenDto(tokenUtils.generateToken(accountModel.getUserId()));
             return BaseResponse.ok(token);
         });
     }

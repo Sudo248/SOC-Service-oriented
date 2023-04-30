@@ -1,6 +1,6 @@
-package com.sudo248.soc.data.dto.discovery
+package com.sudo248.soc_staff.data.dto.discovery
 
-import com.sudo248.soc.domain.entity.discovery.Route
+import com.sudo248.soc_staff.domain.entity.discovery.Route
 
 data class SupplierProductDto(
     val supplierId: String,

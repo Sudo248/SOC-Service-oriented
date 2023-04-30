@@ -1,19 +1,18 @@
-package com.sudo248.soc.ui.activity.otp
+package com.sudo248.soc_staff.ui.activity.otp
 
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.sudo248.base_android.base.BaseActivity
 import com.sudo248.base_android.utils.DialogUtils
-import com.sudo248.soc.R
-import com.sudo248.soc.databinding.ActivityOtpBinding
-import com.sudo248.soc.domain.common.Constants
 import com.sudo248.soc.ui.activity.otp.sms.SmsListener
 import com.sudo248.soc.ui.activity.otp.sms.SmsReceiver
-import com.sudo248.soc.ui.ktx.showErrorDialog
+import com.sudo248.soc_staff.R
+import com.sudo248.soc_staff.databinding.ActivityOtpBinding
+import com.sudo248.soc_staff.domain.common.Constants
+import com.sudo248.soc_staff.ui.ktx.showErrorDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

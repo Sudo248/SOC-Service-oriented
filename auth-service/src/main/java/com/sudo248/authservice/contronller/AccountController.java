@@ -3,6 +3,7 @@ package com.sudo248.authservice.contronller;
 import com.sudo248.authservice.contronller.dto.ChangePasswordDto;
 import com.sudo248.authservice.contronller.dto.SignInDto;
 import com.sudo248.authservice.contronller.dto.SignUpDto;
+import com.sudo248.authservice.contronller.dto.TokenDto;
 import com.sudo248.authservice.service.AccountService;
 import com.sudo248.domain.base.BaseResponse;
 import com.sudo248.domain.common.Constants;
@@ -24,6 +25,11 @@ public class AccountController {
 
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
+    }
+
+    @GetMapping("/try-token")
+    public ResponseEntity<BaseResponse<?>> tryGetToken(@RequestHeader(Constants.HEADER_USER_ID) String userId) {
+        return accountService.tryGetToken(userId);
     }
 
     @PostMapping("/sign-in")

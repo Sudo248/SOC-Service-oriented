@@ -36,9 +36,27 @@ class AuthRepositoryImpl @Inject constructor(
     private val authService: AuthService,
     private val ioDispatcher: CoroutineDispatcher
 ) : AuthRepository {
+    override suspend fun tryGetToken(): DataState<Token, Exception> = stateOn(ioDispatcher) {
+        val token = SharedPreferenceUtils.withApplicationSharedPreference().getString(Constants.Key.TOKEN, "")
+        if (token.isEmpty()) {
+            throw Exception()
+        } else {
+            val response = handleResponse(authService.tryGetToken())
+            if (response.isSuccess) {
+                val token = response.get().data!!.toToken()
+                saveToken(token.token)
+                token
+            } else {
+                throw response.error().errorBody()
+            }
+        }
+    }
+
     override suspend fun saveToken(token: String): DataState<Unit, Exception> = state {
+        Log.d("Sudoo", "saveToken: $token")
         SharedPreferenceUtils.withApplicationSharedPreference()
             .putString(Constants.Key.TOKEN, token)
+        Log.d("Sudoo", "after saveToken: ${SharedPreferenceUtils.getString(Constants.Key.TOKEN)}")
     }
 
     override suspend fun signIn(account: Account): DataState<Token, Exception> =

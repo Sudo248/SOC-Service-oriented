@@ -6,6 +6,7 @@
     <data>
 
         <import type="com.sudo248.soc.ui.util.Utils" />
+        <import type="android.view.View" />
 
         <variable
             name="product"
@@ -60,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:gravity="bottom"
-                android:text="@{product.route.distance.value + product.route.distance.unit}"
+                android:text="@{Utils.INSTANCE.formatDistance(product.route.distance.value, product.route.distance.unit)}"
                 android:textColor="@color/black"
                 android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="@+id/icPin"
@@ -68,6 +69,13 @@
                 app:layout_constraintTop_toTopOf="@id/icPin"
                 tools:ignore="SmallSp"
                 tools:text="0.75km" />
+
+            <androidx.constraintlayout.widget.Group
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:visibility="invisible"
+                android:visibility="@{product.route.distance.value != 0.0 ? View.VISIBLE : View.INVISIBLE}"
+                app:constraint_referenced_ids="icPin, txtDistances"/>
 
             <ImageView
                 android:layout_width="10dp"
@@ -80,7 +88,7 @@
             <TextView
                 android:id="@+id/txtStarts"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="15dp"
                 android:gravity="bottom"
                 android:text="@{Utils.INSTANCE.format(product.rate, 1)}"
                 android:textColor="@color/black"
@@ -108,16 +116,17 @@
 
             <TextView
                 android:id="@+id/nameProduct"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:singleLine="true"
+                android:lines="2"
+                android:ellipsize="end"
                 android:text="@{product.name}"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:textStyle="bold"
+                android:layout_marginHorizontal="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.23"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/icPin"
                 tools:text="Chicken Burger" />

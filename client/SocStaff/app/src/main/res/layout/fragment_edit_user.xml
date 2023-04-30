@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.sudo248.soc.ui.util.Utils" />
+        <import type="com.sudo248.soc_staff.ui.util.Utils" />
 
         <variable
             name="viewModel"
-            type="com.sudo248.soc.ui.activity.main.fragment.user.UserViewModel" />
+            type="com.sudo248.soc_staff.ui.activity.main.fragment.user.UserViewModel" />
     </data>
 
     <LinearLayout
@@ -84,8 +84,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@color/primaryColor"
-                        app:imageUrl="@{viewModel.user.cover}"/>
+                        android:src="@color/primaryColor"/>
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cardImageUser"
@@ -95,7 +94,8 @@
                         app:cardCornerRadius="50dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:onClick="@{(v) -> viewModel.pickImage()}">
 
                         <FrameLayout
                             android:layout_width="80dp"
@@ -125,16 +125,37 @@
                 </FrameLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/edtFullName"
+                    android:id="@+id/edtPhoneNumber"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="30dp"
-                    android:hint="@string/full_name"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:hint="@string/label_phonenumber"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/frameImage">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:text="@{viewModel.user.phone}"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/edtFullName"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="@string/full_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/edtPhoneNumber">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:text="@={viewModel.user.fullName}"
@@ -157,7 +178,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/edtFullName">
 
                     <AutoCompleteTextView
-                        android:text="@={viewModel.user.gender}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="none" />
@@ -188,45 +208,24 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/edtPhoneNumber"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="15dp"
-                    android:enabled="false"
-                    android:focusable="false"
-                    android:hint="@string/label_phonenumber"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/edtDob">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:text="@{viewModel.user.phone}"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:singleLine="true" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/edtProvince"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="15dp"
-                    android:focusable="false"
                     android:hint="@string/label_province"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/edtPhoneNumber">
+                    app:layout_constraintTop_toBottomOf="@id/edtDob">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:onClick="@{(v) -> viewModel.getAddressProvinceSuggestion()}"
                         android:text="@{viewModel.user.address.provinceName}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:focusable="false"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -236,7 +235,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="15dp"
-                    android:focusable="false"
                     android:hint="@string/label_district"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -246,7 +244,8 @@
                         android:text="@{viewModel.user.address.districtName}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:focusable="false"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -256,7 +255,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="15dp"
-                    android:focusable="false"
                     android:hint="@string/label_ward"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -266,7 +264,8 @@
                         android:text="@{viewModel.user.address.wardName}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:singleLine="true" />
+                        android:maxLines="1"
+                        android:focusable="false"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -284,11 +283,12 @@
                     app:layout_constraintBottom_toBottomOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:text="@{viewModel.user.address.address}"
+                        android:text="@={viewModel.user.address.address}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:lines="5"
-                        android:maxLines="5" />
+                        android:maxLines="5"
+                        android:gravity="top"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!--            <Button-->

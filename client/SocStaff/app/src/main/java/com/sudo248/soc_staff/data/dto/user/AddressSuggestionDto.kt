@@ -1,4 +1,4 @@
-package com.sudo248.soc.data.dto.user
+package com.sudo248.soc_staff.data.dto.user
 
 data class AddressSuggestionDto(
     val addressId: Int,

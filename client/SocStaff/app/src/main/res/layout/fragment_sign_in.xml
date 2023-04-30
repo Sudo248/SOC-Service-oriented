@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.sudo248.soc.ui.activity.auth.fragment.sign_in.SignInViewModel" />
+            type="com.sudo248.soc_staff.ui.activity.auth.fragment.sign_in.SignInViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

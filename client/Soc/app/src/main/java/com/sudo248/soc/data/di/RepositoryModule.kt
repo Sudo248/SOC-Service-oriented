@@ -1,13 +1,7 @@
 package com.sudo248.soc.data.di
 
-import com.sudo248.soc.data.repository.AuthRepositoryImpl
-import com.sudo248.soc.data.repository.DiscoveryRepositoryImpl
-import com.sudo248.soc.data.repository.PaymentRepositoryImpl
-import com.sudo248.soc.data.repository.UserRepositoryImpl
-import com.sudo248.soc.domain.repository.AuthRepository
-import com.sudo248.soc.domain.repository.DiscoveryRepository
-import com.sudo248.soc.domain.repository.PaymentRepository
-import com.sudo248.soc.domain.repository.UserRepository
+import com.sudo248.soc.data.repository.*
+import com.sudo248.soc.domain.repository.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -35,4 +29,8 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindPaymentRepository(paymentRepository: PaymentRepositoryImpl): PaymentRepository
+
+    @Binds
+    abstract fun bindImageRepository(imageRepository: ImageRepositoryImpl): ImageRepository
+
 }

@@ -8,23 +8,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddressDto {
-    private String addressId;
+    private String addressId = "";
 
-    private int provinceID;
+    private int provinceID = 0;
 
-    private int districtID;
+    private int districtID = 0;
 
-    private int wardCode;
+    private int wardCode = 0;
 
-    private String provinceName;
+    private String provinceName = "";
 
-    private String districtName;
+    private String districtName = "";
 
-    private String wardName;
+    private String wardName = "";
 
-    private String address;
+    private String address = "";
 
     private LocationDto location;
 
-    private String fullAddress;
+    private String fullAddress = "";
 }

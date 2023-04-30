@@ -11,5 +11,5 @@ data class Category(
     val categoryId: String,
     val name: String,
     val imageUrl: String,
-    val products: List<Product>
-)
+    var products: List<Product>
+) : java.io.Serializable

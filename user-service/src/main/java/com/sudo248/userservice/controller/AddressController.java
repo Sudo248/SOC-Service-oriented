@@ -29,6 +29,17 @@ public class AddressController {
         });
     }
 
+    @GetMapping("/{otherId}")
+    public ResponseEntity<BaseResponse<?>> getOtherAddress(
+            @RequestHeader(Constants.HEADER_USER_ID) String userId,
+            @RequestParam("otherId") String otherId
+    ) {
+        return Utils.handleException(() -> {
+            AddressDto addressDto = addressService.getAddress(otherId);
+            return BaseResponse.ok(addressDto);
+        });
+    }
+
     @PutMapping
     public ResponseEntity<BaseResponse<?>> putAddress(
             @RequestHeader(Constants.HEADER_USER_ID) String userId,

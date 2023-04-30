@@ -33,6 +33,13 @@ class ProductDetailViewModel @Inject constructor(
     // Khi khởi tạo view observer dữ liệu trong viewmodel nên sẽ hiển thị sai. Khi set lại value nhưng k notify nên k có dữ liệu
     var product: ProductUiModel = ProductUiModel()
 
+    fun getSupplierAddress() = launch {
+        discoveryRepository.getSupplierAddress(product.supplierId)
+            .onSuccess {
+                _supplierLocation.postValue(it.fullAddress)
+            }
+    }
+
     fun onClickLike() {
         product.isLike.set(!product.isLike.get()!!)
         product.isLike.notifyChange()

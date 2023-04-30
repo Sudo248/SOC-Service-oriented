@@ -30,21 +30,24 @@ import retrofit2.http.Path
 @LoggingLever(level = Level.BODY)
 interface AuthService {
 
+    @GET("try-token")
+    suspend fun tryGetToken(): Response<BaseResponse<TokenDto>>
+
     @POST("sign-in")
     suspend fun signIn(@Body accountRequest: AccountRequest): Response<BaseResponse<TokenDto>>
 
     @POST("sign-up")
-    suspend fun signUp(@Body accountRequest: AccountRequest): Response<BaseResponse<Unit>>
+    suspend fun signUp(@Body accountRequest: AccountRequest): Response<BaseResponse<String>>
 
     @POST("change-password")
-    suspend fun changePassword(@Body changePasswordRequest: ChangePasswordRequest): Response<BaseResponse<Unit>>
+    suspend fun changePassword(@Body changePasswordRequest: ChangePasswordRequest): Response<BaseResponse<String>>
 
     @POST("generate-otp/{phoneNumber}")
-    suspend fun generateOtp(@Path("phoneNumber") phoneNumber: String): Response<BaseResponse<Unit>>
+    suspend fun generateOtp(@Path("phoneNumber") phoneNumber: String): Response<BaseResponse<String>>
 
     @POST("verify-otp")
     suspend fun verifyOtp(@Body otp: OtpRequest): Response<BaseResponse<TokenDto>>
 
     @GET("logout")
-    suspend fun logout(): Response<BaseResponse<Unit>>
+    suspend fun logout(): Response<BaseResponse<String>>
 }

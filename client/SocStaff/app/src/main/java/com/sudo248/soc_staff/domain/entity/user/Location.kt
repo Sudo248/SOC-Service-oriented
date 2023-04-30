@@ -1,4 +1,4 @@
-package com.sudo248.soc.domain.entity.user
+package com.sudo248.soc_staff.domain.entity.user
 
 data class Location(
     val longitude: Double = 0.0,

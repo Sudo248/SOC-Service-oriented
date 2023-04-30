@@ -1,11 +1,8 @@
 package com.sudo248.soc_staff.data.mapper
 
-import com.sudo248.soc.data.dto.discovery.CategoryDto
-import com.sudo248.soc.data.dto.discovery.ProductDto
-import com.sudo248.soc.data.dto.discovery.SupplierProductDto
-import com.sudo248.soc.domain.entity.discovery.Category
-import com.sudo248.soc.domain.entity.discovery.Product
-import com.sudo248.soc.domain.entity.discovery.SupplierProduct
+import android.util.Log
+import com.sudo248.soc_staff.data.dto.discovery.*
+import com.sudo248.soc_staff.domain.entity.discovery.*
 
 fun SupplierProductDto.toSupplierProduct(): SupplierProduct {
     return SupplierProduct(
@@ -24,8 +21,9 @@ fun ProductDto.toProduct(): Product {
         productId = productId,
         name = name,
         description = description,
+        categoryId = categoryIds[0],
         sku = sku,
-        images = images?.map { it.url } ?: listOf("https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YnVyZ2VyfGVufDB8fDB8fA%3D%3D&w=1000&q=80"),
+        images = images?.map { it.url } ?: listOf("product_default.png"),
         supplierProducts = supplierProducts.map { it.toSupplierProduct() }
     )
     //
@@ -37,5 +35,75 @@ fun CategoryDto.toCategory(): Category {
         name = name,
         imageUrl = image,
         products = products.map { it.toProduct() }
+    )
+}
+
+fun Product.toProductDto(): ProductDto {
+    return ProductDto(
+        productId = productId,
+        name = name,
+        description = description,
+        sku = sku,
+        images = images.map { ImageDto(url = it) },
+        categoryIds = listOf(categoryId),
+        supplierProducts = supplierProducts.map { it.toSupplerProductDto() }
+    )
+}
+
+fun Category.toCategoryDto(): CategoryDto {
+    return CategoryDto(
+        categoryId = categoryId,
+        name = name,
+        image = imageUrl
+    )
+}
+
+fun Supplier.toSupplierDto(): SupplierDto {
+    return SupplierDto(
+        supplierId,
+        name,
+        avatar,
+        location
+    )
+}
+
+fun SupplierDto.toSupplier(): Supplier {
+    return Supplier(
+        supplierId, name, avatar, location
+    )
+}
+
+fun CategoryInfoDto.toCategoryInfo(): CategoryInfo {
+    return CategoryInfo(
+        categoryId, name, image, supplierId
+    )
+}
+
+fun SupplierProductInfoDto.toSupplierProductInfo(): SupplierProductInfo {
+    return SupplierProductInfo(
+        supplierId,
+        productId,
+        categoryId,
+        productImages.map { it.url },
+        description,
+        productName,
+        categoryName,
+        amountLeft,
+        price,
+        soldAmount,
+        rate,
+        sku
+    )
+}
+
+fun SupplierProduct.toSupplerProductDto(): SupplierProductDto {
+    return SupplierProductDto(
+        supplierId = supplierId,
+        productId = productId,
+        route = route,
+        amountLeft = amountLeft,
+        price = price,
+        soldAmount = soldAmount,
+        rate = rate
     )
 }

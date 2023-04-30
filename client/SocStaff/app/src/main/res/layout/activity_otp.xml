@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.sudo248.soc.ui.activity.otp.OtpViewModel" />
+            type="com.sudo248.soc_staff.ui.activity.otp.OtpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -66,7 +66,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txtDescription"
             tools:text="0989465270" />
 
-        <com.sudo248.soc.ui.widget.OtpEntryEditText
+        <com.sudo248.soc_staff.ui.widget.OtpEntryEditText
             android:id="@+id/edtOtp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

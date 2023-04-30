@@ -1,4 +1,4 @@
-package com.sudo248.soc.domain.entity.user
+package com.sudo248.soc_staff.domain.entity.user
 
 enum class Gender(val value: String) {
     MALE("Nam"),

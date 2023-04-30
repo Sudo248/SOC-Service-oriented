@@ -8,12 +8,14 @@ import com.sudo248.base_android.base.BaseViewModel
 import com.sudo248.base_android.core.UiState
 import com.sudo248.base_android.ktx.createActionIntentDirections
 import com.sudo248.base_android.ktx.onState
-import com.sudo248.soc.domain.entity.auth.Account
-import com.sudo248.soc.domain.repository.AuthRepository
-import com.sudo248.soc.ui.activity.auth.AuthViewModel
-import com.sudo248.soc.ui.activity.main.MainActivity
-import com.sudo248.soc.ui.mapper.toAccount
-import com.sudo248.soc.ui.uimodel.AccountUiModel
+import com.sudo248.base_android.utils.SharedPreferenceUtils
+import com.sudo248.soc_staff.domain.common.Constants
+import com.sudo248.soc_staff.domain.repository.AuthRepository
+import com.sudo248.soc_staff.domain.repository.DiscoveryRepository
+import com.sudo248.soc_staff.ui.activity.auth.AuthViewModel
+import com.sudo248.soc_staff.ui.activity.main.MainActivity
+import com.sudo248.soc_staff.ui.mapper.toAccount
+import com.sudo248.soc_staff.ui.uimodel.AccountUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -29,6 +31,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val authRepository: AuthRepository,
+    private val discoveryRepository: DiscoveryRepository
 ) : BaseViewModel<NavDirections>() {
 
     private var parentViewModel: AuthViewModel? = null
@@ -48,13 +51,15 @@ class SignInViewModel @Inject constructor(
         authRepository.signIn(accountUiModel.toAccount()).onState(
             onSuccess = {
                 authRepository.saveToken(it.token)
+                discoveryRepository.getSupplier().get().run {
+                    SharedPreferenceUtils.putString(Constants.Key.SUPPLIER_ID, supplierId)
+                }
                 parentViewModel?.setState(UiState.SUCCESS)
                 parentViewModel?.navigator()
                     ?.navigateOff(MainActivity::class.createActionIntentDirections())
             },
             onError = {
                 _error.postValue(it.message)
-                Log.e("Sudoo", "signIn: ", it)
                 accountUiModel.password.set("")
                 parentViewModel?.setState(UiState.ERROR)
             }

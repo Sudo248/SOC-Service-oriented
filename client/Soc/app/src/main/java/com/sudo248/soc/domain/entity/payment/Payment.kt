@@ -7,4 +7,6 @@ data class Payment(
     val bankCode: String? = null,
     val orderId: String,
     val orderType: String = "100000",
+    val paymentStatus: PaymentStatus,
+    val amount: Double
 )

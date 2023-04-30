@@ -12,6 +12,7 @@ import com.sudo248.soc.domain.entity.auth.Token
  * @since 23:47 - 04/03/2023
  */
 interface AuthRepository {
+    suspend fun tryGetToken(): DataState<Token, Exception>
     suspend fun saveToken(token: String): DataState<Unit, Exception>
     suspend fun signIn(account: Account): DataState<Token, Exception>
     suspend fun signUp(account: Account): DataState<Unit, Exception>

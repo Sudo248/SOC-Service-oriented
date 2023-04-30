@@ -1,24 +1,19 @@
 package com.sudo248.soc_staff.data.di
 
-import android.content.Context
+import com.google.gson.GsonBuilder
 import com.sudo248.base_android.data.api.ApiService
-import com.sudo248.soc.data.api.auth.AuthService
+import com.sudo248.base_android.data.api.api
+import com.sudo248.soc_staff.data.api.auth.AuthService
+import com.sudo248.soc_staff.data.api.discovery.DiscoveryService
+import com.sudo248.soc_staff.data.api.image.ImageService
+import com.sudo248.soc_staff.data.api.user.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.Dispatchers
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-import com.sudo248.soc.BuildConfig
-import com.sudo248.soc.data.api.discovery.DiscoveryService
-import com.sudo248.soc.data.api.payment.PaymentService
-import com.sudo248.soc.data.api.user.UserService
 
 
 /**
@@ -42,11 +37,15 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideUserService(): UserService = ApiService()
+    fun provideUserService(): UserService = api {
+        converterFactory = GsonConverterFactory.create(
+            GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX").create()
+        )
+    }
 
     @Singleton
     @Provides
-    fun providePaymentService(): PaymentService = ApiService()
+    fun provideImageService(): ImageService = ApiService()
 
     @Singleton
     @Provides

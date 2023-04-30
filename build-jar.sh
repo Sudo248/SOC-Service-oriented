@@ -2,7 +2,6 @@ strings=(
   domain
   soc-registry
   api-gateway
-  common-service
   auth-service
   discovery-service
   payment-service

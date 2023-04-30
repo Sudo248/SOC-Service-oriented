@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.sudo248.soc.R
-import com.sudo248.soc.domain.entity.user.AddressSuggestion
+import com.sudo248.soc_staff.R
+import com.sudo248.soc_staff.domain.entity.user.AddressSuggestion
 
 class AddressSuggestionAdapter(
     private val onItemClick: (AddressSuggestion) -> Unit
