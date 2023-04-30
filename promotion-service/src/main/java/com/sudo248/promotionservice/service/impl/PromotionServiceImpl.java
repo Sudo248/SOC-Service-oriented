@@ -1,5 +1,6 @@
 package com.sudo248.promotionservice.service.impl;
 
+import com.sudo248.domain.util.Utils;
 import com.sudo248.promotionservice.controller.dto.PromotionDto;
 import com.sudo248.promotionservice.repository.PromotionRepository;
 import com.sudo248.promotionservice.repository.entity.Promotion;
@@ -45,10 +46,11 @@ public class PromotionServiceImpl implements PromotionService {
     @Override
     public PromotionDto addPromotion(PromotionDto promotionDto) {
         Promotion promotion = new Promotion();
-        promotion.setPromotionId(promotionDto.getPromotionId());
+        promotion.setPromotionId(Utils.createIdOrElse(promotionDto.getPromotionId()));
         promotion.setName(promotionDto.getName());
         promotion.setValue(promotionDto.getValue());
-        Promotion savedPromotion = promotionRepository.save(promotion);
+        promotionRepository.save(promotion);
+        promotionDto.setPromotionId(promotion.getPromotionId());
         return promotionDto;
     }
 
@@ -58,7 +60,7 @@ public class PromotionServiceImpl implements PromotionService {
         promotion.setPromotionId(promotionId);
         promotion.setName(promotionDto.getName());
         promotion.setValue(promotionDto.getValue());
-        Promotion savedPromotion = promotionRepository.save(promotion);
+        promotionRepository.save(promotion);
 
         Map<String, String> vars = new HashMap<>();
 

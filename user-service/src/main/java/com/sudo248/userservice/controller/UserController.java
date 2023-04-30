@@ -30,6 +30,13 @@ public class UserController {
         });
     }
 
+    @GetMapping("/internal")
+    public UserDto getUserInternal(
+            @RequestHeader(Constants.HEADER_USER_ID) String userId
+    ) {
+        return userService.getUser(userId);
+    }
+
     @GetMapping("/{userId}")
     public ResponseEntity<BaseResponse<?>> getOtherUser(
             @PathVariable("userId") String userId

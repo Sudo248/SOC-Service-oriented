@@ -1,85 +1,31 @@
 package com.sudo248.invoiceservice.Controller.dto;
 
+import com.sudo248.invoiceservice.repository.entity.Gender;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDto {
     private String userId;
-    private String  fullName, phone, bio, gender, avatar, cover, address;
+
+    private String fullName;
+
+    private String phone;
+
     private Date dob;
 
-    public String getUserId() {
-        return userId;
-    }
+    private String bio;
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+    private String avatar;
 
-    public String getFullName() {
-        return fullName;
-    }
+    private String cover;
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
+    private AddressDto address;
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getCover() {
-        return cover;
-    }
-
-    public void setCover(String cover) {
-        this.cover = cover;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Date getDob() {
-        return dob;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
-    }
-
-    public UserDto(String userId) {
-        this.userId = userId;
-    }
+    private Gender gender;
 }

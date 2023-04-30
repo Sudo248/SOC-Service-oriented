@@ -1,6 +1,5 @@
 package com.sudo248.promotionservice.repository.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -11,7 +10,7 @@ import javax.persistence.Table;
 @Setter
 @ToString
 @Entity
-@Table(name = "promotion")
+@Table(name = "promotions")
 @NoArgsConstructor
 @AllArgsConstructor
 

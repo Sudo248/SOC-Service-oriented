@@ -40,7 +40,6 @@ public class CartController {
     //Call from other service
     @GetMapping("/service/{cartId}")
     public CartDto serviceGetCartById(@PathVariable String cartId) {
-        CartDto cart = cartService.getCartById(cartId);
-        return cart;
+        return cartService.getCartById(cartId);
     }
 }

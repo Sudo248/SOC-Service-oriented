@@ -1,39 +1,17 @@
 package com.sudo248.invoiceservice.Controller.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CartSupplierProductDto {
-    private SupplierProductDto supplierProductDto;
+    private SupplierProductDto supplierProduct;
     private int amount;
     private Double totalPrice;
-
-    public CartSupplierProductDto(SupplierProductDto supplierProductDto, int amount, Double totalPrice) {
-        this.supplierProductDto = supplierProductDto;
-        this.amount = amount;
-        this.totalPrice = totalPrice;
-    }
-
-    public SupplierProductDto getSupplierProductDto() {
-        return supplierProductDto;
-    }
-
-    public void setSupplierProductDto(SupplierProductDto supplierProductDto) {
-        this.supplierProductDto = supplierProductDto;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public Double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
+    private String cartId;
 }

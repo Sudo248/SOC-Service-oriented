@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PromotionDto {
-    private String promotionId = "";
-    private String name = "";
-    private Double value = 0.0;
+public class AddressSuggestionDto {
+    private int addressId;
+    private String addressName;
+    private String addressCode;
 }

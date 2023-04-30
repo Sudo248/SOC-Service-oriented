@@ -1,35 +1,17 @@
 package com.sudo248.invoiceservice.Controller.dto;
 
-public class ProductDto {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProductDto implements Serializable {
+    private String productId;
     private String name,description,sku;
-
-    public ProductDto(String name, String description, String sku) {
-        this.name = name;
-        this.description = description;
-        this.sku = sku;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getSku() {
-        return sku;
-    }
-
-    public void setSku(String sku) {
-        this.sku = sku;
-    }
+    private List<ImageDto> images;
 }

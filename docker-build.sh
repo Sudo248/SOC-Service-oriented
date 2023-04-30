@@ -5,6 +5,9 @@ strings=(
   discovery-service:0.0.1
   payment-service:0.0.1
   user-service:0.0.1
+  cart-service:0.0.1
+  invoice-service:0.0.1
+  promotion-service:0.0.1
 )
 admin="sudo248dev/"
 # shellcheck disable=SC2046
