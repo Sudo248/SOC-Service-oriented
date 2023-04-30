@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CoreCategoryDto {
+public class CategoryInfoDto {
     private String categoryId;
     private String  name, image, supplierId;
 }
