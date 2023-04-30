@@ -19,6 +19,4 @@ public interface SupplierProductRepository extends JpaRepository<SupplierProduct
 
     List<SupplierProduct> getAllBySupplier(Supplier supplier);
 
-    SupplierProduct getBySupplierProductId(SupplierProductId id);
-
 }

@@ -17,8 +17,10 @@ public class CartSupplierProduct {
 
     @Column(name = "amount")
     private int amount;
+
     @Column(name = "totalPrice")
     private double totalPrice;
+
     @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false,insertable= false, updatable = false, referencedColumnName = "cart_id")
     private Cart cart;

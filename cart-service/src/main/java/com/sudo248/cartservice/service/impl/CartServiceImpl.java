@@ -8,6 +8,7 @@ import com.sudo248.cartservice.repository.CartRepository;
 import com.sudo248.cartservice.repository.entity.Cart;
 import com.sudo248.cartservice.repository.entity.CartSupplierProduct;
 import com.sudo248.cartservice.service.CartService;
+import com.sudo248.domain.util.Utils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -28,7 +29,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public CartDto creNewCart(String userId) {
         Cart cart = new Cart();
-        cart.setCartId(UUID.randomUUID().toString());
+        cart.setCartId(Utils.createId());
         cart.setUserId(userId);
         cart.setStatus("active");
         cart.setTotalAmount(0);
@@ -50,42 +51,57 @@ public class CartServiceImpl implements CartService {
     @Override
     public CartDto getCartById(String cartId) {
         Cart cart = cartRepository.findById(cartId).get();
-        Double totalPrice = 0.0;
+        double totalPrice = 0.0;
         int totalAmount = 0;
         List<CartSupplierProductDto> cartSupplierProductDtoList = new ArrayList<>();
-        if(cart.getCartSupplierProducts() != null   ){
+        if(cart.getCartSupplierProducts() != null){
             for(CartSupplierProduct cartSupplierProduct: cart.getCartSupplierProducts()){
                 totalPrice += cartSupplierProduct.getTotalPrice();
                 totalAmount += cartSupplierProduct.getAmount();
             }
-            cartSupplierProductDtoList = getSupplierProduct(cart.getCartSupplierProducts());
-
+            cartSupplierProductDtoList = getSupplierProduct(cartId, cart.getCartSupplierProducts());
         }
-        CartDto cartDto = new CartDto(cart.getCartId(), totalPrice, totalAmount, cart.getStatus(), cart.getUserId(), cartSupplierProductDtoList);
+        CartDto cartDto = new CartDto(
+                cart.getCartId(),
+                totalPrice,
+                totalAmount,
+                cart.getStatus(),
+                cartSupplierProductDtoList
+        );
         return cartDto;
     }
 
     @Override
     public CartDto getActiveCartByUserId(String userId) {
-        List<Cart> carts = cartRepository.findAll();
-        for(Cart cart:carts){
-            if(cart.getUserId().equals(userId) && cart.getStatus().equals("active")){
-                CartDto cartDto = new CartDto(cart.getCartId(), cart.getTotalPrice(), cart.getTotalAmount(), cart.getStatus(), cart.getUserId());
-                return cartDto;
+        try {
+            Cart cart = cartRepository.findByUserIdAndStatus(userId, "active");
+            if (cart == null) {
+                throw new Exception("Not found cart for user " + userId);
             }
+            CartDto cartDto = new CartDto(
+                    cart.getCartId(),
+                    cart.getTotalPrice(),
+                    cart.getTotalAmount(),
+                    cart.getStatus(),
+                    getSupplierProduct(cart.getCartId(), cart.getCartSupplierProducts())
+            );
+            return cartDto;
+        } catch (Exception e) {
+            return creNewCart(userId);
         }
-        CartDto newCart = creNewCart(userId);
-        return newCart;
     }
-    private List<CartSupplierProductDto> getSupplierProduct(List<CartSupplierProduct> list){
+
+    @Override
+    public List<CartSupplierProductDto> getSupplierProduct(String cartId, List<CartSupplierProduct> list){
         List<CartSupplierProductDto> supplierProductDtos = new ArrayList<>();
         for(CartSupplierProduct s: list){
-//            RestTemplate restTemplate = new RestTemplate();
-//            String url = "http://DISCOVRY-SERVICE/api/v1/discovery/service/supplierId/" + s.getId().getSupplierId() + "/productId/" + s.getId().getProductId();
-//
-//            SupplierProductDto supplierProductDto = restTemplate.getForObject(url, SupplierProductDto.class);
             SupplierProductDto supplierProductDto = discoveryService.getSupplierProduct(s.getId().getSupplierId(), s.getId().getProductId());
-            supplierProductDtos.add(new CartSupplierProductDto(supplierProductDto, s.getAmount(),s.getAmount() * supplierProductDto.getPrice()));
+            supplierProductDtos.add(new CartSupplierProductDto(
+                    supplierProductDto,
+                    s.getAmount(),
+                    s.getAmount() * supplierProductDto.getPrice(),
+                    cartId
+            ));
         }
 
         return supplierProductDtos;

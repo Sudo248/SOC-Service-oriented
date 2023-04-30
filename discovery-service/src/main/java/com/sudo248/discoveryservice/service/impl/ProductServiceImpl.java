@@ -1,5 +1,6 @@
 package com.sudo248.discoveryservice.service.impl;
 
+import com.sudo248.discoveryservice.controller.dto.ImageDto;
 import com.sudo248.discoveryservice.controller.dto.ProductDto;
 import com.sudo248.discoveryservice.controller.dto.SupplierProductDto;
 import com.sudo248.discoveryservice.repository.*;
@@ -87,7 +88,7 @@ public class ProductServiceImpl implements ProductService {
 
         SupplierProductDto supplierProductDto = productDto.getSupplierProducts().get(0);
 
-        SupplierProduct oldSupplierProduct = supplierProductRepository.getBySupplierProductId(new SupplierProductId(
+        SupplierProduct oldSupplierProduct = supplierProductRepository.getReferenceById(new SupplierProductId(
                 oldProduct.getProductId(),
                 supplierProductDto.getSupplierId()
         ));
@@ -105,6 +106,19 @@ public class ProductServiceImpl implements ProductService {
     public ProductDto getProductById(String userId, String productId) {
         Product product = productRepository.getReferenceById(productId);
         return toDto(userId, product);
+    }
+
+    @Override
+    public ProductDto getRawProductById(String productId) {
+        Product product = productRepository.getReferenceById(productId);
+        ProductDto productDto = new ProductDto();
+        productDto.setProductId(productId);
+        productDto.setName(product.getName());
+        productDto.setDescription(product.getDescription());
+        productDto.setSku(product.getSku());
+        productDto.setImages(product.getImages().stream().map(image -> new ImageDto(image.getImageId(), image.getUrl(), image.getOwnerId())).collect(Collectors.toList()));
+
+        return productDto;
     }
 
     @Override

@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CartSupplierProductRepository extends JpaRepository<CartSupplierProduct, Long> {
+public interface CartSupplierProductRepository extends JpaRepository<CartSupplierProduct, SupplierProductKey> {
 }

@@ -16,4 +16,9 @@ public interface DiscoveryService {
             @PathVariable("productId") String productId
     );
 
+    @GetMapping("/api/v1/discovery/service/supplierId/{supplierId}/productId/{productId}/price")
+    Double getSupplierProductPrice(
+            @PathVariable("supplierId") String supplierId,
+            @PathVariable("productId") String productId
+    );
 }

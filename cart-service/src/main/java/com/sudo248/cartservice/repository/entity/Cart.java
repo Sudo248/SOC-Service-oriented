@@ -30,6 +30,7 @@ public class Cart {
 
     @Column(name = "status")
     private String status;
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CartSupplierProduct> cartSupplierProducts;
 }
