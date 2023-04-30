@@ -32,6 +32,10 @@
 
 <!--    port: 8084    -->
         <module>user-service</module>
+
+<!--    port: 8087-->
+        <module>cart-service</module>
+
     </modules>
 
 </project>
