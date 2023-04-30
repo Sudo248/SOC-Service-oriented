@@ -20,4 +20,6 @@ public interface SupplierService {
 
     SupplierDto toDto(String userId, Supplier supplier);
     Supplier toEntity(String userId, SupplierDto supplierDto);
+
+    SupplierDto getSupplierById(String id);
 }

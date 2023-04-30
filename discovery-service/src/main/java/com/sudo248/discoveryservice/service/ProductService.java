@@ -14,6 +14,9 @@ public interface ProductService {
     List<ProductDto> getProductsByName(String userId, String name);
 
     ProductDto getProductById(String userId, String productId);
+
+    ProductDto getRawProductById(String productId);
+
     ProductDto toDto(String userId, Product product);
     Product toEntity(ProductDto productDto);
 

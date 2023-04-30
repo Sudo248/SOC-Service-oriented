@@ -1,6 +1,5 @@
 package com.sudo248.discoveryservice.internal;
 
-import com.sudo248.discoveryservice.controller.dto.AddressDto;
 import com.sudo248.discoveryservice.repository.entity.Location;
 import com.sudo248.domain.base.BaseResponse;
 import com.sudo248.domain.common.Constants;

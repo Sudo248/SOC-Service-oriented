@@ -13,6 +13,7 @@ import com.sudo248.domain.util.Utils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -97,5 +98,17 @@ public class SupplierServiceImpl implements SupplierService {
         supplier.setAvatar(supplierDto.getAvatar());
         supplier.setUserId(userId);
         return supplier;
+    }
+
+    @Override
+    public SupplierDto getSupplierById(String id) {
+        Supplier supplier = supplierRepository.getReferenceById(id);
+        SupplierDto supplierDto = new SupplierDto();
+        supplierDto.setSupplierId(supplier.getSupplierId());
+        supplierDto.setName(supplier.getName());
+        supplierDto.setAvatar(supplier.getAvatar());
+        supplierDto.setLocation(supplier.getLocation());
+        supplierDto.setSupplierProducts(new ArrayList<>());
+        return supplierDto;
     }
 }

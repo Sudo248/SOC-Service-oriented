@@ -13,6 +13,7 @@ import com.sudo248.discoveryservice.repository.entity.SupplierProduct;
 import com.sudo248.discoveryservice.repository.entity.SupplierProductId;
 import com.sudo248.discoveryservice.service.ProductService;
 import com.sudo248.discoveryservice.service.SupplierProductService;
+import com.sudo248.discoveryservice.service.SupplierService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -34,13 +35,16 @@ public class SupplierProductServiceImpl implements SupplierProductService {
 
     private final MapBoxService mapBoxService;
 
+    private final SupplierService supplierService;
+
     @Lazy
-    public SupplierProductServiceImpl(SupplierProductRepository supplierProductRepository, SupplierRepository supplierRepository, ProductService productService, CacheLocationManager cacheLocationManager, MapBoxService mapBoxService) {
+    public SupplierProductServiceImpl(SupplierProductRepository supplierProductRepository, SupplierRepository supplierRepository, ProductService productService, CacheLocationManager cacheLocationManager, MapBoxService mapBoxService, SupplierService supplierService) {
         this.supplierProductRepository = supplierProductRepository;
         this.supplierRepository = supplierRepository;
         this.productService = productService;
         this.cacheLocationManager = cacheLocationManager;
         this.mapBoxService = mapBoxService;
+        this.supplierService = supplierService;
     }
 
     @Override
@@ -70,6 +74,20 @@ public class SupplierProductServiceImpl implements SupplierProductService {
             }
         }
         return null;
+    }
+
+    @Override
+    public SupplierProductCartDto getProductInfoBySupplierIdProductId(String supplierId, String productId) {
+        SupplierProduct supplierProduct = supplierProductRepository.getReferenceById(new SupplierProductId(productId, supplierId));
+        SupplierProductCartDto supplierProductCartDto = new SupplierProductCartDto();
+        supplierProductCartDto.setProduct(productService.getRawProductById(productId));
+        supplierProductCartDto.setSupplier(supplierService.getSupplierById(supplierId));
+        supplierProductCartDto.setDistance(0.0);
+        supplierProductCartDto.setAmountLeft(supplierProduct.getAmountLeft());
+        supplierProductCartDto.setPrice(supplierProduct.getPrice());
+        supplierProductCartDto.setRate(supplierProduct.getRate());
+        supplierProductCartDto.setSoldAmount(supplierProduct.getSoldAmount());
+        return supplierProductCartDto;
     }
 
     @Override
@@ -105,6 +123,12 @@ public class SupplierProductServiceImpl implements SupplierProductService {
     }
 
     @Override
+    public Double getProductPrice(String supplierId, String productId) {
+        SupplierProduct supplierProduct = supplierProductRepository.getReferenceById(new SupplierProductId(productId, supplierId));
+        return supplierProduct.getPrice();
+    }
+
+    @Override
     public SupplierProductDto orderProduct(String userId, String productId, String supplierId, int amount) {
         SupplierProduct supplierProduct = supplierProductRepository.getReferenceById(new SupplierProductId(productId, supplierId));
         int amountLeft = supplierProduct.getAmountLeft();
@@ -119,7 +143,7 @@ public class SupplierProductServiceImpl implements SupplierProductService {
 
     @Override
     public SupplierProductDto toDto(String userId, SupplierProduct s) {
-        boolean isSameLocation = userId.equals(s.getSupplier().getUserId());
+        boolean isSameLocation = userId == null || userId.equals(s.getSupplier().getUserId());
         return new SupplierProductDto(
                 s.getSupplier().getSupplierId(),
                 s.getProduct().getProductId(),
@@ -159,11 +183,11 @@ public class SupplierProductServiceImpl implements SupplierProductService {
         if (minutes < 60) return new ValueDto(minutes, "phút");
         double hour = minutes / 60;
         if (hour < 24) return new ValueDto(hour, "giờ");
-        return new ValueDto(hour/24, "ngày");
+        return new ValueDto(hour / 24, "ngày");
     }
 
     private ValueDto getDistanceValue(double distance) {
         if (distance < 500) return new ValueDto(distance, "m");
-        return new ValueDto(distance/1000, "km");
+        return new ValueDto(distance / 1000, "km");
     }
 }

@@ -1,6 +1,7 @@
 package com.sudo248.discoveryservice.controller;
 
 import com.sudo248.discoveryservice.controller.dto.ProductDto;
+import com.sudo248.discoveryservice.controller.dto.SupplierProductCartDto;
 import com.sudo248.discoveryservice.controller.dto.SupplierProductDto;
 import com.sudo248.discoveryservice.controller.dto.SupplierProductInfoDto;
 import com.sudo248.discoveryservice.service.SupplierProductService;
@@ -84,5 +85,23 @@ public class SupplierProductController {
             SupplierProductDto supplierProductDto = supplierProductService.orderProduct(userId, productId, supplierId, amount);
             return BaseResponse.ok(supplierProductDto);
         });
+    }
+
+    //call from other service
+    @GetMapping("/service/supplierId/{supplierId}/productId/{productId}")
+    public SupplierProductCartDto getProductInfoBySupplierIdProductIdV2(
+            @PathVariable("supplierId") String supplierId,
+            @PathVariable("productId") String productId
+    ) {
+        SupplierProductCartDto dto = supplierProductService.getProductInfoBySupplierIdProductId(supplierId, productId);
+        return dto;
+    }
+
+    @GetMapping("/service/supplierId/{supplierId}/productId/{productId}/price")
+    public Double getProductPrice(
+            @PathVariable("supplierId") String supplierId,
+            @PathVariable("productId") String productId
+    ) {
+        return supplierProductService.getProductPrice(supplierId, productId);
     }
 }
