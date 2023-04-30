@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.sudo248</groupId>
 	<artifactId>invoice-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>invoice-service</name>
 	<description>invoice-service</description>
 	<properties>
@@ -53,8 +53,9 @@
 		<dependency>
 			<groupId>com.sudo248</groupId>
 			<artifactId>domain</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>compile</scope>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>/mnt/39178B285F7A3DB1/Code/SOC/domain/target/domain-0.0.1.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.modelmapper</groupId>
@@ -88,6 +89,7 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+					<includeSystemScope>true</includeSystemScope>
 				</configuration>
 			</plugin>
 		</plugins>

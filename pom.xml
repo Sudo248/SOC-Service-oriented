@@ -36,6 +36,12 @@
 <!--    port: 8087-->
         <module>cart-service</module>
 
+<!--    port: 8088-->
+        <module>invoice-service</module>
+
+<!--    port: 8089-->
+        <module>promotion-service</module>
+
     </modules>
 
 </project>

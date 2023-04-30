@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/")
 public class PromotionController {
     private final PromotionService promotionService;
 
@@ -17,19 +18,18 @@ public class PromotionController {
         this.promotionService = promotionService;
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<BaseResponse<?>> addPromotion(@RequestBody PromotionDto promotionDto) {
         PromotionDto savedPromotion = promotionService.addPromotion(promotionDto);
         return BaseResponse.ok(savedPromotion);
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<BaseResponse<?>> getAllPromotions() {
         List<PromotionDto> promotionDtos = promotionService.getAllPromotions();
         return BaseResponse.ok(promotionDtos);
     }
     @GetMapping("/{promotionId}")
-    @ResponseBody
     public ResponseEntity<BaseResponse<?>> getPromotionById(@PathVariable String promotionId) {
         PromotionDto promotion = promotionService.getPromotionById(promotionId);
         return BaseResponse.ok(promotion);
@@ -40,7 +40,6 @@ public class PromotionController {
         return BaseResponse.ok(null);
     }
     @PutMapping("/{promotionId}")
-    @ResponseBody
     public ResponseEntity<BaseResponse<?>> updatePromotionById(@RequestBody PromotionDto promotionDto,@PathVariable String promotionId) {
         PromotionDto promotion = promotionService.updatePromotion(promotionDto,promotionId);
         return BaseResponse.ok(promotion);
@@ -48,9 +47,7 @@ public class PromotionController {
 
     //call from other service
     @GetMapping("/service/{promotionId}")
-    @ResponseBody
     public PromotionDto getPromotionByIdFromService(@PathVariable String promotionId) {
-        PromotionDto promotion = promotionService.getPromotionById(promotionId);
-        return promotion;
+        return promotionService.getPromotionById(promotionId);
     }
 }

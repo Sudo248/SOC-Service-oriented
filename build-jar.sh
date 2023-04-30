@@ -6,6 +6,9 @@ strings=(
   discovery-service
   payment-service
   user-service
+  cart-service
+  invoice-service
+  promotion-service
 )
 mvn clean
 

@@ -4,8 +4,9 @@ import com.sudo248.domain.base.BaseResponse;
 import com.sudo248.domain.util.Utils;
 import com.sudo248.paymentservice.config.VnPayConfig;
 import com.sudo248.paymentservice.controller.dto.PaymentDto;
+import com.sudo248.paymentservice.controller.dto.PaymentInfoDto;
 import com.sudo248.paymentservice.controller.dto.VnPayResponse;
-import com.sudo248.paymentservice.external.OrderService;
+import com.sudo248.paymentservice.internal.OrderService;
 import com.sudo248.paymentservice.repository.PaymentRepository;
 import com.sudo248.paymentservice.repository.entity.Payment;
 import com.sudo248.paymentservice.repository.entity.PaymentStatus;
@@ -92,8 +93,19 @@ public class VnPayServiceImpl implements PaymentService, VnpayService {
             queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
             String paymentUrl = VnPayConfig.vnp_Url + "?" + queryUrl;
 
+            orderService.updateInvoice(payment.getOrderId(), payment.getPaymentId());
             return BaseResponse.ok(toDto(payment, paymentUrl));
         });
+    }
+
+    @Override
+    public PaymentInfoDto getPaymentInfo(String paymentId) {
+        Payment payment = paymentRepository.getReferenceById(paymentId);
+        return new PaymentInfoDto(
+                paymentId,
+                payment.getAmount(),
+                payment.getPaymentType()
+        );
     }
 
     private Payment toEntity(PaymentDto paymentDto) {

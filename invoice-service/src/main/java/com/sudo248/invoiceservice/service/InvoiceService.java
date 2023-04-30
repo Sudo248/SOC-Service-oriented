@@ -9,10 +9,12 @@ import java.util.List;
 public interface InvoiceService {
     List<InvoiceDto> getListInvoice(String userId);
     InvoiceDto getInvoiceByInvoiceId(String orderId);
-    InvoiceAddDto addInvoice(InvoiceAddDto invoiceAddDto);
+    InvoiceAddDto addInvoice(String userId, InvoiceAddDto invoiceAddDto);
     InvoiceDto updateInvoice(InvoiceDto invoiceDto,String invoiceId);
     boolean deleteInvoice(String orderId);
     InvoiceDto toDto(Invoice invoice);
     Invoice toEntity(InvoiceDto invoiceDto);
-    void updateInvoiceByField(String field, String fieldId);
+    InvoiceDto updateInvoiceByField(String invoiceId, String field, String fieldId);
+
+    void updateInvoicePayment(String invoiceId, String paymentId);
 }

@@ -24,6 +24,8 @@ public class ApiGatewayConfig {
                 .route("PAYMENT-SERVICE", r -> r.path("/api/v1/payment/**", "/payment/**").filters(f -> f.filter(filter)).uri("lb://PAYMENT-SERVICE"))
                 .route("USER-SERVICE", r -> r.path("/api/v1/user/**").filters(f -> f.filter(filter)).uri("lb://USER-SERVICE"))
                 .route("CART-SERVICE", r -> r.path("/api/v1/cart/**").filters(f -> f.filter(filter)).uri("lb://CART-SERVICE"))
+                .route("INVOICE-SERVICE", r -> r.path("/api/v1/invoice/**").filters(f -> f.filter(filter)).uri("lb://INVOICE-SERVICE"))
+                .route("PROMOTION-SERVICE", r -> r.path("/api/v1/promotion/**").filters(f -> f.filter(filter)).uri("lb://PROMOTION-SERVICE"))
                 .build();
     }
 }

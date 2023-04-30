@@ -86,6 +86,36 @@ services:
     networks:
       - soc-network
 
+  cart-service:
+    image: sudo248dev/cart-service:0.0.1
+    container_name: cart-service
+    hostname: cart-service
+    depends_on:
+      - soc-registry
+      - db-service
+    networks:
+      - soc-network
+
+  invoice-service:
+    image: sudo248dev/invoice-service:0.0.1
+    container_name: invoice-service
+    hostname: invoice-service
+    depends_on:
+      - soc-registry
+      - db-service
+    networks:
+      - soc-network
+
+  promotion-service:
+    image: sudo248dev/promotion-service:0.0.1
+    container_name: promotion-service
+    hostname: promotion-service
+    depends_on:
+      - soc-registry
+      - db-service
+    networks:
+      - soc-network
+
 networks:
   soc-network:
     external: true
