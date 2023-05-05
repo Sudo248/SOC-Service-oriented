@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.sudo248.soc.ui.activity.payment.PaymentViewModel" />
+            type="com.sudo248.soc.ui.activity.payment.fragment.PaymentViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView

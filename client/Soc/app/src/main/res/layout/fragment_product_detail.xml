@@ -265,6 +265,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/txtBuyNow"
                 app:layout_constraintStart_toEndOf="@+id/imgChat"
                 app:layout_constraintTop_toTopOf="parent"
+                android:onClick="@{(v) -> viewModel.addSupplierProduct()}"
                 app:tint="@color/primaryColor" />
 
             <TextView

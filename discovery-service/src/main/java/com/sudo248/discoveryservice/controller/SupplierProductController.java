@@ -90,11 +90,12 @@ public class SupplierProductController {
     //call from other service
     @GetMapping("/service/supplierId/{supplierId}/productId/{productId}")
     public SupplierProductCartDto getProductInfoBySupplierIdProductIdV2(
+            @RequestHeader(Constants.HEADER_USER_ID) String userId,
             @PathVariable("supplierId") String supplierId,
-            @PathVariable("productId") String productId
+            @PathVariable("productId") String productId,
+            @RequestParam(value = "hasRoute", defaultValue = "true") boolean hasRoute
     ) {
-        SupplierProductCartDto dto = supplierProductService.getProductInfoBySupplierIdProductId(supplierId, productId);
-        return dto;
+        return supplierProductService.getProductInfoBySupplierIdProductId(userId, supplierId, productId, hasRoute);
     }
 
     @GetMapping("/service/supplierId/{supplierId}/productId/{productId}/price")

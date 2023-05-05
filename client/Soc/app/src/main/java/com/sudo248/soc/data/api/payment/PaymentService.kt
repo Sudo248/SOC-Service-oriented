@@ -12,12 +12,13 @@ import com.sudo248.soc.domain.common.Constants
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 
 @ApiService(baseUrl = BuildConfig.BASE_URL + "payment/")
 @EnableAuthentication(Constants.Key.TOKEN)
 @LoggingLever(level = Level.BODY)
 interface PaymentService {
 
-    @GET("pay")
+    @POST("pay")
     suspend fun pay(@Body request: PaymentRequest): Response<BaseResponse<PaymentDto>>
 }

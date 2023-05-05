@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class SupplierProductCartDto {
     private SupplierDto supplier;
     private ProductDto product;
-    private double distance;
+    private RouteDto route = new RouteDto();
     private int amountLeft;
     private double price, soldAmount, rate;
 }

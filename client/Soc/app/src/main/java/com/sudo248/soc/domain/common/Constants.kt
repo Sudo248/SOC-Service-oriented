@@ -15,6 +15,9 @@ object Constants {
     object Key {
         const val PHONE_NUMBER = "PHONE_NUMBER"
         const val TOKEN = "TOKEN"
+        const val INVOICE_ID = "INVOICE_ID"
+        const val PROMOTION = "PROMOTION"
+        const val SCREEN = "SCREEN"
     }
 
     object Payment {

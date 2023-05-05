@@ -1,4 +1,4 @@
-package com.sudo248.soc.ui.activity.payment
+package com.sudo248.soc.ui.activity.payment.fragment
 
 interface ViewController {
     fun openVnPaySdk()

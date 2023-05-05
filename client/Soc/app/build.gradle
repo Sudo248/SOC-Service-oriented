@@ -18,7 +18,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "BASE_URL", "\"http://192.168.1.15:9030/api/v1/\"")
+        buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:9030/api/v1/\"")
 //        buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8083/api/v1/\"")
     }
 
@@ -91,6 +91,9 @@ dependencies {
 
     //facebook
     implementation ('com.facebook.android:facebook-android-sdk:13.0.0')
+
+    // swipe layout
+    implementation("com.apachat:swipereveallayout-android:1.1.2")
 }
 
 kapt {

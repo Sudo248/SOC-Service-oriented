@@ -4,10 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavDirections
 import com.sudo248.base_android.base.BaseViewModel
+import com.sudo248.base_android.core.UiState
 import com.sudo248.base_android.event.SingleEvent
 import com.sudo248.base_android.ktx.bindUiState
 import com.sudo248.base_android.ktx.onError
 import com.sudo248.base_android.ktx.onSuccess
+import com.sudo248.soc.domain.entity.cart.AddSupplierProduct
+import com.sudo248.soc.domain.repository.CartRepository
 import com.sudo248.soc.domain.repository.DiscoveryRepository
 import com.sudo248.soc.ui.uimodel.ProductUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,8 +26,11 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class ProductDetailViewModel @Inject constructor(
-    private val discoveryRepository: DiscoveryRepository
+    private val discoveryRepository: DiscoveryRepository,
+    private val cartRepository: CartRepository
 ) : BaseViewModel<NavDirections>() {
+
+    var viewController: ViewController? = null
 
     private val _supplierLocation =MutableLiveData("")
     val supplierLocation: LiveData<String> = _supplierLocation
@@ -38,6 +44,22 @@ class ProductDetailViewModel @Inject constructor(
             .onSuccess {
                 _supplierLocation.postValue(it.fullAddress)
             }
+    }
+
+    fun addSupplierProduct() = launch {
+        val addSupplierProduct = AddSupplierProduct(
+            product.supplierId,
+            product.productId,
+            1
+        )
+        setState(UiState.LOADING)
+        cartRepository.addSupplierProduct(addSupplierProduct)
+            .onSuccess {
+                viewController?.setBadgeCart(it.cartSupplierProducts.size)
+            }
+            .onError {
+                error = SingleEvent(it.message)
+            }.bindUiState(_uiState)
     }
 
     fun onClickLike() {

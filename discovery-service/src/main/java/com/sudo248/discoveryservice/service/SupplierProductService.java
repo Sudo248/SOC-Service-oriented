@@ -13,7 +13,7 @@ public interface SupplierProductService {
     List<ProductDto> getProductBySupplierName(String userId, String supplierName);
     SupplierProductDto getProductInfoBySupplierNameProductId(String userId, String supplierName, String productId);
 
-    SupplierProductCartDto getProductInfoBySupplierIdProductId(String supplierId, String productId);
+    SupplierProductCartDto getProductInfoBySupplierIdProductId(String userId, String supplierId, String productId, boolean hasRoute);
 
     List<SupplierProductInfoDto> getAllSupplierProductInfo(String userId);
 

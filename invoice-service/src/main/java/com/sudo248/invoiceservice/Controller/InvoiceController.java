@@ -26,6 +26,7 @@ public class InvoiceController {
         InvoiceAddDto invoiceAddDto1 = invoiceService.addInvoice(userId, invoiceAddDto);
         return BaseResponse.ok(invoiceAddDto1);
     }
+
     @GetMapping("/user")
     public ResponseEntity<BaseResponse<?>> getInvoiceByUserId(
             @RequestHeader(Constants.HEADER_USER_ID) String userId
@@ -33,11 +34,13 @@ public class InvoiceController {
         List<InvoiceDto> list = invoiceService.getListInvoice(userId);
         return BaseResponse.ok(list);
     }
+
     @GetMapping("/{invoiceId}")
     public ResponseEntity<BaseResponse<?>> getInvoiceByInvoiceId(@PathVariable String invoiceId) {
         InvoiceDto invoiceDto = invoiceService.getInvoiceByInvoiceId(invoiceId);
         return BaseResponse.ok(invoiceDto);
     }
+
     @DeleteMapping("/{invoiceId}")
     public ResponseEntity<BaseResponse<?>> deleteInvoiceByInvoiceId(@PathVariable String invoiceId) {
         boolean res = invoiceService.deleteInvoice(invoiceId);
@@ -45,11 +48,13 @@ public class InvoiceController {
             return BaseResponse.ok(invoiceId);
         return BaseResponse.ok(null);
     }
+
     @PutMapping("/{invoiceId}")
     public ResponseEntity<BaseResponse<?>> updateInvoice(@RequestBody InvoiceDto invoiceDto, @PathVariable String invoiceId){
         InvoiceDto invoiceDto1 = invoiceService.updateInvoice(invoiceDto, invoiceId);
         return BaseResponse.ok(invoiceDto1);
     }
+
     @PutMapping("/{invoiceId}/update/{field}/{fieldId}")
     public ResponseEntity<BaseResponse<?>> updateInvoiceByCase(
             @PathVariable(name = "invoiceId") String invoiceId,
@@ -60,12 +65,12 @@ public class InvoiceController {
         return BaseResponse.ok(invoiceDto);
     }
 
-    @PatchMapping("/{invoiceId}/payment")
+    @PutMapping("/{invoiceId}/payment/{paymentId}")
     ResponseEntity<BaseResponse<?>> patchPaymentInvoice(
             @PathVariable("invoiceId") String invoiceId,
-            @RequestBody String paymentId
+            @PathVariable("paymentId") String paymentId
     ) {
         invoiceService.updateInvoicePayment(invoiceId, paymentId);
-        return BaseResponse.ok(null);
+        return BaseResponse.ok(true);
     }
 }

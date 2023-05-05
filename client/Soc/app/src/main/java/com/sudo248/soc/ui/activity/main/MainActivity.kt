@@ -1,6 +1,7 @@
 package com.sudo248.soc.ui.activity.main
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -11,12 +12,14 @@ import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.google.android.material.badge.BadgeDrawable
 import com.sudo248.base_android.base.BaseActivity
 import com.sudo248.base_android.ktx.gone
 import com.sudo248.base_android.ktx.visible
 import com.sudo248.base_android.utils.DialogUtils
 import com.sudo248.soc.R
 import com.sudo248.soc.databinding.ActivityMainBinding
+import com.sudo248.soc.domain.common.Constants
 import com.sudo248.soc.ui.ktx.showErrorDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -67,6 +70,18 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), PickIma
             binding.bottomNav,
             navController
         )
+        setupBadgeCart()
+
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.getStringExtra(Constants.Key.SCREEN)?.let {
+            if (it == "DISCOVERY") {
+                navController.popBackStack()
+                viewModel.getItemInCart()
+            }
+        }
     }
 
     override fun onResume() {
@@ -77,6 +92,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), PickIma
     override fun onPause() {
         super.onPause()
         navController.removeOnDestinationChangedListener(listener)
+    }
+
+    override fun observer() {
+        super.observer()
+        viewModel.itemInCart.observe(this) {
+            setBadgeCart(it)
+        }
     }
 
     private fun showBottomNav() {
@@ -99,5 +121,22 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), PickIma
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
         }
+    }
+
+    fun setBadgeCart(count: Int) {
+        val badge = binding.bottomNav.getOrCreateBadge(R.id.cartFragment)
+        if (count > 0) {
+            badge.isVisible = true
+            badge.number = count
+        } else {
+            badge.isVisible = false
+        }
+    }
+
+    private fun setupBadgeCart() {
+        val badge = binding.bottomNav.getOrCreateBadge(R.id.cartFragment)
+        badge.backgroundColor = getColor(R.color.primaryColor)
+        badge.badgeTextColor = getColor(R.color.white)
+        badge.verticalOffset = 3
     }
 }

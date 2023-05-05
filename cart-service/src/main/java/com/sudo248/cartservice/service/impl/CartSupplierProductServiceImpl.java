@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CartSupplierProductServiceImpl implements CartSupplierProductService {
@@ -34,12 +35,27 @@ public class CartSupplierProductServiceImpl implements CartSupplierProductServic
     public CartDto addSupplierProductToCart(String userId, AddSupplierProductDto addSupplierProductDto) {
         Cart cart = getActiveCart(userId);
         SupplierProductKey supplierProductKey = new SupplierProductKey(addSupplierProductDto.getProductId(), addSupplierProductDto.getSupplierId(), cart.getCartId());
-        CartSupplierProduct cartSupplierProduct = new CartSupplierProduct(
-                supplierProductKey,
-                addSupplierProductDto.getAmount(),
-                getTotalPriceBySupplierProduct(addSupplierProductDto),
-                cart
-        );
+        Optional<CartSupplierProduct> optionalCartSupplierProduct = cartSupplierProductRepository.findById(supplierProductKey);
+        CartSupplierProduct cartSupplierProduct;
+        double totalPrice = cart.getTotalPrice();
+        int totalAmount = cart.getTotalAmount();
+        if (optionalCartSupplierProduct.isPresent()) {
+            cartSupplierProduct = optionalCartSupplierProduct.get();
+            cartSupplierProduct.setAmount(cartSupplierProduct.getAmount() + addSupplierProductDto.getAmount());
+            double price = getTotalPriceBySupplierProduct(addSupplierProductDto);
+            cartSupplierProduct.setTotalPrice(cartSupplierProduct.getTotalPrice() + price);
+            totalAmount += addSupplierProductDto.getAmount();
+            totalPrice += price;
+        } else {
+            cartSupplierProduct = new CartSupplierProduct(
+                    supplierProductKey,
+                    addSupplierProductDto.getAmount(),
+                    getTotalPriceBySupplierProduct(addSupplierProductDto),
+                    cart
+            );
+            totalAmount += addSupplierProductDto.getAmount();
+            totalPrice += cartSupplierProduct.getTotalPrice();
+        }
         cartSupplierProductRepository.save(cartSupplierProduct);
 
         List<CartSupplierProduct> supplierProductList = new ArrayList<>();
@@ -50,9 +66,6 @@ public class CartSupplierProductServiceImpl implements CartSupplierProductServic
 
         cart.setCartSupplierProducts(supplierProductList);
 
-        double totalPrice = cart.getTotalPrice() + cartSupplierProduct.getTotalPrice();
-        int totalAmount = cart.getTotalAmount() + cartSupplierProduct.getAmount();
-
         cart.setTotalPrice(totalPrice);
         cart.setTotalAmount(totalAmount);
         cartRepository.save(cart);
@@ -62,7 +75,7 @@ public class CartSupplierProductServiceImpl implements CartSupplierProductServic
                 cart.getTotalPrice(),
                 cart.getTotalAmount(),
                 cart.getStatus(),
-                cartService.getSupplierProduct(cart.getCartId(), cart.getCartSupplierProducts())
+                cartService.getSupplierProduct(userId, cart.getCartId(), cart.getCartSupplierProducts(), false)
         );
     }
 
@@ -89,8 +102,8 @@ public class CartSupplierProductServiceImpl implements CartSupplierProductServic
     }
 
     @Override
-    public CartDto updateSupplierProductToCart(String userId, List<AddSupplierProductDto> addSupplierProductDtoList) {
-        Cart cart = getActiveCart(userId);
+    public CartDto updateSupplierProductToCart(String userId, String cartId, List<AddSupplierProductDto> addSupplierProductDtoList) {
+        Cart cart = cartRepository.getReferenceById(cartId);
 
         double totalPrice = cart.getTotalPrice();
         int totalAmount = cart.getTotalAmount();
@@ -122,8 +135,40 @@ public class CartSupplierProductServiceImpl implements CartSupplierProductServic
                 cart.getTotalPrice(),
                 cart.getTotalAmount(),
                 cart.getStatus(),
-                cartService.getSupplierProduct(cart.getCartId(), cart.getCartSupplierProducts())
+                cartService.getSupplierProduct(userId, cart.getCartId(), cart.getCartSupplierProducts(), false)
         );
+    }
+
+    @Override
+    public CartDto deleteSupplierProduct(String userId, String cartId, String supplierId, String productId) throws Exception {
+        Cart cart = cartRepository.getReferenceById(cartId);
+        int index = getIndexCartSupplierProduct(cart, supplierId, productId);
+        if (index == -1) throw new Exception("Not found item");
+        List<CartSupplierProduct> currentList = cart.getCartSupplierProducts();
+        CartSupplierProduct cartSupplierProduct = currentList.remove(index);
+        cart.setCartSupplierProducts(currentList);
+        cart.setTotalAmount(cart.getTotalAmount() - cartSupplierProduct.getAmount());
+        cart.setTotalPrice(cart.getTotalPrice() - cartSupplierProduct.getTotalPrice());
+        cartSupplierProductRepository.deleteById(new SupplierProductKey(productId, supplierId, cartId));
+        cartRepository.save(cart);
+        return new CartDto(
+                cart.getCartId(),
+                cart.getTotalPrice(),
+                cart.getTotalAmount(),
+                cart.getStatus(),
+                cartService.getSupplierProduct(userId, cart.getCartId(), cart.getCartSupplierProducts(), false)
+        );
+    }
+
+    private int getIndexCartSupplierProduct(Cart cart, String supplierId, String productId) {
+        for (int i = 0; i < cart.getCartSupplierProducts().size(); i++) {
+            CartSupplierProduct cartSupplierProduct = cart.getCartSupplierProducts().get(i);
+            if (cartSupplierProduct.getId().getSupplierId().equals(supplierId) &&
+                    cartSupplierProduct.getId().getProductId().equals(productId)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     private int getCartSupplierProductIndex(List<CartSupplierProduct> cartSupplierProducts, AddSupplierProductDto addSupplierProductDto) {

@@ -1,6 +1,7 @@
 package com.sudo248.paymentservice.controller;
 
 import com.sudo248.domain.base.BaseResponse;
+import com.sudo248.domain.common.Constants;
 import com.sudo248.paymentservice.controller.dto.PaymentDto;
 import com.sudo248.paymentservice.controller.dto.PaymentInfoDto;
 import com.sudo248.paymentservice.service.IpService;
@@ -25,9 +26,13 @@ public class PaymentController {
     }
 
     @PostMapping("/pay")
-    public ResponseEntity<BaseResponse<?>> pay(@RequestBody PaymentDto paymentDto, HttpServletRequest request) {
+    public ResponseEntity<BaseResponse<?>> pay(
+            @RequestHeader(Constants.HEADER_USER_ID) String userId,
+            @RequestBody PaymentDto paymentDto,
+            HttpServletRequest request
+    ) {
         if (paymentDto.getIpAddress() == null) paymentDto.setIpAddress(ipService.getIpAddress(request));
-        return paymentService.pay(paymentDto);
+        return paymentService.pay(userId, paymentDto);
     }
 
     @GetMapping("/payment-info/{paymentId}")

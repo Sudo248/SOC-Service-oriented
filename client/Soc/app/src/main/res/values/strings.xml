@@ -67,7 +67,7 @@
     <string name="total_money">Tổng tiền hàng:</string>
     <string name="choose_or_enter_voucher">Chọn hoặc nhập mã</string>
     <string name="total_delivery">Tổng phí tiền vận chuyển:</string>
-    <string name="total_money_format">Tổng tin (2 sản phẩm):</string>
+    <string name="total_money_format">Tổng tiền (%s sản phẩm):</string>
     <string name="total_payment">Tổng tiền thanh toán:</string>
     <string name="choose_payment_method">Chọn phương thức\nthanh toán</string>
     <string name="agree">Đồng ý</string>
@@ -79,4 +79,8 @@
     <string name="choose_district">Chọn Quận/ Huyện</string>
     <string name="choose_ward">Chọn Phường/ Xã</string>
     <string name="not_found_product">Not found product</string>
+    <string name="cart">Giỏ hàng</string>
+    <string name="buy_now">Mua hàng</string>
+    <string name="total_price">Tổng tiền: %s</string>
+    <string name="delete">Xóa</string>
 </resources>

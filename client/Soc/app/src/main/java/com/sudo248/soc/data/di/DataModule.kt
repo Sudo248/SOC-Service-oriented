@@ -18,9 +18,12 @@ import retrofit2.create
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import com.sudo248.soc.BuildConfig
+import com.sudo248.soc.data.api.cart.CartService
 import com.sudo248.soc.data.api.discovery.DiscoveryService
 import com.sudo248.soc.data.api.image.ImageService
+import com.sudo248.soc.data.api.invoice.InvoiceService
 import com.sudo248.soc.data.api.payment.PaymentService
+import com.sudo248.soc.data.api.promotion.PromotionService
 import com.sudo248.soc.data.api.user.UserService
 
 
@@ -55,10 +58,21 @@ object DataModule {
     @Provides
     fun provideImageService(): ImageService = ApiService()
 
-
     @Singleton
     @Provides
     fun providePaymentService(): PaymentService = ApiService()
+
+    @Singleton
+    @Provides
+    fun provideCartService(): CartService = ApiService()
+
+    @Singleton
+    @Provides
+    fun providePromotionService(): PromotionService = ApiService()
+
+    @Singleton
+    @Provides
+    fun provideInvoiceService(): InvoiceService = ApiService()
 
     @Singleton
     @Provides

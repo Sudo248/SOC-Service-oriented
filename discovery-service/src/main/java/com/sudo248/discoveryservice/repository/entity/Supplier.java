@@ -30,14 +30,8 @@ public class Supplier{
     @Transient
     private Location location;
 
-    @OneToMany(mappedBy = "supplier",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "supplier",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SupplierProduct> supplierProducts;
-
-    public Supplier(String supplierId, String name, String avatar) {
-        this.supplierId = supplierId;
-        this.name = name;
-        this.avatar = avatar;
-    }
 }
 
 

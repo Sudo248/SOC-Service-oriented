@@ -8,6 +8,7 @@ strings=(
   user-service
   cart-service
   invoice-service
+  image-service
   promotion-service
 )
 mvn clean

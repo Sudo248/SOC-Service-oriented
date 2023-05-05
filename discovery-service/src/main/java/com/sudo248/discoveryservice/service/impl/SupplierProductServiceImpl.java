@@ -77,12 +77,12 @@ public class SupplierProductServiceImpl implements SupplierProductService {
     }
 
     @Override
-    public SupplierProductCartDto getProductInfoBySupplierIdProductId(String supplierId, String productId) {
+    public SupplierProductCartDto getProductInfoBySupplierIdProductId(String userId, String supplierId, String productId, boolean hasRoute) {
         SupplierProduct supplierProduct = supplierProductRepository.getReferenceById(new SupplierProductId(productId, supplierId));
         SupplierProductCartDto supplierProductCartDto = new SupplierProductCartDto();
         supplierProductCartDto.setProduct(productService.getRawProductById(productId));
         supplierProductCartDto.setSupplier(supplierService.getSupplierById(supplierId));
-        supplierProductCartDto.setDistance(0.0);
+        supplierProductCartDto.setRoute(hasRoute ? getRouteMapBox(userId, supplierId) : new RouteDto());
         supplierProductCartDto.setAmountLeft(supplierProduct.getAmountLeft());
         supplierProductCartDto.setPrice(supplierProduct.getPrice());
         supplierProductCartDto.setRate(supplierProduct.getRate());
@@ -159,6 +159,11 @@ public class SupplierProductServiceImpl implements SupplierProductService {
     public SupplierProduct toEntity(SupplierProductDto s) {
         //Waiting for other APIs
         return new SupplierProduct();
+    }
+
+    private RouteDto getRouteMapBox(String userId, String supplierId) {
+        Supplier supplier = supplierRepository.getRawSupplierById(supplierId);
+        return getRouteMapBox(cacheLocationManager.getLocation(userId), cacheLocationManager.getLocation(supplier.getUserId()));
     }
 
     private RouteDto getRouteMapBox(Location from, Location to) {

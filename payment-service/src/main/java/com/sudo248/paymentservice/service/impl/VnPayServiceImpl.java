@@ -6,6 +6,7 @@ import com.sudo248.paymentservice.config.VnPayConfig;
 import com.sudo248.paymentservice.controller.dto.PaymentDto;
 import com.sudo248.paymentservice.controller.dto.PaymentInfoDto;
 import com.sudo248.paymentservice.controller.dto.VnPayResponse;
+import com.sudo248.paymentservice.internal.CartService;
 import com.sudo248.paymentservice.internal.OrderService;
 import com.sudo248.paymentservice.repository.PaymentRepository;
 import com.sudo248.paymentservice.repository.entity.Payment;
@@ -25,12 +26,15 @@ public class VnPayServiceImpl implements PaymentService, VnpayService {
     private final PaymentRepository paymentRepository;
     private final OrderService orderService;
 
-    public VnPayServiceImpl(PaymentRepository paymentRepository, OrderService orderService) {
+    private final CartService cartService;
+
+    public VnPayServiceImpl(PaymentRepository paymentRepository, OrderService orderService, CartService cartService) {
         this.paymentRepository = paymentRepository;
         this.orderService = orderService;
+        this.cartService = cartService;
     }
 
-    public ResponseEntity<BaseResponse<?>> pay(PaymentDto paymentDto) {
+    public ResponseEntity<BaseResponse<?>> pay(String userId, PaymentDto paymentDto) {
         return handleException(() -> {
             Payment payment = toEntity(paymentDto);
             paymentRepository.save(payment);
@@ -92,8 +96,8 @@ public class VnPayServiceImpl implements PaymentService, VnpayService {
             String vnp_SecureHash = VnPayConfig.hmacSHA512(VnPayConfig.vnp_HashSecret, hashData.toString());
             queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
             String paymentUrl = VnPayConfig.vnp_Url + "?" + queryUrl;
-
             orderService.updateInvoice(payment.getOrderId(), payment.getPaymentId());
+            cartService.updateStatusCart(userId);
             return BaseResponse.ok(toDto(payment, paymentUrl));
         });
     }

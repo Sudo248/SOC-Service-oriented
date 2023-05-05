@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CartSupplierProductRepository extends JpaRepository<CartSupplierProduct, SupplierProductKey> {
+    Integer countByCart_UserIdAndCart_Status(String userId, String status);
 }

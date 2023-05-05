@@ -52,6 +52,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
                 }
             } else {
                 binding.rcvProduct.visible()
+                binding.groupNotFound.gone()
                 productAdapter.submitList(it)
             }
         }

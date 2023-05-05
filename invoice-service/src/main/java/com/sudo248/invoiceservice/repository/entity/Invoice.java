@@ -40,4 +40,7 @@ public class Invoice {
 
     @Column(name = "finalPrice")
     private Double finalPrice;
+
+    @Embedded
+    private Shipment shipment;
 }

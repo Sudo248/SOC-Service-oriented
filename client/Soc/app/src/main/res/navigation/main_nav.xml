@@ -52,4 +52,14 @@
             android:id="@+id/action_searchFragment_to_productDetailFragment"
             app:destination="@id/productDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.sudo248.soc.ui.activity.main.fragment.cart.CartFragment"
+        android:label="CartFragment"
+        tools:layout="@layout/fragment_cart"/>
+    <fragment
+        android:id="@+id/promotionFragment"
+        android:name="com.sudo248.soc.ui.activity.main.fragment.promotion.PromotionFragment"
+        android:label="PromotionFragment"
+        tools:layout="@layout/fragment_promotion"/>
 </navigation>

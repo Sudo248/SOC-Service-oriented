@@ -24,6 +24,7 @@ class PaymentRepositoryImpl @Inject constructor(
             bankCode = payment.bankCode,
             orderId = payment.orderId,
             orderType = payment.orderType,
+            amount = payment.amount
         )
         val response = handleResponse(paymentService.pay(request))
         if (response.isSuccess) {

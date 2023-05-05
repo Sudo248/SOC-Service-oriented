@@ -8,6 +8,7 @@ strings=(
   cart-service:0.0.1
   invoice-service:0.0.1
   promotion-service:0.0.1
+  image-service:0.0.1
 )
 admin="sudo248dev/"
 # shellcheck disable=SC2046

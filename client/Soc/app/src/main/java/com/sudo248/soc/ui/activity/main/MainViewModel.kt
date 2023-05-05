@@ -7,8 +7,11 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
 import com.sudo248.base_android.base.BaseViewModel
+import com.sudo248.base_android.ktx.onError
+import com.sudo248.base_android.ktx.onSuccess
 import com.sudo248.base_android.navigation.IntentDirections
 import com.sudo248.soc.domain.common.Constants
+import com.sudo248.soc.domain.repository.CartRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,10 +30,18 @@ import kotlin.coroutines.suspendCoroutine
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val locationService: FusedLocationProviderClient,
+    private val cartRepository: CartRepository
 ) : BaseViewModel<IntentDirections>() {
+
+    init {
+        getItemInCart()
+    }
 
     private val _imageUri = MutableLiveData<Uri?>()
     val imageUri: LiveData<Uri?> = _imageUri
+
+    private val _itemInCart = MutableLiveData(0)
+    val itemInCart: LiveData<Int> = _itemInCart
 
     var pickImageController: PickImageController? = null
 
@@ -55,6 +66,16 @@ class MainViewModel @Inject constructor(
                 }
             }
 
+    }
+
+    fun getItemInCart() = launch {
+        cartRepository.getItemInCart()
+            .onSuccess {
+                _itemInCart.postValue(it)
+            }
+            .onError {
+                _itemInCart.postValue(0)
+            }
     }
 
 }

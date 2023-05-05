@@ -6,6 +6,6 @@ data class ProductDto(
     val description: String,
     val sku: String,
     val images: List<ImageDto>? = null,
-    val categoryIds: List<String>,
-    val supplierProducts: List<SupplierProductDto>,
+    val categoryIds: List<String> = listOf(),
+    val supplierProducts: List<SupplierProductDto>? = null,
 )

@@ -15,4 +15,5 @@ public interface SupplierRepository extends JpaRepository<Supplier, String> {
     Supplier getRawSupplierById(@Param("supplierId") String supplierId);
 
     Supplier getSupplierByUserId(String userId);
+
 }

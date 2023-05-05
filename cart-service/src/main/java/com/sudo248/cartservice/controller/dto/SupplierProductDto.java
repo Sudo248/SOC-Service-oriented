@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class SupplierProductDto implements Serializable {
     private SupplierDto supplier;
     private ProductDto product;
-    private double distance;
+    private RouteDto route = new RouteDto();
     private int amountLeft;
     private double price, soldAmount, rate;
 }

@@ -13,10 +13,10 @@
         android:icon="@drawable/ic_promotion"/>
 
     <item
-        android:id="@+id/orderFragment"
+        android:id="@+id/cartFragment"
         android:enabled="true"
-        android:title="@string/order"
-        android:icon="@drawable/ic_order"/>
+        android:title="@string/cart"
+        android:icon="@drawable/ic_shopping_cart"/>
     <item
         android:id="@+id/userFragment"
         android:enabled="true"

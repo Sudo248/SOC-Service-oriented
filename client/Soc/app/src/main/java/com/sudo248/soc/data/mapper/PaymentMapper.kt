@@ -9,7 +9,7 @@ fun PaymentDto.toPayment(): Payment {
     return Payment(
         paymentId,
         paymentUrl,
-        PaymentType.valueOf(paymentType),
+        PaymentType.fromString(paymentType),
         bankCode,
         orderId,
         orderType,

@@ -20,16 +20,23 @@ public class CartController {
         CartDto savedCart = cartService.creNewCart(userId);
         return BaseResponse.ok(savedCart);
     }
-    @PutMapping("/{cartId}/completed")
-    public ResponseEntity<BaseResponse<?>> updateStatusCart(@PathVariable String cartId) {
-        CartDto updatedCart = cartService.updateStatusCart(cartId);
+    @PutMapping("/active/completed")
+    public ResponseEntity<BaseResponse<?>> updateStatusCart(
+            @RequestHeader(Constants.HEADER_USER_ID) String userId
+    ) {
+        CartDto updatedCart = cartService.updateStatusCart(userId);
         return BaseResponse.ok(updatedCart);
     }
     @GetMapping("/{cartId}")
-    public ResponseEntity<BaseResponse<?>> getCartById(@PathVariable String cartId) {
-        CartDto cart = cartService.getCartById(cartId);
+    public ResponseEntity<BaseResponse<?>> getCartById(
+            @RequestHeader(Constants.HEADER_USER_ID) String userId,
+            @PathVariable String cartId,
+            @RequestParam(value = "hasRoute", required = false, defaultValue = "false") boolean hasRoute
+    ) {
+        CartDto cart = cartService.getCartById(userId, cartId, hasRoute);
         return BaseResponse.ok(cart);
     }
+
     @GetMapping("/active")
     public ResponseEntity<BaseResponse<?>> getActiveCartByUserId(
             @RequestHeader(Constants.HEADER_USER_ID) String userId
@@ -37,9 +44,22 @@ public class CartController {
         CartDto activeCart = cartService. getActiveCartByUserId(userId);
         return BaseResponse.ok(activeCart);
     }
+
+    @GetMapping("/active/count-item")
+    public ResponseEntity<BaseResponse<?>> getCountItemActiveCartByUserId(
+            @RequestHeader(Constants.HEADER_USER_ID) String userId
+    ) {
+        Integer count = cartService.getCountItemActiveCart(userId);
+        return BaseResponse.ok(count);
+    }
+
     //Call from other service
     @GetMapping("/service/{cartId}")
-    public CartDto serviceGetCartById(@PathVariable String cartId) {
-        return cartService.getCartById(cartId);
+    public CartDto serviceGetCartById(
+            @RequestHeader(Constants.HEADER_USER_ID) String userId,
+            @PathVariable String cartId,
+            @RequestParam(value = "hasRoute", defaultValue = "false") boolean hasRoute
+    ) {
+        return cartService.getCartById(userId, cartId, hasRoute);
     }
 }

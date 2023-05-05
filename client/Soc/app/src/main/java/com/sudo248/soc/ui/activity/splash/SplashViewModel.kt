@@ -64,10 +64,14 @@ class SplashViewModel @Inject constructor(
         if (viewController?.isGrantedLocationPermission() == true) {
             locationService.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
                 .addOnSuccessListener {
-                    it.run {
+                    it?.run {
                         continuation.resume("$longitude,$latitude")
                         Log.d("Sudoo", "getCurrentLocation: $longitude,$latitude")
                     }
+                }
+                .addOnFailureListener {
+                    it.printStackTrace()
+                    continuation.resume("")
                 }
         } else {
             continuation.resume("")

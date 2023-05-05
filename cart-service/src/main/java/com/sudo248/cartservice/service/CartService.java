@@ -10,10 +10,12 @@ import java.util.List;
 @Service
 public interface CartService {
     CartDto creNewCart(String userId);
-    CartDto updateStatusCart(String cartId);
-    CartDto getCartById(String cartId);
+    CartDto updateStatusCart(String userId);
+    CartDto getCartById(String userId, String cartId, boolean hasRoute);
 
     CartDto getActiveCartByUserId(String userId);
 
-    List<CartSupplierProductDto> getSupplierProduct(String cartId, List<CartSupplierProduct> list);
+    Integer getCountItemActiveCart(String userId);
+
+    List<CartSupplierProductDto> getSupplierProduct(String userId, String cartId, List<CartSupplierProduct> list, boolean hasRoute);
 }

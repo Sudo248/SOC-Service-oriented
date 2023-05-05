@@ -1,13 +1,7 @@
 package com.sudo248.soc.data.mapper
 
-import com.sudo248.soc.data.dto.discovery.CategoryDto
-import com.sudo248.soc.data.dto.discovery.CategoryInfoDto
-import com.sudo248.soc.data.dto.discovery.ProductDto
-import com.sudo248.soc.data.dto.discovery.SupplierProductDto
-import com.sudo248.soc.domain.entity.discovery.Category
-import com.sudo248.soc.domain.entity.discovery.CategoryInfo
-import com.sudo248.soc.domain.entity.discovery.Product
-import com.sudo248.soc.domain.entity.discovery.SupplierProduct
+import com.sudo248.soc.data.dto.discovery.*
+import com.sudo248.soc.domain.entity.discovery.*
 
 fun SupplierProductDto.toSupplierProduct(): SupplierProduct {
     return SupplierProduct(
@@ -28,7 +22,7 @@ fun ProductDto.toProduct(): Product {
         description = description,
         sku = sku,
         images = images?.map { it.url } ?: listOf("https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YnVyZ2VyfGVufDB8fDB8fA%3D%3D&w=1000&q=80"),
-        supplierProducts = supplierProducts.map { it.toSupplierProduct() }
+        supplierProducts = supplierProducts?.map { it.toSupplierProduct() } ?: listOf()
     )
     //
 }
@@ -45,5 +39,11 @@ fun CategoryDto.toCategory(): Category {
 fun CategoryInfoDto.toCategoryInfo(): CategoryInfo {
     return CategoryInfo(
         categoryId, name, image, supplierId
+    )
+}
+
+fun SupplierDto.toSupplier(): Supplier {
+    return Supplier(
+        supplierId, name, avatar
     )
 }

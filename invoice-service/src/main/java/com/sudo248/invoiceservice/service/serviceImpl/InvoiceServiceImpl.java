@@ -10,15 +10,19 @@ import com.sudo248.invoiceservice.internal.UserService;
 import com.sudo248.invoiceservice.repository.InvoiceRepository;
 import com.sudo248.invoiceservice.repository.entity.Invoice;
 import com.sudo248.invoiceservice.repository.entity.OrderStatus;
+import com.sudo248.invoiceservice.repository.entity.Shipment;
 import com.sudo248.invoiceservice.service.InvoiceService;
-import org.apache.catalina.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class InvoiceServiceImpl implements InvoiceService {
 
     private final InvoiceRepository invoiceRepository;
@@ -43,9 +47,9 @@ public class InvoiceServiceImpl implements InvoiceService {
     public List<InvoiceDto> getListInvoice(String userId) {
         List<Invoice> invoiceList = invoiceRepository.findAll();
         List<InvoiceDto> invoiceDtoList = new ArrayList<>();
-        for(Invoice invoice: invoiceList){
-            if(invoice.getUserId().equals(userId))
-            invoiceDtoList.add(toDto(invoice));
+        for (Invoice invoice : invoiceList) {
+            if (invoice.getUserId().equals(userId))
+                invoiceDtoList.add(toDto(invoice));
         }
         return invoiceDtoList;
     }
@@ -68,9 +72,11 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoice.setStatus(invoiceAddDto.getStatus());
         invoice.setStatus(OrderStatus.PREPARE);
 
-        CartDto cartDto = getCartById(invoiceAddDto.getCartId());
+        CartDto cartDto = getCartById(userId, invoiceAddDto.getCartId(), true);
+        log.info("cartDto: " + cartDto);
+        invoice.setShipment(calculateShipment(cartDto));
 
-        invoice.setTotalPrice(cartDto.getTotalPrice());
+        invoice.setTotalPrice(cartDto.getTotalPrice() + invoice.getShipment().getPriceShipment());
         invoice.setTotalPromotionPrice(0.0);
         invoice.setFinalPrice(invoice.getTotalPrice() - invoice.getTotalPromotionPrice());
         invoiceRepository.save(invoice);
@@ -84,15 +90,15 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public InvoiceDto updateInvoice(InvoiceDto invoiceDto, String invoiceId) {
-       Invoice invoicedelete = invoiceRepository.findById(invoiceId).get();
-       invoiceRepository.deleteById(invoiceId);
-       Invoice savedInvoice = invoiceRepository.save(toEntity(invoiceDto));
-       return invoiceDto;
+        Invoice invoicedelete = invoiceRepository.findById(invoiceId).get();
+        invoiceRepository.deleteById(invoiceId);
+        Invoice savedInvoice = invoiceRepository.save(toEntity(invoiceDto));
+        return invoiceDto;
     }
 
     @Override
     public boolean deleteInvoice(String invoiceId) {
-        if(invoiceRepository.findById(invoiceId) == null)
+        if (invoiceRepository.findById(invoiceId) == null)
             return false;
         invoiceRepository.deleteById(invoiceId);
         return true;
@@ -102,11 +108,12 @@ public class InvoiceServiceImpl implements InvoiceService {
     public InvoiceDto toDto(Invoice invoice) {
         InvoiceDto invoiceDto = new InvoiceDto();
         invoiceDto.setInvoiceId(invoice.getInvoiceId());
-        invoiceDto.setCart(getCartById(invoice.getCartId()));
+        invoiceDto.setCart(getCartById(invoice.getUserId(), invoice.getCartId(), false));
         invoiceDto.setPayment(getPaymentById(invoice.getPaymentId()));
         invoiceDto.setPromotion(getPromotionById(invoice.getPromotionId()));
         invoiceDto.setUser(getUserById(invoice.getUserId()));
         invoiceDto.setStatus(invoice.getStatus());
+        invoiceDto.setShipment(invoice.getShipment());
         invoiceDto.setTotalPrice(invoice.getTotalPrice());
         invoiceDto.setTotalPromotionPrice(invoiceDto.getPromotion().getValue());
         invoiceDto.setFinalPrice(invoice.getTotalPrice() - invoiceDto.getTotalPromotionPrice());
@@ -131,7 +138,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public InvoiceDto updateInvoiceByField(String invoiceId, String field, String id) {
         Invoice invoice = invoiceRepository.getReferenceById(invoiceId);
-        switch (field){
+        switch (field) {
             case "promotion":
                 PromotionDto promotionDto = getPromotionById(id);
                 invoice.setPromotionId(id);
@@ -151,27 +158,45 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     //Request Detail
-    private PromotionDto getPromotionById(String promotionId){
+    private PromotionDto getPromotionById(String promotionId) {
         if (promotionId == null) return new PromotionDto();
         return promotionService.getPromotionById(promotionId);
     }
-    private UserDto getUserById(String userId){
+
+    private UserDto getUserById(String userId) {
         ResponseEntity<BaseResponse<UserDto>> response = userService.getUserInfo(userId);
         if (response.getStatusCodeValue() == 200) {
             return response.getBody().getData();
         }
         return new UserDto();
     }
-    private CartDto getCartById(String cartId){
-        return cartService.getCartById(cartId);
+
+    private CartDto getCartById(String userId, String cartId, boolean hasRoute) {
+        return cartService.getCartById(userId, cartId, hasRoute);
     }
-    private PaymentDto getPaymentById(String paymentId){
-        if (paymentId == null) return new PaymentDto();
+
+    private PaymentDto getPaymentById(String paymentId) {
+        if (paymentId == null) return null;
         return paymentService.getPaymentById(paymentId);
     }
 
-    //Update
+    private Shipment calculateShipment(CartDto cartDto) {
+        List<RouteDto> routes = cartDto.getCartSupplierProducts().stream().map(cpd -> cpd.getSupplierProduct().getRoute()).collect(Collectors.toList());
+        RouteDto maxRoute = routes.stream().max(Comparator.comparingDouble(r -> r.getDistance().getValue())).get();
+        return new Shipment(
+                "Nhanh",
+                (int) maxRoute.getDuration().getValue(),
+                maxRoute.getDuration().getUnit(),
+                calculateShipmentPrice(maxRoute.getDistance())
+        );
+    }
 
-
+    private double calculateShipmentPrice(ValueDto distance) {
+        if (distance.getUnit().equals("km")) {
+            return distance.getValue() * 10000;
+        } else {
+            return distance.getValue() * 100;
+        }
+    }
 
 }

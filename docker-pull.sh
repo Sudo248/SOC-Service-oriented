@@ -1,7 +1,7 @@
 strings=(
   sudo248dev/soc-registry:0.0.1
   sudo248dev/api-gateway:0.0.1
-  sudo248dev/common-service:0.0.1
+  sudo248dev/image-service:0.0.1
   sudo248dev/auth-service:0.0.1
   sudo248dev/discovery-service:0.0.1
   sudo248dev/payment-service:0.0.1
