@@ -6,5 +6,5 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ImageService extends BaseService {
-    ResponseEntity<BaseResponse<?>> storeImage(MultipartFile image);
+    ResponseEntity<BaseResponse<?>> storeImage(MultipartFile image, String source);
 }

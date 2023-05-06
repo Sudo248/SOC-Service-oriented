@@ -42,6 +42,9 @@
 <!--    port: 8089-->
         <module>promotion-service</module>
 
+<!--    port: 8090-->
+        <module>notification-service</module>
+
     </modules>
 
 </project>

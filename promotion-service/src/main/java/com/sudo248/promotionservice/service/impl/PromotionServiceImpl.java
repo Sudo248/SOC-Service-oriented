@@ -64,11 +64,11 @@ public class PromotionServiceImpl implements PromotionService {
 
         Map<String, String> vars = new HashMap<>();
 
-        vars.put("field", "promotion");
-        vars.put("fieldId", promotionId);
-        RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:8084/api/v1/invoice/updateInvoice/{field}/{fieldId}";
-        restTemplate.put(url,null, vars);
+//        vars.put("field", "promotion");
+//        vars.put("fieldId", promotionId);
+//        RestTemplate restTemplate = new RestTemplate();
+//        String url = "http://localhost:8084/api/v1/invoice/updateInvoice/{field}/{fieldId}";
+//        restTemplate.put(url,null, vars);
         return promotionDto;
     }
 

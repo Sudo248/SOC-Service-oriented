@@ -22,6 +22,7 @@ import com.sudo248.soc.data.api.cart.CartService
 import com.sudo248.soc.data.api.discovery.DiscoveryService
 import com.sudo248.soc.data.api.image.ImageService
 import com.sudo248.soc.data.api.invoice.InvoiceService
+import com.sudo248.soc.data.api.notification.NotificationService
 import com.sudo248.soc.data.api.payment.PaymentService
 import com.sudo248.soc.data.api.promotion.PromotionService
 import com.sudo248.soc.data.api.user.UserService
@@ -73,6 +74,10 @@ object DataModule {
     @Singleton
     @Provides
     fun provideInvoiceService(): InvoiceService = ApiService()
+
+    @Singleton
+    @Provides
+    fun provideNotificationService(): NotificationService = ApiService()
 
     @Singleton
     @Provides

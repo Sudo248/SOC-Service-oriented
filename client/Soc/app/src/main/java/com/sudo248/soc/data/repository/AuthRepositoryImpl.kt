@@ -12,6 +12,7 @@ import com.sudo248.soc.data.api.auth.AuthService
 import com.sudo248.soc.data.api.auth.request.AccountRequest
 import com.sudo248.soc.data.api.auth.request.ChangePasswordRequest
 import com.sudo248.soc.data.api.auth.request.OtpRequest
+import com.sudo248.soc.data.api.notification.NotificationService
 import com.sudo248.soc.data.ktx.errorBody
 import com.sudo248.soc.data.ktx.fromResponse
 import com.sudo248.soc.data.mapper.toToken
@@ -34,6 +35,7 @@ import javax.inject.Singleton
 @Singleton
 class AuthRepositoryImpl @Inject constructor(
     private val authService: AuthService,
+    private val notificationService: NotificationService,
     private val ioDispatcher: CoroutineDispatcher
 ) : AuthRepository {
     override suspend fun tryGetToken(): DataState<Token, Exception> = stateOn(ioDispatcher) {
@@ -56,7 +58,10 @@ class AuthRepositoryImpl @Inject constructor(
         Log.d("Sudoo", "saveToken: $token")
         SharedPreferenceUtils.withApplicationSharedPreference()
             .putString(Constants.Key.TOKEN, token)
-        Log.d("Sudoo", "after saveToken: ${SharedPreferenceUtils.getString(Constants.Key.TOKEN)}")
+        val fcmToken = SharedPreferenceUtils.getString(Constants.Key.FCM_TOKEN, "")
+        if (fcmToken.isNotEmpty()) {
+            notificationService.saveToken(fcmToken)
+        }
     }
 
     override suspend fun signIn(account: Account): DataState<Token, Exception> =

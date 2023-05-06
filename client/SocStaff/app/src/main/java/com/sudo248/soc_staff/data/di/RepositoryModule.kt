@@ -1,13 +1,7 @@
 package com.sudo248.soc_staff.data.di
 
-import com.sudo248.soc_staff.data.repository.AuthRepositoryImpl
-import com.sudo248.soc_staff.data.repository.DiscoveryRepositoryImpl
-import com.sudo248.soc_staff.data.repository.ImageRepositoryImpl
-import com.sudo248.soc_staff.data.repository.UserRepositoryImpl
-import com.sudo248.soc_staff.domain.repository.AuthRepository
-import com.sudo248.soc_staff.domain.repository.DiscoveryRepository
-import com.sudo248.soc_staff.domain.repository.ImageRepository
-import com.sudo248.soc_staff.domain.repository.UserRepository
+import com.sudo248.soc_staff.data.repository.*
+import com.sudo248.soc_staff.domain.repository.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -35,5 +29,8 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindImageRepository(imageRepository: ImageRepositoryImpl): ImageRepository
+
+    @Binds
+    abstract fun bindPromotionRepository(promotionRepository: PromotionRepositoryImpl): PromotionRepository
 
 }

@@ -18,6 +18,7 @@ object Constants {
         const val INVOICE_ID = "INVOICE_ID"
         const val PROMOTION = "PROMOTION"
         const val SCREEN = "SCREEN"
+        const val FCM_TOKEN = "FCM_TOKEN"
     }
 
     object Payment {
@@ -56,4 +57,13 @@ object Constants {
     }
 
     var location: String = ""
+
+    object Notification {
+        const val PROMOTION_TOPIC = "public.promotion"
+        const val PROMOTION_NOTIFICATION_CHANNEL_ID = "PROMOTION-NOTIFICATION-CHANNEL-ID"
+        const val PROMOTION_NOTIFICATION_CHANNEL_NAME = "PROMOTION-NOTIFICATION-CHANNEL"
+        const val PROMOTION_NOTIFICATION_ID = 2001
+    }
+
+
 }

@@ -8,6 +8,7 @@ import com.sudo248.base_android.base.BaseViewModel
 import com.sudo248.base_android.core.UiState
 import com.sudo248.base_android.ktx.createActionIntentDirections
 import com.sudo248.base_android.ktx.onState
+import com.sudo248.base_android.ktx.onSuccess
 import com.sudo248.base_android.utils.SharedPreferenceUtils
 import com.sudo248.soc_staff.domain.common.Constants
 import com.sudo248.soc_staff.domain.repository.AuthRepository
@@ -51,9 +52,10 @@ class SignInViewModel @Inject constructor(
         authRepository.signIn(accountUiModel.toAccount()).onState(
             onSuccess = {
                 authRepository.saveToken(it.token)
-                discoveryRepository.getSupplier().get().run {
-                    SharedPreferenceUtils.putString(Constants.Key.SUPPLIER_ID, supplierId)
-                }
+                discoveryRepository.getSupplier()
+                    .onSuccess { supplier ->
+                        SharedPreferenceUtils.putString(Constants.Key.SUPPLIER_ID, supplier.supplierId)
+                    }
                 parentViewModel?.setState(UiState.SUCCESS)
                 parentViewModel?.navigator()
                     ?.navigateOff(MainActivity::class.createActionIntentDirections())

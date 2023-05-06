@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
+import com.google.firebase.messaging.FirebaseMessaging
 import com.sudo248.base_android.base.BaseViewModel
 import com.sudo248.base_android.ktx.createActionIntentDirections
 import com.sudo248.base_android.ktx.onError
@@ -41,8 +42,9 @@ class SplashViewModel @Inject constructor(
 
     init {
         launch {
-            delay(900)
-            Constants.location = getCurrentLocation()
+            Constants.location = withTimeout(1000) {
+                getCurrentLocation()
+            }
             accountRepository.tryGetToken()
                 .onSuccess {
                     navigator.navigateOff(MainActivity::class.createActionIntentDirections())
@@ -50,6 +52,7 @@ class SplashViewModel @Inject constructor(
                 .onError {
                     navigator.navigateOff(AuthActivity::class.createActionIntentDirections())
                 }
+            delay(900)
         }
 
 //            navigator.navigateOff(OtpActivity::class.createActionIntentDirections{

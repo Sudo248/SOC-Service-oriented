@@ -176,7 +176,6 @@ class ProductFragment : BaseFragment<FragmentProductBinding, ProductViewModel>()
 
     override fun onStateSuccess() {
         super.onStateSuccess()
-        Log.d("Sudoo", "onStateSuccess: ")
         binding.apply {
             nameCategory.setText("")
             nameProduct.setText("")

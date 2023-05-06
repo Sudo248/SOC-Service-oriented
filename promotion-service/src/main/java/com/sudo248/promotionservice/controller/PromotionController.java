@@ -37,7 +37,7 @@ public class PromotionController {
     @DeleteMapping("/{promotionId}")
     public ResponseEntity<BaseResponse<?>> deletePromotionById(@PathVariable String promotionId) {
         boolean success = promotionService.deletePromotion(promotionId);
-        return BaseResponse.ok(null);
+        return BaseResponse.ok(success);
     }
     @PutMapping("/{promotionId}")
     public ResponseEntity<BaseResponse<?>> updatePromotionById(@RequestBody PromotionDto promotionDto,@PathVariable String promotionId) {
