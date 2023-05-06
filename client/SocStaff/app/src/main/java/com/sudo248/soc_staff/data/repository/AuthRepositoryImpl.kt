@@ -1,5 +1,6 @@
 package com.sudo248.soc_staff.data.repository
 
+import android.util.Log
 import com.sudo248.base_android.core.DataState
 import com.sudo248.base_android.data.api.handleResponse
 import com.sudo248.base_android.ktx.state
@@ -76,7 +77,12 @@ class AuthRepositoryImpl @Inject constructor(
                 provider = account.provider
             )
             val response = handleResponse(authService.signUp(request))
-            if (response.isError) {
+            if (response.isSuccess) {
+                response.get().data?.let {
+                    Log.d("Sudoo", "signUp: userId: $it")
+                    SharedPreferenceUtils.putString(Constants.Key.USER_ID, it)
+                }
+            } else {
                 throw response.error().errorBody()
             }
         }

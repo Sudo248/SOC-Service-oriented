@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import com.sudo248.soc.BuildConfig
 import com.sudo248.soc.data.api.cart.CartService
+import com.sudo248.soc.data.api.chat.ChatService
 import com.sudo248.soc.data.api.discovery.DiscoveryService
 import com.sudo248.soc.data.api.image.ImageService
 import com.sudo248.soc.data.api.invoice.InvoiceService
@@ -78,6 +79,10 @@ object DataModule {
     @Singleton
     @Provides
     fun provideNotificationService(): NotificationService = ApiService()
+
+    @Singleton
+    @Provides
+    fun provideChatService(): ChatService = ApiService()
 
     @Singleton
     @Provides

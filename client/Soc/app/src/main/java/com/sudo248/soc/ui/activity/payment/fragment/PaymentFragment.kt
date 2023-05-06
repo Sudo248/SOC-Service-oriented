@@ -160,7 +160,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding, PaymentViewModel>()
         lifecycleScope.launch {
             delay(500)
             val intent = Intent(requireContext(), MainActivity::class.java)
-            intent.putExtra(Constants.Key.SCREEN, "DISCOVERY")
+            intent.putExtra(Constants.Key.SCREEN, Constants.Screen.DISCOVERY)
             startActivity(intent)
             activity?.finish()
         }
@@ -207,7 +207,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding, PaymentViewModel>()
 
     private fun onVnPaySdkActionAppBack() {
         val intent = Intent(requireContext(), MainActivity::class.java)
-        intent.putExtra(Constants.Key.SCREEN, "DISCOVERY")
+        intent.putExtra(Constants.Key.SCREEN, Constants.Screen.DISCOVERY)
         startActivity(intent)
         activity?.finish()
     }

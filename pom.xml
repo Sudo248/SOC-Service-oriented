@@ -45,6 +45,9 @@
 <!--    port: 8090-->
         <module>notification-service</module>
 
+<!--    port: 8091-->
+        <module>chat-service</module>
+
     </modules>
 
 </project>

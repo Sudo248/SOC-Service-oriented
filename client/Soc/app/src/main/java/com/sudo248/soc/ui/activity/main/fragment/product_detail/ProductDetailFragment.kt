@@ -48,7 +48,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding, Product
     }
 
     fun setupSendMessage() {
-        val content = ShareLinkContent.Builder().setContentUrl(Uri.parse("https://shp.ee/m8ijte6")).build()
+        val content = ShareLinkContent.Builder().setContentUrl(Uri.parse(viewModel.getDeeplinkToProduction())).build()
         binding.btnSendMessage.shareContent = content
         binding.btnSendMessage.registerCallback(callbackManager, object : FacebookCallback<Sharer.Result> {
             override fun onCancel() {

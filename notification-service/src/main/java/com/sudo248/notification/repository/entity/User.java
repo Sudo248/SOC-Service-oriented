@@ -11,5 +11,7 @@ import lombok.NoArgsConstructor;
 public class User {
     @DocumentId
     private String userId;
+    private String fullName;
+    private String image;
     private String token;
 }

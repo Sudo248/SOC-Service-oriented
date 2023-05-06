@@ -1,0 +1,33 @@
+package com.sudo248.soc_staff.data.api.chat
+
+import com.sudo248.base_android_annotation.apiservice.ApiService
+import com.sudo248.base_android_annotation.apiservice.EnableAuthentication
+import com.sudo248.base_android_annotation.apiservice.logging_level.Level
+import com.sudo248.base_android_annotation.apiservice.logging_level.LoggingLever
+import com.sudo248.soc_staff.BuildConfig
+import com.sudo248.soc_staff.data.api.BaseResponse
+import com.sudo248.soc_staff.data.dto.chat.ChatDto
+import com.sudo248.soc_staff.domain.common.Constants
+import com.sudo248.soc_staff.domain.entity.chat.Chat
+import com.sudo248.soc_staff.domain.entity.chat.Conversation
+import com.sudo248.soc_staff.domain.entity.chat.ConversationInfo
+import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
+
+@ApiService(baseUrl = BuildConfig.BASE_URL + "chat/")
+@EnableAuthentication(Constants.Key.TOKEN)
+@LoggingLever(level = Level.BODY)
+interface ChatService {
+
+    @GET("conversation/{topic}")
+    suspend fun getConversation(@Path("topic") topic: String): Response<BaseResponse<Conversation>>
+
+    @POST("conversation/{topic}/send")
+    suspend fun sendMessageToTopic(@Path("topic") topic: String,@Body chatDto: ChatDto): Response<BaseResponse<Chat>>
+
+    @GET("conversation/info")
+    suspend fun getAllConversationInfo(): Response<BaseResponse<List<ConversationInfo>>>
+}

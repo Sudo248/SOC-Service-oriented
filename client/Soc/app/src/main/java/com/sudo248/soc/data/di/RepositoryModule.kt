@@ -42,4 +42,7 @@ abstract class RepositoryModule {
     @Binds
     abstract fun bindPromotionRepository(promotionRepository: PromotionRepositoryImpl): PromotionRepository
 
+    @Binds
+    abstract fun bindChatRepository(chatRepository: ChatRepositoryImpl): ChatRepository
+
 }

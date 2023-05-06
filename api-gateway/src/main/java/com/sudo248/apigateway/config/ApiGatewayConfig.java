@@ -27,6 +27,7 @@ public class ApiGatewayConfig {
                 .route("INVOICE-SERVICE", r -> r.path("/api/v1/invoice/**").filters(f -> f.filter(filter)).uri("lb://INVOICE-SERVICE"))
                 .route("PROMOTION-SERVICE", r -> r.path("/api/v1/promotion/**").filters(f -> f.filter(filter)).uri("lb://PROMOTION-SERVICE"))
                 .route("NOTIFICATION-SERVICE", r -> r.path("/api/v1/notification/**").filters(f -> f.filter(filter)).uri("lb://NOTIFICATION-SERVICE"))
+                .route("CHAT-SERVICE", r -> r.path("/api/v1/chat/**").filters(f -> f.filter(filter)).uri("lb://CHAT-SERVICE"))
                 .build();
     }
 }

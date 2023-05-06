@@ -22,7 +22,7 @@
         android:layout_height="?actionBarSize"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="20dp"
-
+        android:background="@drawable/rectangle_conner_25_stroke_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@+id/imgBack"

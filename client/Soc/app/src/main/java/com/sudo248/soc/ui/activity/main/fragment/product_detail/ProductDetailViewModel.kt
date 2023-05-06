@@ -9,6 +9,7 @@ import com.sudo248.base_android.event.SingleEvent
 import com.sudo248.base_android.ktx.bindUiState
 import com.sudo248.base_android.ktx.onError
 import com.sudo248.base_android.ktx.onSuccess
+import com.sudo248.soc.BuildConfig
 import com.sudo248.soc.domain.entity.cart.AddSupplierProduct
 import com.sudo248.soc.domain.repository.CartRepository
 import com.sudo248.soc.domain.repository.DiscoveryRepository
@@ -69,6 +70,19 @@ class ProductDetailViewModel @Inject constructor(
 
     fun onBack() {
         navigator.back()
+    }
+
+    fun openChat() {
+        navigator.navigateTo(ProductDetailFragmentDirections.actionProductDetailFragmentToChatFragment(product.supplierId))
+    }
+
+    fun buyNow() = launch {
+        addSupplierProduct().join()
+        navigator.navigateOff(ProductDetailFragmentDirections.actionProductDetailFragmentToCartFragment())
+    }
+
+    fun getDeeplinkToProduction(): String {
+        return "${BuildConfig.BASE_URL}discovery/product/${product.productId}"
     }
 
 }

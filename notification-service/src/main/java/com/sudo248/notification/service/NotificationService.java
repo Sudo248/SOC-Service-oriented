@@ -13,4 +13,6 @@ public interface NotificationService {
 
     boolean saveUser(User user);
 
+    boolean saveToken(String userId, String token);
+
 }

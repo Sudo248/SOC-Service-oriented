@@ -77,4 +77,11 @@ public class SupplierController {
             return BaseResponse.ok(supplier);
         });
     }
+
+    @GetMapping("/internal/user/{supplierId}")
+    public String getUserIdBySupplier(
+            @PathVariable("supplierId") String supplierId
+    ) {
+        return supplierService.getUserIdBySupplierId(supplierId);
+    }
 }

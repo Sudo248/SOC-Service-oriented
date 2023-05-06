@@ -22,4 +22,6 @@ public interface SupplierService {
     Supplier toEntity(String userId, SupplierDto supplierDto);
 
     SupplierDto getSupplierById(String id);
+
+    String getUserIdBySupplierId(String supplierId);
 }

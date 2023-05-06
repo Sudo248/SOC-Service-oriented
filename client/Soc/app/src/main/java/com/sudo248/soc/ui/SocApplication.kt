@@ -30,14 +30,24 @@ class SocApplication : BaseApplication() {
     }
 
     private fun setupNotification() {
+
         val important = NotificationManager.IMPORTANCE_DEFAULT
-        val channel = NotificationChannel(
+
+        val promotionChannel = NotificationChannel(
             Constants.Notification.PROMOTION_NOTIFICATION_CHANNEL_ID,
             Constants.Notification.PROMOTION_NOTIFICATION_CHANNEL_NAME,
             important
         )
-        channel.description = "This notification alert when merchant add new or update a promotion"
+        promotionChannel.description = "This notification alert when merchant add new or update a promotion"
         val manager = getSystemService(NotificationManager::class.java)
-        manager.createNotificationChannel(channel)
+        manager.createNotificationChannel(promotionChannel)
+
+        val messageChannel = NotificationChannel(
+            Constants.Notification.MESSAGE_NOTIFICATION_CHANNEL_ID,
+            Constants.Notification.MESSAGE_NOTIFICATION_CHANNEL_NAME,
+            important
+        )
+        messageChannel.description = "This notification alert when new message"
+        manager.createNotificationChannel(messageChannel)
     }
 }

@@ -19,6 +19,14 @@ object Constants {
         const val SUPPLIER_ID = "SUPPLIER_ID"
         const val SUPPLIER_NAME = "SUPPLIER_NAME"
         const val CATEGORY = "CATEGORY"
+        const val USER_ID = "USER_ID"
+        const val FCM_TOKEN = "FCM_TOKEN"
+    }
+
+    object Notification {
+        const val MESSAGE_NOTIFICATION_CHANNEL_ID = "STAFF-PROMOTION-NOTIFICATION-CHANNEL-ID"
+        const val MESSAGE_NOTIFICATION_CHANNEL_NAME = "STAFF-PROMOTION-NOTIFICATION-CHANNEL"
+        const val MESSAGE_NOTIFICATION_ID = 3092001
     }
 
     object Payment {

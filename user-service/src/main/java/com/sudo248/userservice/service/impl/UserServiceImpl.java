@@ -2,7 +2,9 @@ package com.sudo248.userservice.service.impl;
 
 import com.sudo248.domain.util.Utils;
 import com.sudo248.userservice.controller.dto.AddressDto;
+import com.sudo248.userservice.controller.dto.FirebaseUserDto;
 import com.sudo248.userservice.controller.dto.UserDto;
+import com.sudo248.userservice.internal.FirebaseService;
 import com.sudo248.userservice.repository.UserRepository;
 import com.sudo248.userservice.repository.entitity.Address;
 import com.sudo248.userservice.repository.entitity.User;
@@ -18,8 +20,11 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    private final FirebaseService firebaseService;
+
+    public UserServiceImpl(UserRepository userRepository, FirebaseService firebaseService) {
         this.userRepository = userRepository;
+        this.firebaseService = firebaseService;
     }
 
     @Override
@@ -34,6 +39,7 @@ public class UserServiceImpl implements UserService {
         User user = toEntity(userDto);
 //        log.error("Sudoo " + user);
         userRepository.save(user);
+        firebaseService.upsertFirebaseUser(createUserFirebaseFromUser(user));
         return toDto(user);
     }
 
@@ -63,6 +69,7 @@ public class UserServiceImpl implements UserService {
 
         user.setAddress(address);
         userRepository.save(user);
+        firebaseService.upsertFirebaseUser(createUserFirebaseFromUser(user));
         return toDto(user);
     }
 
@@ -122,5 +129,13 @@ public class UserServiceImpl implements UserService {
         user.setAddress(address);
 
         return user;
+    }
+
+    private FirebaseUserDto createUserFirebaseFromUser(User user) {
+        return new FirebaseUserDto(
+                user.getUserId(),
+                user.getFullName(),
+                user.getAvatar()
+        );
     }
 }

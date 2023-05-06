@@ -47,6 +47,17 @@ public class NotificationImpl implements NotificationService {
         return userRepository.save(user);
     }
 
+    @Override
+    public boolean saveToken(String userId, String token) {
+        Optional<User> user = userRepository.get(userId);
+        if (user.isPresent()) {
+            User userValue = user.get();
+            userValue.setToken(token);
+            return userRepository.save(userValue);
+        }
+        return false;
+    }
+
     private String sendNotificationToToken(String token, Notification notification) {
         Message message = Message.builder()
                 .setToken(token)

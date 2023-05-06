@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder
 import com.sudo248.base_android.data.api.ApiService
 import com.sudo248.base_android.data.api.api
 import com.sudo248.soc_staff.data.api.auth.AuthService
+import com.sudo248.soc_staff.data.api.chat.ChatService
 import com.sudo248.soc_staff.data.api.discovery.DiscoveryService
 import com.sudo248.soc_staff.data.api.image.ImageService
 import com.sudo248.soc_staff.data.api.notification.NotificationService
@@ -56,6 +57,10 @@ object DataModule {
     @Singleton
     @Provides
     fun provideNotificationService(): NotificationService = ApiService()
+
+    @Singleton
+    @Provides
+    fun provideChatService(): ChatService = ApiService()
 
     @Singleton
     @Provides

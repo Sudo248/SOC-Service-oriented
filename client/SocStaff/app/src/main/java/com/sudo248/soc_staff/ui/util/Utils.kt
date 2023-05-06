@@ -11,6 +11,7 @@ import java.util.*
 object Utils {
     private val locale = Locale("vi", "VN")
     private const val dateFormat = "dd/MM/yyyy"
+    private const val timeFormat = "HH:mm"
 
     fun format(value: Double, digit: Int): String {
         return value.format(digit)
@@ -52,6 +53,10 @@ object Utils {
 
     fun formatDob(date: Date): String {
         return DateUtils.format(date.time, dateFormat, locale)
+    }
+
+    fun formatTime(date: Date): String {
+        return DateUtils.format(date.time, timeFormat)
     }
 
 //    fun formatDobToServer(date: Date): Date {

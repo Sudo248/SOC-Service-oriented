@@ -25,4 +25,8 @@
     <color name="gray_91">#919191</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="button_disable">#DDDDDD</color>
+    <color name="white_F7">#F7F7F7</color>
+    <color name="blue_1B">#1B1A57</color>
+    <color name="grey_33">#333333</color>
+    <color name="grey_4F">#4F5E7B</color>
 </resources>

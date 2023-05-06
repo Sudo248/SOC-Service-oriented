@@ -87,7 +87,12 @@ class AuthRepositoryImpl @Inject constructor(
                 provider = account.provider
             )
             val response = handleResponse(authService.signUp(request))
-            if (response.isError) {
+            if (response.isSuccess) {
+                response.get().data?.let {
+                    Log.d("Sudoo", "signUp: userId: $it")
+                    SharedPreferenceUtils.putString(Constants.Key.USER_ID, it)
+                }
+            } else {
                 throw response.error().errorBody()
             }
         }

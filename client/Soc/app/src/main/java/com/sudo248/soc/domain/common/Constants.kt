@@ -15,10 +15,15 @@ object Constants {
     object Key {
         const val PHONE_NUMBER = "PHONE_NUMBER"
         const val TOKEN = "TOKEN"
+        const val USER_ID = "USER_ID"
         const val INVOICE_ID = "INVOICE_ID"
         const val PROMOTION = "PROMOTION"
         const val SCREEN = "SCREEN"
         const val FCM_TOKEN = "FCM_TOKEN"
+    }
+    object Screen {
+        const val DISCOVERY = "DISCOVERY"
+        const val PROMOTION = "PROMOTION"
     }
 
     object Payment {
@@ -63,6 +68,10 @@ object Constants {
         const val PROMOTION_NOTIFICATION_CHANNEL_ID = "PROMOTION-NOTIFICATION-CHANNEL-ID"
         const val PROMOTION_NOTIFICATION_CHANNEL_NAME = "PROMOTION-NOTIFICATION-CHANNEL"
         const val PROMOTION_NOTIFICATION_ID = 2001
+
+        const val MESSAGE_NOTIFICATION_CHANNEL_ID = "PROMOTION-NOTIFICATION-CHANNEL-ID"
+        const val MESSAGE_NOTIFICATION_CHANNEL_NAME = "PROMOTION-NOTIFICATION-CHANNEL"
+        const val MESSAGE_NOTIFICATION_ID = 30901
     }
 
 

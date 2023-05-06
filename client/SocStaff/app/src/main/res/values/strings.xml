@@ -79,6 +79,7 @@
     <string name="label_supplier">Nhà cung cấp</string>
     <string name="label_promotion">Khuyến mại</string>
     <string name="label_account">Tài Khoản</string>
+    <string name="label_chat">Chăm sóc khách hàng</string>
     <string name="not_found_category">Không tìm thấy %s</string>
     <string name="add_new">Thêm mới</string>
 
@@ -88,4 +89,5 @@
     <string name="content">Content</string>
     <string name="send">Send</string>
     <string name="cancel">Cancel</string>
+    <string name="resent_chat">Resent chat</string>
 </resources>

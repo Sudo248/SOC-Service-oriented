@@ -6,7 +6,6 @@ import com.sudo248.base_android.base.BaseListAdapter
 import com.sudo248.base_android.base.BaseViewHolder
 import com.sudo248.soc_staff.databinding.ItemPromotionBinding
 import com.sudo248.soc_staff.domain.entity.promotion.Promotion
-import com.sudo248.soc_staff.ui.uimodel.adapter.loadImage
 import com.sudo248.soc_staff.ui.util.Utils
 
 class PromotionAdapter(

@@ -25,8 +25,7 @@ public class NotificationController {
             @PathVariable("token") String token
     ) {
         return Utils.handleException(() -> {
-            User user = new User(userId, token);
-            return BaseResponse.ok(notificationService.saveUser(user));
+            return BaseResponse.ok(notificationService.saveToken(userId, token));
         });
     }
 

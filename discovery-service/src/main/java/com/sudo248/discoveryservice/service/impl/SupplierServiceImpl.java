@@ -111,4 +111,9 @@ public class SupplierServiceImpl implements SupplierService {
         supplierDto.setSupplierProducts(new ArrayList<>());
         return supplierDto;
     }
+
+    @Override
+    public String getUserIdBySupplierId(String supplierId) {
+        return supplierRepository.getReferenceById(supplierId).getUserId();
+    }
 }

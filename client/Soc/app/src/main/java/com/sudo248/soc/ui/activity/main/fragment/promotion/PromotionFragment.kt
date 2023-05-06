@@ -1,7 +1,9 @@
 package com.sudo248.soc.ui.activity.main.fragment.promotion
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.sudo248.base_android.base.BaseFragment
+import com.sudo248.base_android.ktx.gone
 import com.sudo248.base_android.utils.DialogUtils
 import com.sudo248.soc.databinding.FragmentPromotionBinding
 import com.sudo248.soc.ui.activity.main.adapter.PromotionAdapter
@@ -11,6 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PromotionFragment : BaseFragment<FragmentPromotionBinding, PromotionViewModel>() {
     override val viewModel: PromotionViewModel by viewModels()
+    private val args: PromotionFragmentArgs by navArgs()
 
     private val adapter: PromotionAdapter by lazy {
         PromotionAdapter{
@@ -19,6 +22,9 @@ class PromotionFragment : BaseFragment<FragmentPromotionBinding, PromotionViewMo
     }
 
     override fun initView() {
+        if (!args.forChoosePromotion) {
+            binding.txtAgree.gone()
+        }
         binding.rcvPromotion.adapter = adapter
         binding.txtAgree.setOnClickListener {
             viewModel.applyPromotion()

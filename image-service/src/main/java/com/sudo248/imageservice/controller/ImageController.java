@@ -20,7 +20,7 @@ public class ImageController {
     @PostMapping("/upload")
     public ResponseEntity<BaseResponse<?>> upload(
             @RequestParam("image") MultipartFile image,
-            @RequestParam(value = "source", required = false) String source
+            @RequestParam(value = "source", required = false, defaultValue = "soc") String source
     ) {
         return imageService.storeImage(image, source);
     }

@@ -117,6 +117,22 @@
                     android:text="@string/label_account"
                     android:textColor="@color/white"
                     android:textSize="22sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/txtChat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/rectangle_conner_25_primary"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:onClick="@{(v) -> viewModel.navigateToChat()}"
+                    android:paddingVertical="15dp"
+                    android:text="@string/label_chat"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="50dp"/>
             </LinearLayout>

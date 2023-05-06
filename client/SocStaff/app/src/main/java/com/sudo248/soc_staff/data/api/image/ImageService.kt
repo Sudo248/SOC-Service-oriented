@@ -1,6 +1,5 @@
 package com.sudo248.soc_staff.data.api.image
 
-import com.sudo248.base_android.core.DataState
 import com.sudo248.base_android_annotation.apiservice.ApiService
 import com.sudo248.base_android_annotation.apiservice.logging_level.Level
 import com.sudo248.base_android_annotation.apiservice.logging_level.LoggingLever
@@ -17,7 +16,7 @@ import retrofit2.http.Part
 @LoggingLever(level = Level.BODY)
 interface ImageService {
     @Multipart
-    @POST("upload")
+    @POST("upload?source=cloudinary")
     suspend fun uploadImage(@Part image: MultipartBody.Part): Response<BaseResponse<ImageDto>>
 
 }

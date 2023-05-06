@@ -26,4 +26,8 @@ class HomeViewModel @Inject constructor(
         navigator.navigateTo(HomeFragmentDirections.actionHomeFragmentToUserFragment())
     }
 
+    fun navigateToChat() {
+        navigator.navigateTo(HomeFragmentDirections.actionHomeFragmentToConversationFragment())
+    }
+
 }

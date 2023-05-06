@@ -18,7 +18,7 @@
         android:id="@+id/userEditFragment"
         android:name="com.sudo248.soc_staff.ui.activity.main.fragment.user.UserEditFragment"
         android:label="UserEditFragment"
-        tools:layout="@layout/fragment_edit_user"/>
+        tools:layout="@layout/fragment_edit_user" />
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.sudo248.soc_staff.ui.activity.main.fragment.home.HomeFragment"
@@ -39,12 +39,15 @@
         <action
             android:id="@+id/action_homeFragment_to_userEditFragment"
             app:destination="@id/userEditFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_conversationFragment"
+            app:destination="@id/conversationFragment" />
     </fragment>
     <fragment
         android:id="@+id/categoryFragment"
         android:name="com.sudo248.soc_staff.ui.activity.main.fragment.category.CategoryFragment"
         android:label="CategoryFragment"
-        tools:layout="@layout/fragment_category"/>
+        tools:layout="@layout/fragment_category" />
     <fragment
         android:id="@+id/productFragment"
         android:name="com.sudo248.soc_staff.ui.activity.main.fragment.product.ProductFragment"
@@ -58,10 +61,29 @@
         android:id="@+id/promotionFragment"
         android:name="com.sudo248.soc_staff.ui.activity.main.fragment.promotion.PromotionFragment"
         android:label="PromotionFragment"
-        tools:layout="@layout/fragment_promotion"/>
+        tools:layout="@layout/fragment_promotion" />
     <fragment
         android:id="@+id/searchCategoryFragment"
         android:name="com.sudo248.soc_staff.ui.activity.main.fragment.search.SearchCategoryFragment"
         android:label="SearchCategoryFragment"
-        tools:layout="@layout/fragment_search_category"/>
+        tools:layout="@layout/fragment_search_category" />
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.sudo248.soc_staff.ui.activity.main.fragment.chat.ChatFragment"
+        android:label="ChatFragment"
+        tools:layout="@layout/fragment_chat">
+        <argument
+            android:name="topic"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/conversationFragment"
+        android:name="com.sudo248.soc_staff.ui.activity.main.fragment.conversation.ConversationFragment"
+        android:label="ConversationFragment"
+        tools:layout="@layout/fragment_conversation">
+        <action
+            android:id="@+id/action_conversationFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
 </navigation>

@@ -48,7 +48,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), PickIma
 
     private val listFragmentHideBottomNav = listOf(
         R.id.productDetailFragment,
-        R.id.searchFragment
+        R.id.searchFragment,
+        R.id.chatFragment
     )
 
     private val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
@@ -77,9 +78,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), PickIma
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         intent?.getStringExtra(Constants.Key.SCREEN)?.let {
-            if (it == "DISCOVERY") {
-                navController.popBackStack()
-                viewModel.getItemInCart()
+            when(it) {
+                Constants.Screen.DISCOVERY -> {
+                    navController.popBackStack()
+                    viewModel.getItemInCart()
+                }
+                Constants.Screen.PROMOTION -> {
+                    binding.bottomNav.selectedItemId = R.id.promotionFragment
+                }
+                else -> {
+
+                }
             }
         }
     }
