@@ -21,18 +21,18 @@ public class VnPayReturnController {
 
     @GetMapping("/return-vnpay")
     public String returnVnPay(
-        @RequestParam("vnp_TmnCode") String vnp_TmnCode,
-        @RequestParam("vnp_Amount") long vnp_Amount,
-        @RequestParam("vnp_BankCode") String vnp_BankCode,
-        @RequestParam("vnp_BankTranNo") String vnp_BankTranNo,
-        @RequestParam("vnp_CardType") String vnp_CardType,
-        @RequestParam("vnp_PayDate") long vnp_PayDate,
-        @RequestParam("vnp_OrderInfo") String vnp_OrderInfo,
-        @RequestParam("vnp_TransactionNo") long vnp_TransactionNo,
-        @RequestParam("vnp_ResponseCode") String vnp_ResponseCode,
-        @RequestParam("vnp_TransactionStatus") String vnp_TransactionStatus,
-        @RequestParam("vnp_TxnRef") String vnp_TxnRef,
-        @RequestParam("vnp_SecureHashType") String vnp_SecureHashType,
+        @RequestParam(value = "vnp_TmnCode", required = false) String vnp_TmnCode,
+        @RequestParam(value = "vnp_Amount", required = false) long vnp_Amount,
+        @RequestParam(value = "vnp_BankCode", required = false) String vnp_BankCode,
+        @RequestParam(value = "vnp_BankTranNo", required = false) String vnp_BankTranNo,
+        @RequestParam(value = "vnp_CardType", required = false) String vnp_CardType,
+        @RequestParam(value = "vnp_PayDate", required = false) long vnp_PayDate,
+        @RequestParam(value = "vnp_OrderInfo", required = false) String vnp_OrderInfo,
+        @RequestParam(value = "vnp_TransactionNo", required = false) long vnp_TransactionNo,
+        @RequestParam(value = "vnp_ResponseCode", required = false) String vnp_ResponseCode,
+        @RequestParam(value = "vnp_TransactionStatus", required = false) String vnp_TransactionStatus,
+        @RequestParam(value = "vnp_TxnRef", required = false) String vnp_TxnRef,
+        @RequestParam(value = "vnp_SecureHashType", required = false) String vnp_SecureHashType,
         @RequestParam(value = "vnp_SecureHash", required = false) String vnp_SecureHash
     ) {
         log.error("Sudoo: " + "vnpay server call return url");
