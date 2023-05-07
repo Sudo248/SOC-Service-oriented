@@ -16,7 +16,7 @@ services:
       - soc-network
 
   soc-registry:
-    image: sudo248dev/soc-registry:0.0.2
+    image: sudo248dev/soc-registry:0.0.1
     container_name: soc-registry
     hostname: soc-registry
     networks:
@@ -25,7 +25,7 @@ services:
       - "8761:8761"
 
   api-gateway:
-    image: sudo248dev/api-gateway:0.0.2
+    image: sudo248dev/api-gateway:0.0.1
     container_name: api-gateway
     hostname: api-gateway
     depends_on:
@@ -36,7 +36,7 @@ services:
       - "9030:9030"
 
   image-service:
-    image: sudo248dev/image-service:0.0.2
+    image: sudo248dev/image-service:0.0.1
     container_name: image-service
     hostname: image-service
     depends_on:
@@ -47,7 +47,7 @@ services:
       - ./image-service/uploads/images:/app/image-service/uploads/images
 
   auth-service:
-    image: sudo248dev/auth-service:0.0.2
+    image: sudo248dev/auth-service:0.0.1
     container_name: auth-service
     hostname: auth-service
     depends_on:
@@ -57,7 +57,7 @@ services:
       - soc-network
 
   discovery-service:
-    image: sudo248dev/discovery-service:0.0.2
+    image: sudo248dev/discovery-service:0.0.1
     container_name: discovery-service
     hostname: discovery-service
     depends_on:
@@ -67,7 +67,7 @@ services:
       - soc-network
 
   payment-service:
-    image: sudo248dev/payment-service:0.0.2
+    image: sudo248dev/payment-service:0.0.1
     container_name: payment-service
     hostname: payment-service
     depends_on:
@@ -77,7 +77,7 @@ services:
       - soc-network
 
   user-service:
-    image: sudo248dev/user-service:0.0.2
+    image: sudo248dev/user-service:0.0.1
     container_name: user-service
     hostname: user-service
     depends_on:
@@ -87,7 +87,7 @@ services:
       - soc-network
 
   cart-service:
-    image: sudo248dev/cart-service:0.0.2
+    image: sudo248dev/cart-service:0.0.1
     container_name: cart-service
     hostname: cart-service
     depends_on:
@@ -97,7 +97,7 @@ services:
       - soc-network
 
   invoice-service:
-    image: sudo248dev/invoice-service:0.0.2
+    image: sudo248dev/invoice-service:0.0.1
     container_name: invoice-service
     hostname: invoice-service
     depends_on:
@@ -107,7 +107,7 @@ services:
       - soc-network
 
   promotion-service:
-    image: sudo248dev/promotion-service:0.0.2
+    image: sudo248dev/promotion-service:0.0.1
     container_name: promotion-service
     hostname: promotion-service
     depends_on:
@@ -117,7 +117,7 @@ services:
       - soc-network
 
   notification-service:
-    image: sudo248dev/notification-service:0.0.2
+    image: sudo248dev/notification-service:0.0.1
     container_name: notification-service
     hostname: notification-service
     depends_on:
@@ -126,7 +126,7 @@ services:
       - soc-network
 
   chat-service:
-    image: sudo248dev/chat-service:0.0.2
+    image: sudo248dev/chat-service:0.0.1
     container_name: chat-service
     hostname: chat-service
     depends_on:
