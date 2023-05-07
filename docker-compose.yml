@@ -122,7 +122,6 @@ services:
     hostname: notification-service
     depends_on:
       - soc-registry
-      - db-service
     networks:
       - soc-network
 
@@ -132,7 +131,6 @@ services:
     hostname: chat-service
     depends_on:
       - soc-registry
-      - db-service
     networks:
       - soc-network
 
