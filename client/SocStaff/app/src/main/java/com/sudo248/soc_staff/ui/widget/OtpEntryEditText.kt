@@ -234,7 +234,7 @@ constructor(
      */
     private fun updateColorStroke(next: Boolean) {
         if (isFocused && next) {
-            recPaint.color = Color.RED
+            recPaint.color = context.getColor(R.color.primaryColor)
         } else {
             recPaint.color = Color.GRAY
         }

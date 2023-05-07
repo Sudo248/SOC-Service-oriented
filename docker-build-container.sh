@@ -1,5 +1,5 @@
 admin="sudo248dev/"
-service="chat-service:0.0.1"
+service="auth-service:0.0.1"
 
 # shellcheck disable=SC2046
 docker rm -f $(docker container ps -a -q)

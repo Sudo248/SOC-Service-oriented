@@ -61,14 +61,14 @@ public class AccountServiceImpl implements AccountService {
             if (!encoder.matches(signInDto.getPassword(), accountModel.getPassword())) {
                 throw new WrongPasswordException();
             }
-//            if (!accountModel.isValidated()) {
-//                var result = otpService.generateOtp(accountModel.getPhoneNumber());
-//                if (result.getStatusCode() == HttpStatus.OK) {
-//                    return BaseResponse.ok("Need to verify phone number " + accountModel.getPhoneNumber());
-//                } else {
-//                    return result;
-//                }
-//            }
+            if (!accountModel.isValidated()) {
+                var result = otpService.generateOtp(accountModel.getPhoneNumber());
+                if (result.getStatusCode() == HttpStatus.OK) {
+                    return BaseResponse.ok("Need to verify phone number " + accountModel.getPhoneNumber());
+                } else {
+                    return result;
+                }
+            }
             TokenDto token = new TokenDto(tokenUtils.generateToken(accountModel.getUserId()));
             return BaseResponse.ok(token);
         });
@@ -83,13 +83,13 @@ public class AccountServiceImpl implements AccountService {
                 throw new PhoneNumberExistedException();
             }
             saveAccount(accountModel);
-//            var result = otpService.generateOtp(accountModel.getPhoneNumber());
-//            if  (result.getStatusCode() == HttpStatus.OK) {
-//                return BaseResponse.ok("Need to verify phone number " + accountModel.getPhoneNumber(), accountModel.getUserId());
-//            } else {
-//                return result;
-//            }
-            return BaseResponse.ok("Need to verify phone number " + accountModel.getPhoneNumber(), accountModel.getUserId());
+            var result = otpService.generateOtp(accountModel.getPhoneNumber());
+            if  (result.getStatusCode() == HttpStatus.OK) {
+                return BaseResponse.ok("Need to verify phone number " + accountModel.getPhoneNumber(), accountModel.getUserId());
+            } else {
+                return result;
+            }
+//            return BaseResponse.ok("Need to verify phone number " + accountModel.getPhoneNumber(), accountModel.getUserId());
         });
     }
 

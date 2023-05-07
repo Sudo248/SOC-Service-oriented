@@ -12,10 +12,12 @@ import com.sudo248.authservice.utils.TokenUtils;
 import com.sudo248.domain.base.BaseResponse;
 import com.twilio.Twilio;
 import com.twilio.rest.verify.v2.service.Verification;
+import com.twilio.rest.verify.v2.service.VerificationCheck;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -67,18 +69,18 @@ public class TwilioOtpServiceImpl implements OtpService {
     @Override
     public ResponseEntity<BaseResponse<?>> verifyOtp(VerifyDto verifyDto) {
         return handleException(() -> {
-//            Twilio.init(twilioAccountSid, twilioAuthToken);
-//            String status = "";
-//            try {
-//                VerificationCheck verificationCheck = VerificationCheck.creator(verifySoc, verifyDto.getOtp())
-//                        .setTo(verifyDto.getPhoneNumber())
-//                        .create();
-//                status = verificationCheck.getStatus();
-//                log.info("Twilio verify status: " + status);
-//            } catch (Exception e) {
-//                log.error(e.toString());
-//                return BaseResponse.status(HttpStatus.BAD_REQUEST, "Verification failed with status: " + status != null ? status : e.getMessage());
-//            }
+            Twilio.init(twilioAccountSid, twilioAuthToken);
+            String status = "";
+            try {
+                VerificationCheck verificationCheck = VerificationCheck.creator(verifySoc, verifyDto.getOtp())
+                        .setTo(verifyDto.getPhoneNumber())
+                        .create();
+                status = verificationCheck.getStatus();
+                log.info("Twilio verify status: " + status);
+            } catch (Exception e) {
+                log.error(e.toString());
+                return BaseResponse.status(HttpStatus.BAD_REQUEST, "Verification failed with status: " + status != null ? status : e.getMessage());
+            }
             AccountModel accountModel = mapper.map(accountRepository.getAccountByPhoneNumber(verifyDto.getPhoneNumber()), AccountModel.class);
             accountRepository.validate(accountModel.getUserId());
 
