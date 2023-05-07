@@ -62,7 +62,12 @@ class MainViewModel @Inject constructor(
         locationService.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
             .addOnCompleteListener {
                 it.result.run {
-                    continuation.resume("$longitude,$latitude")
+                    try {
+                        continuation.resume("$longitude,$latitude")
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        continuation.resume("")
+                    }
                 }
             }
 

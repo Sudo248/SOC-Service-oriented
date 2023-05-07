@@ -42,7 +42,7 @@ public class VnPayServiceImpl implements PaymentService, VnpayService {
         this.notificationService = notificationService;
     }
 
-    public ResponseEntity<BaseResponse<?>> pay(String userId, PaymentDto paymentDto) {
+    public ResponseEntity<BaseResponse<?>> pay(String userId, long currentTime, PaymentDto paymentDto) {
         return handleException(() -> {
             Payment payment = toEntity(userId, paymentDto);
             paymentRepository.save(payment);
@@ -66,6 +66,7 @@ public class VnPayServiceImpl implements PaymentService, VnpayService {
             vnp_Params.put("vnp_IpAddr", paymentDto.getIpAddress());
 
             Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7" ));
+            cld.setTimeInMillis(currentTime);
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss" );
             String vnp_CreateDate = formatter.format(cld.getTime());
             vnp_Params.put("vnp_CreateDate", vnp_CreateDate);

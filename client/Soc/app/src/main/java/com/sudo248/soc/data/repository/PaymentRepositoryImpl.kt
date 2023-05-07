@@ -26,7 +26,7 @@ class PaymentRepositoryImpl @Inject constructor(
             orderType = payment.orderType,
             amount = payment.amount
         )
-        val response = handleResponse(paymentService.pay(request))
+        val response = handleResponse(paymentService.pay(System.currentTimeMillis(), request))
         if (response.isSuccess) {
             response.get().data!!.toPayment()
         } else {

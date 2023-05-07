@@ -11,7 +11,6 @@ import com.sudo248.soc.data.dto.payment.PaymentDto
 import com.sudo248.soc.domain.common.Constants
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.POST
 
 @ApiService(baseUrl = BuildConfig.BASE_URL + "payment/")
@@ -19,6 +18,6 @@ import retrofit2.http.POST
 @LoggingLever(level = Level.BODY)
 interface PaymentService {
 
-    @POST("pay")
-    suspend fun pay(@Body request: PaymentRequest): Response<BaseResponse<PaymentDto>>
+    @POST("pay/{currentTime}")
+    suspend fun pay(currentTime: Long, @Body request: PaymentRequest): Response<BaseResponse<PaymentDto>>
 }

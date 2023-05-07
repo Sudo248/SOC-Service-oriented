@@ -23,8 +23,6 @@ class FirebaseMessageService : FirebaseMessagingService() {
 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
-    private val clientId = SharedPreferenceUtils.getString(Constants.Key.USER_ID)
-
     private val gson = Gson()
 
     override fun onNewToken(token: String) {
@@ -38,7 +36,7 @@ class FirebaseMessageService : FirebaseMessagingService() {
             try {
                 val chat = gson.fromJson(message.data["chat"], Chat::class.java)
                 Log.d("Sudoo", "onMessageReceived: $chat")
-                if (chat.sender.userId != clientId) {
+                if (chat.sender.userId != SharedPreferenceUtils.getString(Constants.Key.USER_ID)) {
                     scope.launch {
                         chatFlow.emit(chat)
                     }

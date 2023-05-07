@@ -42,7 +42,7 @@
         app:layout_constraintTop_toTopOf="@+id/cardAvatar"
         android:gravity="center_vertical"
         android:paddingHorizontal="10dp"
-        android:text="Le Hong Duong"
+        tools:text="Le Hong Duong"
         android:textColor="@color/primaryColor"
         android:textSize="16sp"
         android:maxLines="2"

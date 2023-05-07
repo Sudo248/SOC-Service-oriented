@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 
 
 public interface PaymentService extends BaseService {
-    ResponseEntity<BaseResponse<?>> pay(String userId, PaymentDto paymentDto);
+    ResponseEntity<BaseResponse<?>> pay(String userId, long currentTime, PaymentDto paymentDto);
 
     PaymentInfoDto getPaymentInfo(String paymentId);
 }

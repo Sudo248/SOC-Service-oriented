@@ -25,14 +25,15 @@ public class PaymentController {
         this.ipService = ipService;
     }
 
-    @PostMapping("/pay")
+    @PostMapping("/pay/{currentTime}")
     public ResponseEntity<BaseResponse<?>> pay(
             @RequestHeader(Constants.HEADER_USER_ID) String userId,
+            @PathVariable("currentTime") long currentTime,
             @RequestBody PaymentDto paymentDto,
             HttpServletRequest request
     ) {
         if (paymentDto.getIpAddress() == null) paymentDto.setIpAddress(ipService.getIpAddress(request));
-        return paymentService.pay(userId, paymentDto);
+        return paymentService.pay(userId, currentTime, paymentDto);
     }
 
     @GetMapping("/payment-info/{paymentId}")

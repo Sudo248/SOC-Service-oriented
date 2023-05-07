@@ -29,6 +29,9 @@ class UserEditFragment : BaseFragment<FragmentEditUserBinding, UserViewModel>(),
     override val viewModel: UserViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
 
+    override val enableStateScreen: Boolean
+        get() = true
+
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
         if (isGranted) {
 
