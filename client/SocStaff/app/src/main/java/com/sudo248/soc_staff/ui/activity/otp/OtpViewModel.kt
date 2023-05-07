@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.auth.api.phone.SmsRetrieverClient
 import com.sudo248.base_android.base.BaseViewModel
 import com.sudo248.base_android.core.UiState
+import com.sudo248.base_android.ktx.bindUiState
 import com.sudo248.base_android.ktx.createActionIntentDirections
 import com.sudo248.base_android.ktx.onState
 import com.sudo248.base_android.navigation.IntentDirections
@@ -80,11 +81,13 @@ class OtpViewModel @Inject constructor(
     }
 
     fun resendOtp() = launch {
-        _otp.postValue("")
-//        setState(UiState.LOADING)
-//        authRepository.generateOtp(_phoneNumber.value!!).bindUiState(_uiState)
-        startTimer()
-        startListenUserConsent()
+        if (!_phoneNumber.value.isNullOrEmpty()) {
+            _otp.postValue("")
+            setState(UiState.LOADING)
+            authRepository.generateOtp(_phoneNumber.value!!).bindUiState(_uiState)
+            startTimer()
+            startListenUserConsent()
+        }
     }
 
     fun submitOtp() = launch {

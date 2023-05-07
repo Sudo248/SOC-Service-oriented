@@ -73,7 +73,7 @@ public class TwilioOtpServiceImpl implements OtpService {
             String status = "";
             try {
                 VerificationCheck verificationCheck = VerificationCheck.creator(verifySoc, verifyDto.getOtp())
-                        .setTo(verifyDto.getPhoneNumber())
+                        .setTo(formatPhoneNumber(verifyDto.getPhoneNumber()))
                         .create();
                 status = verificationCheck.getStatus();
                 log.info("Twilio verify status: " + status);

@@ -2,6 +2,7 @@ package com.sudo248.soc_staff.data.api.auth
 
 import com.sudo248.base_android_annotation.apiservice.ApiService
 import com.sudo248.base_android_annotation.apiservice.EnableAuthentication
+import com.sudo248.base_android_annotation.apiservice.Timeout
 import com.sudo248.base_android_annotation.apiservice.logging_level.Level
 import com.sudo248.base_android_annotation.apiservice.logging_level.LoggingLever
 import com.sudo248.soc_staff.BuildConfig
@@ -28,6 +29,7 @@ import retrofit2.http.Path
 @ApiService(baseUrl = BuildConfig.BASE_URL + "auth/")
 @EnableAuthentication(Constants.Key.TOKEN)
 @LoggingLever(level = Level.BODY)
+@Timeout(read = 20000, write = 20000)
 interface AuthService {
 
     @GET("try-token")
