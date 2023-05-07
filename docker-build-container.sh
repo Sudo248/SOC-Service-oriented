@@ -1,5 +1,5 @@
 admin="sudo248dev/"
-service="payment-service:0.0.1"
+service="chat-service:0.0.1"
 
 # shellcheck disable=SC2046
 docker rm -f $(docker container ps -a -q)
@@ -10,8 +10,4 @@ echo "Build docker image $service"
 image="${admin}$service"
 folder=$(echo $service | cut -d':' -f 1)
 
-# shellcheck disable=SC2164
-cd "$folder"
-docker build -t "${image}" .
-# shellcheck disable=SC2103
-cd ..
+docker build -t "${image}" "$folder"

@@ -7,6 +7,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 import com.google.firebase.messaging.FirebaseMessaging;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,8 +25,8 @@ public class FirebaseConfig {
     @Bean
     GoogleCredentials googleCredentials() throws IOException {
         try {
-            FileInputStream serviceAccount =
-                    new FileInputStream(firebaseServiceAccount);
+            InputStream serviceAccount = getClass().getClassLoader().getResourceAsStream(firebaseServiceAccount);
+            assert serviceAccount != null;
             return GoogleCredentials.fromStream(serviceAccount);
         } catch (Exception e) {
             e.printStackTrace();

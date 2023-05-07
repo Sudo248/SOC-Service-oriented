@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Configuration
 public class FirebaseConfig {
@@ -22,8 +23,8 @@ public class FirebaseConfig {
     @Bean
     GoogleCredentials googleCredentials() throws IOException {
         try {
-            FileInputStream serviceAccount =
-                    new FileInputStream(firebaseServiceAccount);
+            InputStream serviceAccount = getClass().getClassLoader().getResourceAsStream(firebaseServiceAccount);
+            assert serviceAccount != null;
             return GoogleCredentials.fromStream(serviceAccount);
         } catch (Exception e) {
             e.printStackTrace();

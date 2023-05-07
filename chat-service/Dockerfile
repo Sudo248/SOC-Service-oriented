@@ -9,4 +9,4 @@ ENV PORT=8091
 COPY target/$JAR_FILE $APP
 EXPOSE $PORT
 
-CMD ["java","-jar", "$APP"]
+CMD ["sh", "-c", "java -jar ${APP}"]
