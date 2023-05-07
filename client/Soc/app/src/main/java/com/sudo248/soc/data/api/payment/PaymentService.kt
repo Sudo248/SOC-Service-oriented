@@ -12,6 +12,7 @@ import com.sudo248.soc.domain.common.Constants
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 @ApiService(baseUrl = BuildConfig.BASE_URL + "payment/")
 @EnableAuthentication(Constants.Key.TOKEN)
@@ -19,5 +20,5 @@ import retrofit2.http.POST
 interface PaymentService {
 
     @POST("pay/{currentTime}")
-    suspend fun pay(currentTime: Long, @Body request: PaymentRequest): Response<BaseResponse<PaymentDto>>
+    suspend fun pay(@Path("currentTime") currentTime: Long, @Body request: PaymentRequest): Response<BaseResponse<PaymentDto>>
 }
