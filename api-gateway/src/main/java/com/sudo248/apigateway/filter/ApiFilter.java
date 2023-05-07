@@ -55,6 +55,14 @@ public class ApiFilter implements GatewayFilter {
 
         log.info("[" + request.getMethod() + "] " + request.getPath());
 
+        String query = "";
+
+        for (String s : request.getQueryParams().keySet()) {
+            query += s + "=" + request.getQueryParams().get(s);
+        }
+
+        log.info("QueryParams: " + query);
+
         if (isApiInternal.test(request)) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, ErrorMessage.INTERNAL_API_NOT_ALLOW);
         }
