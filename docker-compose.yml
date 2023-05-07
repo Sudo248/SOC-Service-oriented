@@ -137,3 +137,6 @@ services:
 networks:
   soc-network:
     external: true
+volumes:
+  database:
+    external: true
