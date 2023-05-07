@@ -10,6 +10,8 @@ strings=(
   invoice-service
   image-service
   promotion-service
+  notification-service
+  chat-service
 )
 mvn clean
 

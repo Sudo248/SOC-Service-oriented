@@ -58,7 +58,8 @@ public class NotificationImpl implements NotificationService {
         return false;
     }
 
-    private String sendNotificationToToken(String token, Notification notification) {
+    @Override
+    public String sendNotificationToToken(String token, Notification notification) {
         Message message = Message.builder()
                 .setToken(token)
                 .setNotification(notification.toFirebaseNotification())
@@ -66,5 +67,14 @@ public class NotificationImpl implements NotificationService {
 
         firebaseMessaging.sendAsync(message);
         return "Success";
+    }
+
+    @Override
+    public String sendNotificationPayment(String userId, Notification notification) {
+        Optional<User> user = userRepository.get(userId);
+        if (user.isPresent() && user.get().getToken() != null) {
+            return sendNotificationToToken(user.get().getToken(), notification);
+        }
+        return "Not found user";
     }
 }

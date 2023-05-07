@@ -24,9 +24,7 @@ public class NotificationController {
             @RequestHeader(Constants.HEADER_USER_ID) String userId,
             @PathVariable("token") String token
     ) {
-        return Utils.handleException(() -> {
-            return BaseResponse.ok(notificationService.saveToken(userId, token));
-        });
+        return Utils.handleException(() -> BaseResponse.ok(notificationService.saveToken(userId, token)));
     }
 
     @PostMapping("/send/topic/{topic}")
@@ -38,11 +36,27 @@ public class NotificationController {
         return Utils.handleException(() -> BaseResponse.ok(notificationService.sendNotificationToTopic(userId, topic, notification)));
     }
 
+    @PostMapping("/send/token/{token}")
+    public ResponseEntity<BaseResponse<?>> sendNotificationToToken(
+            @PathVariable("token") String token,
+            @RequestBody Notification notification
+    ) {
+        return Utils.handleException(() -> BaseResponse.ok(notificationService.sendNotificationToToken(token, notification)));
+    }
+
     @PostMapping("/send/promotion")
-    public ResponseEntity<BaseResponse<?>> sendNotificationToTopic(
+    public ResponseEntity<BaseResponse<?>> sendNotificationToTopicPromotion(
             @RequestHeader(Constants.HEADER_USER_ID) String userId,
             @RequestBody Notification notification
     ) {
         return Utils.handleException(() -> BaseResponse.ok(notificationService.sendNotificationToTopic(userId, NotificationService.promotionTopic, notification)));
+    }
+
+    @PostMapping("/send/payment")
+    public ResponseEntity<BaseResponse<?>> sendNotificationPayment(
+            @RequestHeader(Constants.HEADER_USER_ID) String userId,
+            @RequestBody Notification notification
+    ) {
+        return Utils.handleException(() -> BaseResponse.ok(notificationService.sendNotificationPayment(userId, notification)));
     }
 }

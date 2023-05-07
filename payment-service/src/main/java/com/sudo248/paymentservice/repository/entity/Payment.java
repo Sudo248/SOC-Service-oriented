@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "payment")
+@Table(name = "payments")
 public class Payment {
 
     @Id
@@ -22,6 +22,9 @@ public class Payment {
 
     @Column(name = "order_id")
     private String orderId;
+
+    @Column(name = "user_id")
+    private String userId;
 
     @Column(name = "order_type")
     private String orderType;

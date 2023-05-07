@@ -7,8 +7,10 @@ import com.sudo248.paymentservice.controller.dto.PaymentDto;
 import com.sudo248.paymentservice.controller.dto.PaymentInfoDto;
 import com.sudo248.paymentservice.controller.dto.VnPayResponse;
 import com.sudo248.paymentservice.internal.CartService;
+import com.sudo248.paymentservice.internal.NotificationService;
 import com.sudo248.paymentservice.internal.OrderService;
 import com.sudo248.paymentservice.repository.PaymentRepository;
+import com.sudo248.paymentservice.repository.entity.Notification;
 import com.sudo248.paymentservice.repository.entity.Payment;
 import com.sudo248.paymentservice.repository.entity.PaymentStatus;
 import com.sudo248.paymentservice.service.PaymentService;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -28,15 +31,20 @@ public class VnPayServiceImpl implements PaymentService, VnpayService {
 
     private final CartService cartService;
 
-    public VnPayServiceImpl(PaymentRepository paymentRepository, OrderService orderService, CartService cartService) {
+    private final NotificationService notificationService;
+
+    private final Locale locale = new Locale("vi", "VN");
+
+    public VnPayServiceImpl(PaymentRepository paymentRepository, OrderService orderService, CartService cartService, NotificationService notificationService) {
         this.paymentRepository = paymentRepository;
         this.orderService = orderService;
         this.cartService = cartService;
+        this.notificationService = notificationService;
     }
 
     public ResponseEntity<BaseResponse<?>> pay(String userId, PaymentDto paymentDto) {
         return handleException(() -> {
-            Payment payment = toEntity(paymentDto);
+            Payment payment = toEntity(userId, paymentDto);
             paymentRepository.save(payment);
 
             Map<String, String> vnp_Params = new HashMap<>();
@@ -112,10 +120,11 @@ public class VnPayServiceImpl implements PaymentService, VnpayService {
         );
     }
 
-    private Payment toEntity(PaymentDto paymentDto) {
+    private Payment toEntity(String userId, PaymentDto paymentDto) {
         return new Payment(
                 Utils.createIdOrElse(paymentDto.getPaymentId()),
                 paymentDto.getOrderId(),
+                userId,
                 paymentDto.getOrderType(),
                 paymentDto.getAmount(),
                 paymentDto.getBankCode(),
@@ -212,8 +221,10 @@ public class VnPayServiceImpl implements PaymentService, VnpayService {
 
         String signValue = VnPayConfig.hashAllFields(fields);
 
+        VnPayResponse response;
+
         if (signValue.equals(vnp_SecureHash)) {
-            return checkAndUpdatePayment(
+            response = checkAndUpdatePayment(
                     vnp_TxnRef,
                     vnp_Amount,
                     vnp_BankCode,
@@ -221,11 +232,12 @@ public class VnPayServiceImpl implements PaymentService, VnpayService {
                     vnp_ResponseCode
             );
         } else {
-            return new VnPayResponse(
+            response = new VnPayResponse(
                     "99",
                     "Unknown error"
             );
         }
+        return response;
     }
 
     private VnPayResponse checkAndUpdatePayment(
@@ -243,11 +255,24 @@ public class VnPayServiceImpl implements PaymentService, VnpayService {
 
                 if ("00".equals(paymentStatus) || payment.getStatus() == PaymentStatus.PENDING) {
 
+                    Notification notification;
+
                     if ("00".equals(responseCode)) {
                         payment.setStatus(PaymentStatus.SUCCESS);
+                        notification = new Notification(
+                                null,
+                                "Thanh toán thành công",
+                                "Thanh toán thành công: " + NumberFormat.getCurrencyInstance(locale).format(payment.getAmount())
+                        );
                     } else {
                         payment.setStatus(PaymentStatus.FAILURE);
+                        notification = new Notification(
+                                null,
+                                "Thanh toán thất bại",
+                                "Có lỗi xảy ra trong quá trình thanh toán. Hãy kiểm tra lại"
+                        );
                     }
+                    notificationService.sendNotificationPaymentStatus(payment.getUserId(), notification);
                     if (payment.getBankCode() == null || payment.getBankCode().isEmpty()) {
                         payment.setBankCode(bankCode);
                     }

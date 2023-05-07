@@ -116,6 +116,26 @@ services:
     networks:
       - soc-network
 
+  notification-service:
+    image: sudo248dev/notification-service:0.0.1
+    container_name: notification-service
+    hostname: notification-service
+    depends_on:
+      - soc-registry
+      - db-service
+    networks:
+      - soc-network
+
+  chat-service:
+    image: sudo248dev/chat-service:0.0.1
+    container_name: chat-service
+    hostname: chat-service
+    depends_on:
+      - soc-registry
+      - db-service
+    networks:
+      - soc-network
+
 networks:
   soc-network:
     external: true

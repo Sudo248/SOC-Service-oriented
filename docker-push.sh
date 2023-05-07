@@ -13,8 +13,6 @@ strings=(
   sudo248dev/chat-service:0.0.1
 )
 for i in "${strings[@]}"; do
-  echo "Pull docker image $i"
-  docker pull "$i"
+  echo "Push docker image $i"
+  docker push "$i"
 done
-
-docker network create --subnet 172.18.0.0/24 --gateway 172.18.0.1 soc-network

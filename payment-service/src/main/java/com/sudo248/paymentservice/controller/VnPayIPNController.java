@@ -2,6 +2,7 @@ package com.sudo248.paymentservice.controller;
 
 import com.sudo248.paymentservice.controller.dto.VnPayResponse;
 import com.sudo248.paymentservice.service.VnpayService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/payment/vnpay")
+@Slf4j
 public class VnPayIPNController {
 
     private final VnpayService vnpayService;
@@ -33,6 +35,7 @@ public class VnPayIPNController {
             @RequestParam("vnp_SecureHashType") String vnp_SecureHashType,
             @RequestParam("vnp_SecureHash") String vnp_SecureHash
     ) {
+        log.info("Sudoo: " + "vnpay server call ipn");
         return vnpayService.ipnVnpay(
                 vnp_TmnCode,
                 vnp_Amount,
