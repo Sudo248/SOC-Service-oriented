@@ -35,7 +35,7 @@ public class VnPayReturnController {
         @RequestParam("vnp_SecureHashType") String vnp_SecureHashType,
         @RequestParam("vnp_SecureHash") String vnp_SecureHash
     ) {
-        log.info("Sudoo: " + "vnpay server call return url");
+        log.error("Sudoo: " + "vnpay server call return url");
         return vnpayService.returnVnPay(
                 vnp_TmnCode,
                 vnp_Amount,

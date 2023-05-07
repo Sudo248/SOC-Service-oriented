@@ -35,7 +35,7 @@ public class VnPayIPNController {
             @RequestParam("vnp_SecureHashType") String vnp_SecureHashType,
             @RequestParam("vnp_SecureHash") String vnp_SecureHash
     ) {
-        log.info("Sudoo: " + "vnpay server call ipn");
+        log.error("Sudoo: " + "vnpay server call ipn");
         return vnpayService.ipnVnpay(
                 vnp_TmnCode,
                 vnp_Amount,
