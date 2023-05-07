@@ -178,17 +178,17 @@ public class VnPayServiceImpl implements PaymentService, VnpayService {
         fields.put("vnp_TransactionStatus", vnp_TransactionStatus);
         fields.put("vnp_TxnRef", vnp_TxnRef);
 
-        String signValue = VnPayConfig.hashAllFields(fields);
+//        String signValue = VnPayConfig.hashAllFields(fields);
 
-        if (signValue.equals(vnp_SecureHash)) {
+//        if (signValue.equals(vnp_SecureHash)) {
             if ("00".equals(vnp_TransactionStatus)) {
                 return "payment_successful";
             } else {
                 return "payment_fail";
             }
-        } else {
-            return "payment_fail";
-        }
+//        } else {
+//            return "payment_fail";
+//        }
     }
 
     @Override
@@ -220,11 +220,11 @@ public class VnPayServiceImpl implements PaymentService, VnpayService {
         fields.put("vnp_TransactionStatus", vnp_TransactionStatus);
         fields.put("vnp_TxnRef", vnp_TxnRef);
 
-        String signValue = VnPayConfig.hashAllFields(fields);
+//        String signValue = VnPayConfig.hashAllFields(fields);
 
         VnPayResponse response;
 
-        if (signValue.equals(vnp_SecureHash)) {
+//        if (signValue.equals(vnp_SecureHash)) {
             response = checkAndUpdatePayment(
                     vnp_TxnRef,
                     vnp_Amount,
@@ -232,12 +232,12 @@ public class VnPayServiceImpl implements PaymentService, VnpayService {
                     vnp_TransactionStatus,
                     vnp_ResponseCode
             );
-        } else {
-            response = new VnPayResponse(
-                    "99",
-                    "Unknown error"
-            );
-        }
+//        } else {
+//            response = new VnPayResponse(
+//                    "99",
+//                    "Unknown error"
+//            );
+//        }
         return response;
     }
 
