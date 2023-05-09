@@ -36,7 +36,7 @@ class CartAdapter(
                 txtPriceItem.text = Utils.formatVnCurrency(item.supplierProduct.price)
 
                 minusOrder.setOnClickListener {
-                    if (item.amount >= 1) {
+                    if (item.amount > 1) {
                         item.amount -= 1
                         onUpdateItemAmount.invoke(
                             AddSupplierProduct(

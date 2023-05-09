@@ -40,7 +40,9 @@ public class ApiFilter implements GatewayFilter {
                 "/images",
                 "/return-vnpay",
                 "/ipn-vnpay",
-                "/public",
+                "/static",
+                "/templates",
+                "/share",
                 "/cache"
         );
 

@@ -48,7 +48,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding, PaymentViewModel>()
         }
         setupOnClickListener()
         binding.imgBack.setOnClickListener {
-            back()
+            activity?.onBackPressed()
         }
     }
 

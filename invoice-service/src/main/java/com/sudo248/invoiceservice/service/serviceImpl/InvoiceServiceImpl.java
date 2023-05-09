@@ -193,10 +193,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     private double calculateShipmentPrice(ValueDto distance) {
         if (distance.getUnit().equals("km")) {
-            return distance.getValue() * 10000;
+            return ((int)distance.getValue()) * 5000;
         } else {
-            return distance.getValue() * 100;
+            return ((int)distance.getValue()) * 50;
         }
     }
-
+// https://google/ogp?url=https%3A%2F%2Fd1hjkbq40fs2x4.cloudfront.net%2F2016-01-31%2Ffiles%2F1045.jpg&title=test&description=123&image=https%3A%2F%2Fencrypted-tbn0.gstatic.com%2Fimages%3Fq%3Dtbn%3AANd9GcSsGIp1RbFF_EUgR0Y-CUQYgIZ76BO27pSpcTL9VfHn%26s
 }

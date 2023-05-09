@@ -40,7 +40,7 @@
                     android:id="@+id/imageProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitXY"
                     app:imageUrl="@{product.images.get(0)}"
                     tools:src="@drawable/zing_burger" />
             </com.google.android.material.card.MaterialCardView>

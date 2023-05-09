@@ -109,6 +109,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public String getProductImageById(String productId) {
+        try {
+            Product product = productRepository.getReferenceById(productId);
+            return product.getImages().get(0).getUrl();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    @Override
     public ProductDto getRawProductById(String productId) {
         Product product = productRepository.getReferenceById(productId);
         ProductDto productDto = new ProductDto();

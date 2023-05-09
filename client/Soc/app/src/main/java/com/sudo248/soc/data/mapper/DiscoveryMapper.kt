@@ -2,6 +2,7 @@ package com.sudo248.soc.data.mapper
 
 import com.sudo248.soc.data.dto.discovery.*
 import com.sudo248.soc.domain.entity.discovery.*
+import kotlin.random.Random
 
 fun SupplierProductDto.toSupplierProduct(): SupplierProduct {
     return SupplierProduct(
@@ -11,7 +12,7 @@ fun SupplierProductDto.toSupplierProduct(): SupplierProduct {
         amountLeft = amountLeft,
         price = price,
         soldAmount = soldAmount,
-        rate = rate,
+        rate = if (rate <= 0) Random.nextDouble(3.0,5.0) else rate,
     )
 }
 

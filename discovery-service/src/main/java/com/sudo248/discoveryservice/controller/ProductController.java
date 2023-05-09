@@ -6,10 +6,18 @@ import com.sudo248.discoveryservice.service.ProductService;
 import com.sudo248.domain.base.BaseResponse;
 import com.sudo248.domain.common.Constants;
 import com.sudo248.domain.util.Utils;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 @RestController
@@ -83,5 +91,21 @@ public class ProductController {
             List<ProductDto> products = productService.getProductsByName(userId, productName);
             return BaseResponse.ok(products);
         });
+    }
+
+    @GetMapping("/share/{productId}")
+    public ResponseEntity<byte[]> getShareLinkProduct(
+            @PathVariable("productId") String productId
+    ) throws IOException {
+        String imageUrl = productService.getProductImageById(productId);
+        URL url = new URL(imageUrl);
+        BufferedImage image = ImageIO.read(url);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ImageIO.write(image, "jpg", outputStream);
+        byte[] bytes = outputStream.toByteArray();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+        headers.setContentLength(bytes.length);
+        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
     }
 }

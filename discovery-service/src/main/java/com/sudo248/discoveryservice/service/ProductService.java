@@ -15,6 +15,8 @@ public interface ProductService {
 
     ProductDto getProductById(String userId, String productId);
 
+    String getProductImageById(String productId);
+
     ProductDto getRawProductById(String productId);
 
     ProductDto toDto(String userId, Product product);
