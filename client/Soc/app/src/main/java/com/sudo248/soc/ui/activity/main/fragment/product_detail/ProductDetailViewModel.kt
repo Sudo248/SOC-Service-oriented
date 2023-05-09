@@ -82,15 +82,7 @@ class ProductDetailViewModel @Inject constructor(
     }
 
     fun getDeeplinkToProduction(): String {
-//        return "${BuildConfig.BASE_URL}discovery/product/${product.productId}"
-        return product.images.get()?.let {
-            val imageUrl = it[0]
-            if (!imageUrl.startsWith("http")) {
-                return@let "${BuildConfig.BASE_URL}images/$imageUrl"
-            } else {
-                return@let imageUrl
-            }
-        } ?: "${BuildConfig.BASE_URL}discovery/product/${product.productId}"
+        return "${BuildConfig.BASE_URL}discovery/product/share/${product.productId}"
     }
 
 }

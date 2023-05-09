@@ -89,10 +89,31 @@ class DiscoveryViewModel @Inject constructor(
     }
 
     private fun onProductItemClick(item: ProductUiModel) {
-        navigator.navigateTo(DiscoveryFragmentDirections.actionDiscoveryFragmentToProductDetailFragment(item))
+        navigator.navigateTo(
+            DiscoveryFragmentDirections.actionDiscoveryFragmentToProductDetailFragment(
+                item
+            )
+        )
     }
 
     fun navigateToSearchView() {
         navigator.navigateTo(DiscoveryFragmentDirections.actionDiscoveryFragmentToSearchFragment())
+    }
+
+    fun getProductById(productId: String) = launch {
+        emitState(UiState.LOADING)
+        discoveryRepository.getProductById(productId)
+            .onSuccess {
+                navigator.navigateTo(
+                    DiscoveryFragmentDirections.actionDiscoveryFragmentToProductDetailFragment(
+                        it.toListProductUi()[0]
+                    )
+                )
+                emitState(UiState.SUCCESS)
+            }
+            .onError {
+                error = SingleEvent(it.message)
+                emitState(UiState.ERROR)
+            }
     }
 }

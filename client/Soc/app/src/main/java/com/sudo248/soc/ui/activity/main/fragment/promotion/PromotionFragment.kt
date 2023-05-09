@@ -14,6 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class PromotionFragment : BaseFragment<FragmentPromotionBinding, PromotionViewModel>() {
     override val viewModel: PromotionViewModel by viewModels()
     private val args: PromotionFragmentArgs by navArgs()
+    override val enableStateScreen: Boolean
+        get() = true
 
     private val adapter: PromotionAdapter by lazy {
         PromotionAdapter{

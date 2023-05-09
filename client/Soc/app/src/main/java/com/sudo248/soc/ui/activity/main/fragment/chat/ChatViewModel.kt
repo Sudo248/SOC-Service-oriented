@@ -57,9 +57,11 @@ class ChatViewModel @Inject constructor(
     }
 
     fun getConversation() = launch {
+        emitState(UiState.LOADING)
         chatRepository.getConversation(supplierId)
             .onSuccess {
                 _conversation.postValue(it)
+                emitState(UiState.SUCCESS)
             }
             .onError {
                 error = SingleEvent(it.message)

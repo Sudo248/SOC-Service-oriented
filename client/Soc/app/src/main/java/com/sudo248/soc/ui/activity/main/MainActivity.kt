@@ -3,6 +3,8 @@ package com.sudo248.soc.ui.activity.main
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -12,7 +14,6 @@ import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.google.android.material.badge.BadgeDrawable
 import com.sudo248.base_android.base.BaseActivity
 import com.sudo248.base_android.ktx.gone
 import com.sudo248.base_android.ktx.visible
@@ -27,6 +28,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), PickImageController {
     override val layoutId: Int = R.layout.activity_main
     override val viewModel: MainViewModel by viewModels()
+
+    private var deepLinkHandler: DeepLinkHandler? = null
 
     private val pickMedia =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -72,7 +75,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), PickIma
             navController
         )
         setupBadgeCart()
-
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -90,6 +92,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), PickIma
 
                 }
             }
+        }
+
+        intent?.data?.path?.let {
+            deepLinkHandler?.onHandle(it)
         }
     }
 
@@ -147,5 +153,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), PickIma
         badge.backgroundColor = getColor(R.color.primaryColor)
         badge.badgeTextColor = getColor(R.color.white)
         badge.verticalOffset = 3
+    }
+
+    fun setDeepLinkHandler(deepLinkHandler: DeepLinkHandler) {
+        this.deepLinkHandler = deepLinkHandler
     }
 }

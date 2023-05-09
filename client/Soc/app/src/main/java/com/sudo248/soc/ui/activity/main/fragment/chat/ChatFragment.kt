@@ -19,6 +19,8 @@ import kotlinx.coroutines.launch
 class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>() {
     override val viewModel: ChatViewModel by viewModels()
     private val args: ChatFragmentArgs by navArgs()
+    override val enableStateScreen: Boolean
+        get() = true
 
     private val chatAdapter: ChatAdapter by lazy {
         ChatAdapter(viewModel.clientId).apply {

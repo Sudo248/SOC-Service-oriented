@@ -6,6 +6,8 @@ import android.content.pm.PackageManager
 import android.util.Log
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.Priority
 import com.google.firebase.messaging.FirebaseMessaging
 import com.sudo248.base_android.base.BaseViewModel
@@ -65,6 +67,9 @@ class SplashViewModel @Inject constructor(
     @SuppressLint("MissingPermission")
     private suspend fun getCurrentLocation(): String = suspendCoroutine { continuation ->
         if (viewController?.isGrantedLocationPermission() == true) {
+//            locationService.requestLocationUpdates(LocationRequest.Builder.IMPLICIT_MIN_UPDATE_INTERVAL, LocationCallback {
+//
+//            })
             locationService.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
                 .addOnSuccessListener {
                     it?.run {
