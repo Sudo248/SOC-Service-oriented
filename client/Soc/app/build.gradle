@@ -9,6 +9,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('/mnt/39178B285F7A3DB1/Code/Android/key-store/soc.jks')
+            storePassword '7480201'
+            keyAlias 'key0'
+            keyPassword '7480201'
+        }
+    }
     namespace 'com.sudo248.soc'
     compileSdk 33
 
@@ -26,6 +34,7 @@ android {
 
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

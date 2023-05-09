@@ -35,31 +35,35 @@ class UserRepositoryImpl @Inject constructor(
         response.data().toUser()
     }
 
-    override suspend fun updateUser(user: User, isUpdate: Boolean): DataState<User, Exception> = stateOn(ioDispatcher){
-        val location = if (isUpdate) getCurrentLocation() else null
-        val userDto = user.toUserDto(location)
-        val response = handleResponse(userService.updateUser(userDto))
-        if (response.isSuccess) {
-            response.data().toUser()
-        } else {
-            throw response.error().errorBody()
+    override suspend fun updateUser(user: User, isUpdate: Boolean): DataState<User, Exception> =
+        stateOn(ioDispatcher) {
+            val location = if (isUpdate) getCurrentLocation() else null
+            val userDto = user.toUserDto(location)
+            val response = handleResponse(userService.updateUser(userDto))
+            if (response.isSuccess) {
+                response.data().toUser()
+            } else {
+                throw response.error().errorBody()
+            }
         }
-    }
 
-    override suspend fun getAddressSuggestionProvince(): DataState<List<AddressSuggestion>, Exception> = stateOn(ioDispatcher) {
-        val response = handleResponse(userService.getAddressSuggestionProvince())
-        response.data().map { it.toAddressSuggestion() }
-    }
+    override suspend fun getAddressSuggestionProvince(): DataState<List<AddressSuggestion>, Exception> =
+        stateOn(ioDispatcher) {
+            val response = handleResponse(userService.getAddressSuggestionProvince())
+            response.data().map { it.toAddressSuggestion() }
+        }
 
-    override suspend fun getAddressSuggestionDistrict(provinceId: Int): DataState<List<AddressSuggestion>, Exception> = stateOn(ioDispatcher){
-        val response = handleResponse(userService.getAddressSuggestionDistrict(provinceId))
-        response.data().map { it.toAddressSuggestion() }
-    }
+    override suspend fun getAddressSuggestionDistrict(provinceId: Int): DataState<List<AddressSuggestion>, Exception> =
+        stateOn(ioDispatcher) {
+            val response = handleResponse(userService.getAddressSuggestionDistrict(provinceId))
+            response.data().map { it.toAddressSuggestion() }
+        }
 
-    override suspend fun getAddressSuggestionWard(districtId: Int): DataState<List<AddressSuggestion>, Exception> = stateOn(ioDispatcher){
-        val response = handleResponse(userService.getAddressSuggestionWard(districtId))
-        response.data().map { it.toAddressSuggestion() }
-    }
+    override suspend fun getAddressSuggestionWard(districtId: Int): DataState<List<AddressSuggestion>, Exception> =
+        stateOn(ioDispatcher) {
+            val response = handleResponse(userService.getAddressSuggestionWard(districtId))
+            response.data().map { it.toAddressSuggestion() }
+        }
 
     @SuppressLint("MissingPermission")
     private suspend fun getCurrentLocation(): Location = suspendCoroutine { continuation ->
@@ -69,10 +73,11 @@ class UserRepositoryImpl @Inject constructor(
 //            }
 //        }
 
-        locationService.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null).addOnCompleteListener {
-            it.result.run {
-                continuation.resume(Location(longitude, latitude))
+        locationService.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
+            .addOnCompleteListener {
+                it.result.run {
+                    continuation.resume(Location(longitude, latitude))
+                }
             }
-        }
     }
 }

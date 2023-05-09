@@ -52,7 +52,7 @@ class SplashViewModel @Inject constructor(
                 .onError {
                     navigator.navigateOff(AuthActivity::class.createActionIntentDirections())
                 }
-            delay(900)
+            delay(500)
         }
 
 //            navigator.navigateOff(OtpActivity::class.createActionIntentDirections{

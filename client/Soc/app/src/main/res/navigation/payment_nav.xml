@@ -18,5 +18,10 @@
         android:id="@+id/promotionFragment"
         android:name="com.sudo248.soc.ui.activity.main.fragment.promotion.PromotionFragment"
         android:label="PromotionFragment"
-        tools:layout="@layout/fragment_promotion"/>
+        tools:layout="@layout/fragment_promotion">
+        <argument
+            android:name="forChoosePromotion"
+            android:defaultValue="true"
+            app:argType="boolean" />
+    </fragment>
 </navigation>

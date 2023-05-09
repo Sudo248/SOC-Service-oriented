@@ -73,7 +73,11 @@ class AuthRepositoryImpl @Inject constructor(
             )
             val response = handleResponse(authService.signIn(request))
             if (response.isSuccess) {
-                response.get().data!!.toToken()
+                val data = response.get().data!!
+                data.userId?.let {
+                    SharedPreferenceUtils.putString(Constants.Key.USER_ID, it)
+                }
+                data.toToken()
             } else {
                 throw response.error().errorBody()
             }

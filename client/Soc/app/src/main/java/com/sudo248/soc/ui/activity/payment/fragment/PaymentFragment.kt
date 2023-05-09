@@ -47,6 +47,9 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding, PaymentViewModel>()
             viewModel.getInvoice(it)
         }
         setupOnClickListener()
+        binding.imgBack.setOnClickListener {
+            back()
+        }
     }
 
     private fun setupOnClickListener() {

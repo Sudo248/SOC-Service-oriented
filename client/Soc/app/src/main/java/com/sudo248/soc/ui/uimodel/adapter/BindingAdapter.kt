@@ -20,25 +20,19 @@ import com.sudo248.soc.R
  */
 
 @BindingAdapter("imageUrl")
-fun loadImage(image: ImageView, url: String, isShowLoading: Boolean = true) {
+fun loadImage(image: ImageView, url: String) {
     if (url.isEmpty()) return
     var imageUrl = url
     if (!imageUrl.startsWith("http")) imageUrl = "${BuildConfig.BASE_URL}images/$url"
+    val circularProgressDrawable = CircularProgressDrawable(image.context)
+    circularProgressDrawable.strokeWidth = 5f
+    circularProgressDrawable.centerRadius = 30f
+    circularProgressDrawable.start()
     Glide
         .with(image.context)
         .load(imageUrl)
         .diskCacheStrategy(DiskCacheStrategy.NONE)
-        .placeholder(
-            if (isShowLoading) {
-                val circularProgressDrawable = CircularProgressDrawable(image.context)
-                circularProgressDrawable.strokeWidth = 5f
-                circularProgressDrawable.centerRadius = 30f
-                circularProgressDrawable.start()
-                circularProgressDrawable
-            } else {
-                null
-            }
-        )
+        .placeholder(circularProgressDrawable)
         .error(R.drawable.ic_error)
         .into(image)
 }

@@ -37,13 +37,36 @@ public class CacheLocationManager {
     }
 
     public Location getLocation(String userId) {
-        if (cacheLocation.containsKey(userId)) {
+        if (cacheLocation.containsKey(userId) &&
+                cacheLocation.get(userId).getLongitude() > 0.0 &&
+                cacheLocation.get(userId).getLatitude() > 0.0
+        ) {
             return cacheLocation.get(userId);
         } else {
             Location location = userService.getLocation(userId);
-            cacheLocation.put(userId, location);
-            log.info("Cache location: " + location);
+            saveLocation(userId, location);
             return location;
         }
+    }
+
+    public Location requiredGetLocation(String userId) {
+        Location location = userService.getLocation(userId);
+        saveLocation(userId, location);
+        return location;
+    }
+
+    public String clearCache() {
+        String res = getAllLocation();
+        cacheLocation.clear();
+        return res;
+    }
+    public String getAllLocation() {
+        StringBuilder res = new StringBuilder();
+        res.append("{");
+        for(String key : cacheLocation.keySet()) {
+            res.append("\""+key+"\"").append(":").append(cacheLocation.get(key)).append(",");
+        }
+        res.append("}");
+        return res.toString();
     }
 }

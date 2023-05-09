@@ -147,7 +147,7 @@ public class SupplierProductServiceImpl implements SupplierProductService {
         return new SupplierProductDto(
                 s.getSupplier().getSupplierId(),
                 s.getProduct().getProductId(),
-                isSameLocation ? new RouteDto() : getRouteMapBox(cacheLocationManager.getLocation(userId), cacheLocationManager.getLocation(s.getSupplier().getUserId())),
+                isSameLocation ? new RouteDto() : getRouteMapBox(userId, s.getSupplier().getSupplierId()),
                 s.getAmountLeft(),
                 s.getPrice(),
                 s.getSoldAmount(),
@@ -163,23 +163,31 @@ public class SupplierProductServiceImpl implements SupplierProductService {
 
     private RouteDto getRouteMapBox(String userId, String supplierId) {
         Supplier supplier = supplierRepository.getRawSupplierById(supplierId);
-        return getRouteMapBox(cacheLocationManager.getLocation(userId), cacheLocationManager.getLocation(supplier.getUserId()));
-    }
-
-    private RouteDto getRouteMapBox(Location from, Location to) {
+        RouteDto routeDto;
         try {
-            MapBoxDistanceDto mapBoxDistanceDto = mapBoxService.getDistance(from.getLongitude(), from.getLatitude(), to.getLongitude(), to.getLatitude());
-            MapBoxRouteDto mapBoxRouteDto = mapBoxDistanceDto.getRoutes().get(0);
-            log.info("Sudoo: " + mapBoxRouteDto.getDistance() + " " + mapBoxRouteDto.getDuration());
-            return new RouteDto(
-                    mapBoxRouteDto.getWeight(),
-                    getDurationValue(mapBoxRouteDto.getDuration()),
-                    getDistanceValue(mapBoxRouteDto.getDistance())
-            );
+            routeDto = getRouteMapBox(cacheLocationManager.getLocation(userId), cacheLocationManager.getLocation(supplier.getUserId()));
         } catch (Exception e) {
             e.printStackTrace();
-            return new RouteDto();
+            cacheLocationManager.requiredGetLocation(supplier.getUserId());
+            try {
+                routeDto = getRouteMapBox(cacheLocationManager.getLocation(userId), cacheLocationManager.getLocation(supplier.getUserId()));
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                routeDto = new RouteDto();
+            }
         }
+        return routeDto;
+    }
+
+    private RouteDto getRouteMapBox(Location from, Location to) throws Exception {
+        MapBoxDistanceDto mapBoxDistanceDto = mapBoxService.getDistance(from.getLongitude(), from.getLatitude(), to.getLongitude(), to.getLatitude());
+        MapBoxRouteDto mapBoxRouteDto = mapBoxDistanceDto.getRoutes().get(0);
+        log.info("Sudoo: " + mapBoxRouteDto.getDistance() + " " + mapBoxRouteDto.getDuration());
+        return new RouteDto(
+                mapBoxRouteDto.getWeight(),
+                getDurationValue(mapBoxRouteDto.getDuration()),
+                getDistanceValue(mapBoxRouteDto.getDistance())
+        );
     }
 
     private ValueDto getDurationValue(double duration) {

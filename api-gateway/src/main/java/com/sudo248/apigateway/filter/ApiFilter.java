@@ -39,7 +39,9 @@ public class ApiFilter implements GatewayFilter {
                 "/verify-otp",
                 "/images",
                 "/return-vnpay",
-                "/ipn-vnpay"
+                "/ipn-vnpay",
+                "/public",
+                "/cache"
         );
 
         final List<String> internalApiEndpoint = List.of("/internal");

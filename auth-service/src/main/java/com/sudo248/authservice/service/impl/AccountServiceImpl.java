@@ -69,7 +69,7 @@ public class AccountServiceImpl implements AccountService {
                     return result;
                 }
             }
-            TokenDto token = new TokenDto(tokenUtils.generateToken(accountModel.getUserId()));
+            TokenDto token = new TokenDto(accountModel.getUserId(), tokenUtils.generateToken(accountModel.getUserId()));
             return BaseResponse.ok(token);
         });
     }

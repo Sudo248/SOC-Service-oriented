@@ -47,12 +47,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
         viewModel.products.observe(viewLifecycleOwner) {
             if (it.isEmpty()) {
                 binding.apply {
-                    groupNotFound.visible()
+                    imgNotFound.visible()
                     rcvProduct.gone()
                 }
             } else {
                 binding.rcvProduct.visible()
-                binding.groupNotFound.gone()
+                binding.imgNotFound.gone()
                 productAdapter.submitList(it)
             }
         }
