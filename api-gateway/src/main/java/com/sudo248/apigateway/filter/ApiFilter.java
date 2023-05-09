@@ -55,10 +55,10 @@ public class ApiFilter implements GatewayFilter {
 
         log.info("[" + request.getMethod() + "] " + request.getPath());
 
-        String query = "";
+        StringBuilder query = new StringBuilder();
 
         for (String s : request.getQueryParams().keySet()) {
-            query += s + "=" + request.getQueryParams().get(s);
+            query.append(s).append("=").append(request.getQueryParams().get(s)).append(" ");
         }
 
         log.info("QueryParams: " + query);

@@ -43,6 +43,17 @@ public class NotificationImpl implements NotificationService {
     }
 
     @Override
+    public String sendNotificationToToken(String token, Notification notification) {
+        Message message = Message.builder()
+                .setToken(token)
+                .setNotification(notification.toFirebaseNotification())
+                .build();
+
+        firebaseMessaging.sendAsync(message);
+        return "Success";
+    }
+
+    @Override
     public boolean saveUser(User user) {
         return userRepository.save(user);
     }
@@ -56,17 +67,6 @@ public class NotificationImpl implements NotificationService {
             return userRepository.save(userValue);
         }
         return false;
-    }
-
-    @Override
-    public String sendNotificationToToken(String token, Notification notification) {
-        Message message = Message.builder()
-                .setToken(token)
-                .setNotification(notification.toFirebaseNotification())
-                .build();
-
-        firebaseMessaging.sendAsync(message);
-        return "Success";
     }
 
     @Override

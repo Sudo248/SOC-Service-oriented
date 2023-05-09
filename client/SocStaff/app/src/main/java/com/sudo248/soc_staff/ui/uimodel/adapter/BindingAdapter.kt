@@ -4,6 +4,7 @@ import android.net.Uri
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.sudo248.base_android.ktx.setHorizontalViewPort
@@ -19,7 +20,7 @@ import com.sudo248.soc_staff.ui.util.Utils
  */
 
 @BindingAdapter("imageUrl")
-fun loadImage(image: ImageView, url: String) {
+fun loadImage(image: ImageView, url: String, isShowLoading: Boolean = true) {
     if (url.isEmpty()) return
     var imageUrl = url
     if (!imageUrl.startsWith("http")) {
@@ -29,6 +30,17 @@ fun loadImage(image: ImageView, url: String) {
         .with(image.context)
         .load(imageUrl)
         .diskCacheStrategy(DiskCacheStrategy.NONE)
+        .placeholder(
+            if (isShowLoading) {
+                val circularProgressDrawable = CircularProgressDrawable(image.context)
+                circularProgressDrawable.strokeWidth = 5f
+                circularProgressDrawable.centerRadius = 30f
+                circularProgressDrawable.start()
+                circularProgressDrawable
+            } else {
+                null
+            }
+        )
         .error(R.drawable.ic_error)
         .into(image)
 }

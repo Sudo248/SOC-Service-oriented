@@ -108,7 +108,10 @@ public class ChatServiceImpl implements ChatService {
             Conversation conversationValue = conversation.get();
             Chat chat = new Chat(
                     userRepository.get(userId).get().toUserChat(),
-                    userRepository.get(conversationValue.getFirstUserId().equals(userId) ? conversationValue.getSecondUserId() : conversationValue.getFirstUserId()).get().toUserChat(),
+                    userRepository.get(
+                            conversationValue.getFirstUserId().equals(userId) ?
+                                    conversationValue.getSecondUserId() :
+                                    conversationValue.getFirstUserId()).get().toUserChat(),
                     chatDto.getContent(),
                     System.currentTimeMillis());
             conversationValue.getChats().add(chat);
